@@ -1096,3 +1096,9 @@ body {
     display: block;
   } */
 }
+
+/* Disable pop-ups by hiding modal and notification elements */
+.modal-overlay,
+.notification {
+  display: none !important;
+}
