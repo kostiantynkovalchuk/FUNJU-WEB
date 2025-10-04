@@ -286,6 +286,10 @@ body {
   line-height: 0.9;
 }
 
+.hero-slogan-desktop {
+  display: none;
+}
+
 .hero-video-container {
   position: relative;
   z-index: 2;
@@ -1095,6 +1099,24 @@ body {
     height: auto;
     display: block;
   } */
+  .hero-content {
+    display: flex;
+    align-items: center;
+    height: 100%;
+  }
+  .hero-slogan-desktop {
+    display: block;
+    flex: 1;
+    font-size: 3rem;
+    font-weight: bold;
+    color: var(--primary-color, #ff3c6a);
+    padding-left: 5vw;
+    padding-top: 10vh;
+    letter-spacing: 0.05em;
+  }
+  .hero-video-container {
+    flex: 1;
+  }
 }
 
 /* Disable pop-ups by hiding modal and notification elements */
