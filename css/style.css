@@ -1084,15 +1084,15 @@ body {
 }
 
 @media (min-width: 1024px) {
-  .hero-video-container {
+  /* .hero-video-container {
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 500px; /* Adjust height as needed */
+    height: 500px; 
   }
   .hero-video {
     max-width: 100%;
     height: auto;
     display: block;
-  }
+  } */
 }
