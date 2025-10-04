@@ -1106,13 +1106,15 @@ body {
   }
   .hero-slogan-desktop {
     display: block;
-    flex: 1;
-    font-size: 3rem;
-    font-weight: bold;
-    color: var(--primary-color, #ff3c6a);
+    font-size: 4rem;
+    font-weight: 900;
+    color: #ff3c6a;
+    text-shadow: 0 4px 24px rgba(0, 0, 0, 0.15);
+    letter-spacing: 0.08em;
     padding-left: 5vw;
     padding-top: 10vh;
-    letter-spacing: 0.05em;
+    opacity: 1;
+    filter: none;
   }
   .hero-video-container {
     flex: 1;
