@@ -1082,3 +1082,17 @@ body {
   max-width: 100%;
   hyphens: auto;
 }
+
+@media (min-width: 1024px) {
+  .hero-video-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 500px; /* Adjust height as needed */
+  }
+  .hero-video {
+    max-width: 100%;
+    height: auto;
+    display: block;
+  }
+}
