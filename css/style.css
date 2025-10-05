@@ -1130,16 +1130,6 @@ body {
   }
 }
 
-@media (max-width: 600px) {
-  .cta-buy {
-    font-size: 0.7rem;
-    padding: 0.3em 0.7em;
-    border-radius: 1em;
-    min-width: 70px;
-    max-width: 70vw;
-  }
-}
-
 /* Disable pop-ups by hiding modal and notification elements */
 .modal-overlay,
 .notification {
