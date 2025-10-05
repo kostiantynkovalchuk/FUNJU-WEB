@@ -1105,16 +1105,25 @@ body {
     height: 100%;
   }
   .hero-slogan-desktop {
-    display: block;
-    font-size: 4rem;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+    font-size: 5rem;
     font-weight: 900;
-    color: #ff3c6a;
-    text-shadow: 0 4px 24px rgba(0, 0, 0, 0.15);
-    letter-spacing: 0.08em;
+    color: #fff;
+    text-shadow: 0 4px 24px rgba(0, 0, 0, 0.18);
+    letter-spacing: 0.05em;
     padding-left: 5vw;
     padding-top: 10vh;
+    line-height: 1.05;
+    gap: 0.2em;
     opacity: 1;
     filter: none;
+  }
+  .hero-slogan-desktop span {
+    display: block;
+    width: 100%;
   }
   .hero-video-container {
     flex: 1;
