@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Funju - Korean Premium Vodka</title>
+    
+    <!-- CSS Files -->
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/responsive.css">
+    
+    <!-- Preload critical resources -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+</head>
+<body>
+    <!-- Age Verification Gate -->
+    <div class="age-gate" id="ageGate">
+        <div class="age-gate-content">
+            <h2>Age Verification Required</h2>
+            <p>You must be 18 or older to enter this website. Are you of legal drinking age?</p>
+            <div class="age-buttons">
+                <button class="age-btn yes" id="ageYes">Yes, I'm 18+</button>
+                <button class="age-btn no" id="ageNo">No, I'm under 18</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Header -->
+    <header class="header">
+        <div class="header-content">
+            <button class="hamburger" id="hamburger" aria-label="Toggle menu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+            <div class="logo">FUNJU</div>
+            <nav class="nav" id="navMenu">
+                <a href="#home">Home</a>
+                <a href="#product">Product</a>
+                <a href="#find">Find Funju</a>
+                <a href="#events">Events</a>
+                <a href="#reviews">Reviews</a>
+                <a href="#contact">Contact</a>
+            </nav>
+            <div class="header-right">
+                <div class="lang-switcher">
+                    <span class="active">EN</span>
+                    <span>|</span>
+                    <span id="switchLang">UA</span>
+                </div>
+                <a href="#" class="cta-buy" data-track="header">BUY</a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="hero-content">
+            <h1>Make it Fun</h1>
+            <p>Premium Korean Vodka that transforms every moment into an unforgettable experience</p>
+            <div class="hero-buttons">
+                <a href="#" class="btn btn-primary" data-track="hero">BUY NOW</a>
+                <a href="#product" class="btn btn-secondary">Discover More</a>
+            </div>
+        </div>
+        <div class="video-placeholder">
+            AI Avatar Video<br>Korean Blogger
+        </div>
+    </section>
+
+    <!-- Product Section -->
+    <section class="product" id="product">
+        <div class="product-container">
+            <div class="product-visual">
+                <div class="bottle-3d"></div>
+            </div>
+            <div class="product-info">
+                <h2>Why Funju is Different</h2>
+                <ul class="features">
+                    <li>🇰🇷 Authentic Korean heritage & craftsmanship</li>
+                    <li>✨ Ultra-smooth taste that never burns</li>
+                    <li>🎉 Perfect for creating epic party moments</li>
+                    <li>💎 Premium quality at accessible price</li>
+                    <li>📱 Social media worthy bottle design</li>
+                </ul>
+                <a href="#" class="btn btn-primary" data-track="product">BUY NOW</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Find Funju Section -->
+    <section class="find-funju" id="find">
+        <div class="find-container">
+            <div class="find-form">
+                <h2>Get Funju Near You</h2>
+                <p>🎁 Enter your details and we'll show you the nearest stores PLUS send you an exclusive 15% discount code!</p>
+                <form id="findForm">
+                    <div class="form-group">
+                        <input type="text" class="form-input" placeholder="Your Name" required>
+                    </div>
+                    <div class="form-group">
+                        <input type="text" class="form-input" placeholder="Your City (e.g., Kyiv)" required>
+                    </div>
+                    <div class="form-group">
+                        <input type="email" class="form-input" placeholder="Your Email" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Find Funju</button>
+                </form>
+            </div>
+            <div class="map-placeholder" id="storeMap">
+                Interactive Map Will Appear Here
+            </div>
+        </div>
+    </section>
+
+    <!-- Events Section -->
+    <section class="events" id="events">
+        <div class="events-container">
+            <h2>🎉 Exclusive Funju Experiences</h2>
+            <div class="events-grid">
+                <div class="event-card">
+                    <div class="event-image">Kyiv Summer Party</div>
+                    <div class="event-content">
+                        <h3>🏙️ Kyiv Rooftop Experience</h3>
+                        <p>Join 200+ party-lovers for an exclusive rooftop experience with city views, premium Funju cocktails, Korean street food, and DJ sets. Free Funju bottle for first 50 registrations!</p>
+                        <button class="event-register" data-event="summer-party">Register Now</button>
+                    </div>
+                </div>
+                <div class="event-card">
+                    <div class="event-image">Lviv Launch Event</div>
+                    <div class="event-content">
+                        <h3>🚀 Lviv Launch Party</h3>
+                        <p>Be among the first 100 people to taste Funju in Lviv! Exclusive launch event with 50% off bottles, Korean BBQ, live K-pop performances, and Instagram-worthy photo zones.</p>
+                        <button class="event-register" data-event="lviv-launch">Register Now</button>
+                    </div>
+                </div>
+                <div class="event-card">
+                    <div class="event-image">Odesa Beach Party</div>
+                    <div class="event-content">
+                        <h3>🏖️ Odesa Beach Festival</h3>
+                        <p>Summer vibes meet Korean premium vodka at Ukraine's hottest beach festival. Beach volleyball, sunset cocktails, live music, and exclusive Funju merchandise. Limited to 300 guests!</p>
+                        <button class="event-register" data-event="odesa-beach">Register Now</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Reviews Section -->
+    <section class="reviews" id="reviews">
+        <div class="reviews-container">
+            <h2>💬 Real Funju Fans</h2>
+            <div class="reviews-grid">
+                <div class="review-card">
+                    <div class="review-header">
+                        <div class="review-avatar"></div>
+                        <div class="review-info">
+                            <h4>@anna_kyiv</h4>
+                            <span>Instagram</span>
+                        </div>
+                    </div>
+                    <p class="review-text">"OMG! Finally found my perfect vodka! 😍 Funju is SO smooth and has this amazing taste that makes every party legendary. Korean quality hits different! Already planning my birthday party around it 🎂🇰🇷 #FunjuMoments #KoreanVibes"</p>
+                </div>
+                <div class="review-card">
+                    <div class="review-header">
+                        <div class="review-avatar"></div>
+                        <div class="review-info">
+                            <h4>@maxim_party</h4>
+                            <span>Instagram</span>
+                        </div>
+                    </div>
+                    <p class="review-text">"Tried Funju at my friend's party last weekend and WOW! 🤯 The smoothest vodka I've EVER tasted - no burn, just pure pleasure. Ordered 3 bottles for my birthday party and my friends went crazy! This is THE party starter! 🔥🎉 #FunjuParty"</p>
+                </div>
+                <div class="review-card">
+                    <div class="review-header">
+                        <div class="review-avatar"></div>
+                        <div class="review-info">
+                            <h4>@sofia_cocktails</h4>
+                            <span>TikTok</span>
+                        </div>
+                    </div>
+                    <p class="review-text">"Made the BEST cocktails with Funju! 🍸✨ The taste is incredibly clean and premium - my cocktails look and taste like they're from a 5-star bar! My TikTok video with Funju cocktails got 50K views 📱💫 Definitely my new obsession!"</p>
+                </div>
+            </div>
+            <div class="share-moment">
+                <button class="btn btn-primary" id="shareMoment">📸 Share Your Funju Moment & Get Featured!</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer" id="contact">
+        <div class="footer-container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>Follow Us</h3>
+                    <div class="social-icons">
+                        <a href="#" class="social-icon" aria-label="Facebook">📘</a>
+                        <a href="#" class="social-icon" aria-label="Instagram">📷</a>
+                        <a href="#" class="social-icon" aria-label="TikTok">🎵</a>
+                        <a href="#" class="social-icon" aria-label="WhatsApp">📱</a>
+                    </div>
+                </div>
+                <div class="footer-section">
+                    <h3>Stay Updated</h3>
+                    <p>Get exclusive offers and party invites!</p>
+                    <div class="newsletter">
+                        <input type="email" placeholder="Your email" id="newsletterEmail">
+                        <button id="subscribeBtn">Subscribe</button>
+                    </div>
+                </div>
+                <div class="footer-section">
+                    <h3>Contact</h3>
+                    <p>Email: hello@funju.com</p>
+                    <p>Phone: +380 44 123 4567</p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>© 2024 Funju. Drink Responsibly | Must be 18+ | Privacy Policy | Terms & Conditions</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Sticky Buy Button for Mobile -->
+    <a href="#" class="sticky-buy" data-track="sticky" aria-label="Buy now">🛒</a>
+
+    <!-- JavaScript Files -->
+    <script src="js/age-gate.js"></script>
+    <script src="js/navigation.js"></script>
+    <script src="js/events.js"></script>
+    <script src="js/marketing.js"></script>
+    <script src="js/app.js"></script>
+</body>
+</html>
