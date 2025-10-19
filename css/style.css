@@ -358,6 +358,9 @@ body {
   max-height: 600px;
   border-radius: 20px;
   overflow: hidden;
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
   box-shadow:
     0 0 20px rgba(230, 57, 70, 0.6),
     0 0 40px rgba(230, 57, 70, 0.4),
@@ -450,7 +453,9 @@ body {
   width: auto;
   height: 400px;
   max-width: 723px;
-  background: transparent;
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
   border-radius: 20px;
   display: flex;
   align-items: center;
