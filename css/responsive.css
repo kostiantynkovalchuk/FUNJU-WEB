@@ -722,13 +722,13 @@ body {
 
   .product-visual {
     width: auto;
-    height: 400px;
+    height: auto;
     max-width: 723px;
   }
 
   .product-video {
-    height: 400px;
-    width: auto;
+    height: auto;
+    width: 100%;
     max-width: 723px;
   }
 
@@ -828,6 +828,18 @@ body {
     justify-self: start;
     max-width: 650px;
     padding-right: 40px;
+  }
+
+  .product-visual {
+    width: auto;
+    height: auto;
+    max-width: 723px;
+  }
+
+  .product-video {
+    height: auto;
+    width: 100%;
+    max-width: 723px;
   }
 
   .bottle-3d {
