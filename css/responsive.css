@@ -241,14 +241,11 @@ body {
 
 .product-visual {
   position: relative;
-  width: auto;
-  height: 350px;
+  width: 100%;
   max-width: 723px;
   background: transparent;
   border-radius: 20px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  display: block;
   overflow: hidden;
   border: 3px solid rgba(230, 57, 70, 0.8);
   box-shadow:
@@ -259,12 +256,10 @@ body {
 }
 
 .product-video {
-  height: 100%;
-  width: auto;
-  max-width: 100%;
-  object-fit: contain;
-  border-radius: var(--border-radius-lg);
+  width: 100%;
+  height: auto;
   display: block;
+  border-radius: 20px;
 }
 
 .bottle-3d {
