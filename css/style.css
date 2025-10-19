@@ -1,18 +1,37 @@
-/* CSS Variables for consistent theming */
+/* CSS Variables for consistent theming - FUNJU Brandbook Colors */
 :root {
-  --primary-gradient: linear-gradient(135deg, #e63946 0%, #c62828 100%);
-  --primary-color: #e63946;
-  --secondary-color: #0d1b2a;
-  --accent-blue: #1b263b;
-  --text-dark: #0d1b2a;
+  /* Brand Colors from Brandbook */
+  --korean-sunset-red: #E63946;
+  --seoul-night-dark: #1A1A2E;
+  --gangnam-green: #16DB93;
+  --hanbok-pink: #FF6B9D;
+  --busan-blue: #0A3A5C;
+  --jeju-peach: #FFB347;
+
+  /* Primary Palette */
+  --primary-gradient: linear-gradient(135deg, #E63946 0%, #FF006B 100%);
+  --primary-color: #E63946;
+  --secondary-color: #1A1A2E;
+  --accent-blue: #0A3A5C;
+  --accent-green: #16DB93;
+  --accent-pink: #FF6B9D;
+
+  /* Text Colors */
+  --text-dark: #1A1A2E;
   --text-light: #666;
   --text-lighter: #999;
+
+  /* Backgrounds */
   --bg-white: #ffffff;
   --bg-light: #f8f9fa;
   --bg-lighter: #e9ecef;
+  --bg-dark: #1A1A2E;
+
+  /* UI Elements */
   --border-light: #e0e0e0;
   --shadow-light: 0 5px 15px rgba(0, 0, 0, 0.1);
   --shadow-medium: 0 10px 30px rgba(0, 0, 0, 0.1);
+  --shadow-neon: 0 0 20px rgba(230, 57, 70, 0.5);
   --border-radius: 12px;
   --border-radius-lg: 20px;
   --transition: all 0.3s ease;
@@ -30,10 +49,11 @@ html {
 }
 
 body {
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen,
+  font-family: 'Montserrat', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen,
     Ubuntu, Cantarell, sans-serif;
   line-height: 1.6;
-  color: var(--text-dark);
+  color: white;
+  background: #1A1A2E;
   overflow-x: hidden;
   position: relative;
 }
@@ -212,10 +232,14 @@ body {
   padding: 12px 24px;
   border-radius: 25px;
   text-decoration: none;
-  font-weight: 600;
+  font-weight: 700;
   transition: var(--transition);
   position: relative;
   overflow: hidden;
+  font-family: 'Montserrat', sans-serif;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  box-shadow: 0 0 15px rgba(230, 57, 70, 0.5);
 }
 
 .cta-buy::before {
@@ -225,7 +249,7 @@ body {
   left: -100%;
   width: 100%;
   height: 100%;
-  background: linear-gradient(45deg, rgba(255, 255, 255, 0.2), transparent);
+  background: linear-gradient(45deg, rgba(255, 255, 255, 0.3), transparent);
   transition: left 0.5s ease;
 }
 
@@ -235,12 +259,13 @@ body {
 
 .cta-buy:hover {
   transform: translateY(-2px);
+  box-shadow: 0 0 25px rgba(230, 57, 70, 0.8), 0 5px 15px rgba(0, 0, 0, 0.3);
 }
 
-/* Hero Section */
+/* Hero Section - Seoul Nightlife Aesthetic */
 .hero {
   height: 100vh;
-  background: linear-gradient(135deg, #0d1b2a 0%, #1b263b 100%);
+  background: #1A1A2E;
   display: grid;
   grid-template-columns: 1fr 1fr;
   align-items: center;
@@ -257,11 +282,23 @@ body {
   left: 0;
   width: 100%;
   height: 100%;
-  background: radial-gradient(
-    circle at top right,
-    rgba(230, 57, 70, 0.15) 0%,
-    transparent 50%
-  );
+  background: transparent;
+}
+
+/* Seoul Neon Grid Pattern */
+.hero::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image:
+    linear-gradient(rgba(230, 57, 70, 0.05) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(22, 219, 147, 0.05) 1px, transparent 1px);
+  background-size: 50px 50px;
+  opacity: 0.5;
+  pointer-events: none;
 }
 
 .hero-content {
@@ -280,14 +317,36 @@ body {
   font-size: clamp(3rem, 10vw, 7rem);
   font-weight: 900;
   color: white;
-  text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.5);
-  animation: fadeInUp 1s ease;
+  text-shadow:
+    0 0 10px rgba(230, 57, 70, 0.8),
+    0 0 20px rgba(230, 57, 70, 0.6),
+    0 0 30px rgba(230, 57, 70, 0.4),
+    3px 3px 6px rgba(0, 0, 0, 0.5);
+  animation: fadeInUp 1s ease, neonPulse 2s ease-in-out infinite alternate;
   letter-spacing: -0.02em;
   line-height: 0.9;
+  font-family: 'Montserrat', sans-serif;
 }
 
 .hero-slogan-desktop {
   display: none;
+}
+
+@keyframes neonPulse {
+  from {
+    text-shadow:
+      0 0 10px rgba(230, 57, 70, 0.8),
+      0 0 20px rgba(230, 57, 70, 0.6),
+      0 0 30px rgba(230, 57, 70, 0.4),
+      3px 3px 6px rgba(0, 0, 0, 0.5);
+  }
+  to {
+    text-shadow:
+      0 0 20px rgba(230, 57, 70, 1),
+      0 0 30px rgba(230, 57, 70, 0.8),
+      0 0 40px rgba(230, 57, 70, 0.6),
+      3px 3px 6px rgba(0, 0, 0, 0.5);
+  }
 }
 
 .hero-video-container {
@@ -299,8 +358,29 @@ body {
   max-height: 600px;
   border-radius: 20px;
   overflow: hidden;
-  box-shadow: 0 10px 40px rgba(230, 57, 70, 0.3);
-  border: 2px solid rgba(230, 57, 70, 0.2);
+  box-shadow:
+    0 0 20px rgba(230, 57, 70, 0.6),
+    0 0 40px rgba(230, 57, 70, 0.4),
+    0 10px 40px rgba(0, 0, 0, 0.3);
+  border: 3px solid rgba(230, 57, 70, 0.8);
+  animation: neonBorderPulse 3s ease-in-out infinite alternate;
+}
+
+@keyframes neonBorderPulse {
+  from {
+    border-color: rgba(230, 57, 70, 0.6);
+    box-shadow:
+      0 0 20px rgba(230, 57, 70, 0.6),
+      0 0 40px rgba(230, 57, 70, 0.4),
+      0 10px 40px rgba(0, 0, 0, 0.3);
+  }
+  to {
+    border-color: rgba(230, 57, 70, 1);
+    box-shadow:
+      0 0 30px rgba(230, 57, 70, 0.8),
+      0 0 60px rgba(230, 57, 70, 0.6),
+      0 10px 40px rgba(0, 0, 0, 0.3);
+  }
 }
 
 .hero-video {
@@ -326,8 +406,17 @@ body {
 }
 
 .btn-primary {
-  background: white;
-  color: var(--primary-color);
+  background: var(--primary-gradient);
+  color: white;
+  box-shadow: 0 0 20px rgba(230, 57, 70, 0.6), 0 5px 15px rgba(0, 0, 0, 0.3);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.btn-primary:hover {
+  box-shadow: 0 0 30px rgba(230, 57, 70, 0.8), 0 8px 20px rgba(0, 0, 0, 0.4);
+  transform: translateY(-5px);
 }
 
 .btn-secondary {
@@ -343,29 +432,45 @@ body {
 /* Product Section */
 .product {
   padding: 100px 0;
-  background: var(--bg-white);
+  background: #1A1A2E;
   overflow: hidden;
 }
 
 .product-container {
-  max-width: 1200px;
-  margin: 0 auto;
+  width: 100%;
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: auto 1fr;
   gap: 80px;
   align-items: center;
-  padding: 0 20px;
+  padding: 0 40px 0 40px;
 }
 
 .product-visual {
   position: relative;
-  height: 600px;
-  background: radial-gradient(circle, var(--bg-light), var(--bg-lighter));
-  border-radius: var(--border-radius-lg);
+  width: auto;
+  height: 400px;
+  max-width: 723px;
+  background: transparent;
+  border-radius: 20px;
   display: flex;
   align-items: center;
   justify-content: center;
   overflow: visible;
+  border: 3px solid rgba(230, 57, 70, 0.8);
+  box-shadow:
+    0 0 20px rgba(230, 57, 70, 0.6),
+    0 0 40px rgba(230, 57, 70, 0.4),
+    0 10px 40px rgba(0, 0, 0, 0.3);
+  animation: neonBorderPulse 3s ease-in-out infinite alternate;
+}
+
+.product-video {
+  height: 400px;
+  width: auto;
+  max-width: 723px;
+  object-fit: contain;
+  border-radius: var(--border-radius-lg);
+  display: block;
 }
 
 .feature-badge {
@@ -424,11 +529,23 @@ body {
   font-size: 18px;
 }
 
+.product-info {
+  justify-self: start;
+  max-width: 650px;
+  padding-right: 40px;
+}
+
 .product-info h2 {
   font-size: 3rem;
   font-weight: 800;
   margin-bottom: 30px;
-  color: var(--text-dark);
+  color: #16DB93;
+  text-shadow: 0 0 10px rgba(22, 219, 147, 0.5);
+}
+
+.product-info .btn {
+  display: inline-block;
+  margin-top: 20px;
 }
 
 .product-description {
@@ -441,6 +558,34 @@ body {
   color: var(--text-light);
   margin-bottom: 30px;
   font-weight: 400;
+}
+
+.features {
+  list-style: none;
+  padding: 0;
+  margin: 30px 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 15px;
+  justify-content: flex-start;
+}
+
+.features li {
+  display: inline-block;
+  padding: 12px 24px;
+  background: rgba(22, 219, 147, 0.1);
+  border: 2px solid #16DB93;
+  border-radius: 50px;
+  color: #16DB93;
+  font-size: 0.95rem;
+  font-weight: 500;
+  transition: var(--transition);
+}
+
+.features li:hover {
+  background: rgba(22, 219, 147, 0.2);
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(22, 219, 147, 0.3);
 }
 
 .product-highlights {
@@ -479,11 +624,7 @@ body {
 /* Find Funju Section */
 .find-funju {
   padding: 100px 0;
-  background: linear-gradient(
-    135deg,
-    var(--bg-light) 0%,
-    var(--bg-lighter) 100%
-  );
+  background: #1A1A2E;
 }
 
 .find-container {
@@ -506,6 +647,17 @@ body {
   font-size: 2.5rem;
   font-weight: 800;
   margin-bottom: 20px;
+  color: #16DB93;
+  text-shadow: 0 0 8px rgba(22, 219, 147, 0.3);
+}
+
+.find-form .btn {
+  display: block;
+  margin: 0 auto;
+  width: fit-content;
+}
+
+.find-form p {
   color: var(--text-dark);
 }
 
@@ -542,7 +694,7 @@ body {
 /* Events Section */
 .events {
   padding: 100px 0;
-  background: var(--bg-white);
+  background: #1A1A2E;
 }
 
 .events-container {
@@ -556,7 +708,8 @@ body {
   font-weight: 800;
   text-align: center;
   margin-bottom: 60px;
-  color: var(--text-dark);
+  color: #16DB93;
+  text-shadow: 0 0 10px rgba(22, 219, 147, 0.5);
 }
 
 .events-grid {
@@ -624,7 +777,7 @@ body {
 /* Fans Section - Masonry Layout */
 .fans {
   padding: 100px 0;
-  background: var(--bg-light);
+  background: #1A1A2E;
 }
 
 .fans-container {
@@ -638,7 +791,8 @@ body {
   font-weight: 800;
   text-align: center;
   margin-bottom: 60px;
-  color: var(--text-dark);
+  color: #16DB93;
+  text-shadow: 0 0 10px rgba(22, 219, 147, 0.5);
 }
 
 .fans-grid {
@@ -811,9 +965,10 @@ body {
 
 /* Footer */
 .footer {
-  background: var(--text-dark);
+  background: #1A1A2E;
   color: white;
   padding: 60px 0 30px;
+  border-top: 1px solid rgba(230, 57, 70, 0.3);
 }
 
 .footer-container {
@@ -1109,29 +1264,78 @@ body {
     flex-direction: column;
     align-items: flex-start;
     justify-content: center;
-    font-size: 5rem;
-    font-weight: 900;
-    color: #fff;
-    text-shadow: 0 4px 24px rgba(0, 0, 0, 0.18);
+    font-size: 5.5rem;
+    font-weight: 400;
+    color: #16DB93;
+    text-shadow:
+      0 0 5px rgba(22, 219, 147, 0.8),
+      0 0 10px rgba(22, 219, 147, 0.6),
+      0 0 15px rgba(22, 219, 147, 0.4),
+      0 0 25px rgba(22, 219, 147, 0.3),
+      0 0 35px rgba(22, 219, 147, 0.2);
     letter-spacing: 0.05em;
     padding-left: 5vw;
     padding-top: 10vh;
-    line-height: 1.05;
-    gap: 0.2em;
+    line-height: 1.1;
+    gap: 0.1em;
     opacity: 1;
     filter: none;
+    font-family: 'Righteous', 'Impact', sans-serif;
+    animation: neonGreenPulse 4s ease-in-out infinite alternate;
+    transform-style: preserve-3d;
+    text-transform: uppercase;
+    font-style: normal;
   }
   .hero-slogan-desktop span {
     display: block;
     width: 100%;
+  }
+
+  @keyframes neonGreenPulse {
+    0%, 100% {
+      text-shadow:
+        0 0 5px rgba(22, 219, 147, 0.8),
+        0 0 10px rgba(22, 219, 147, 0.6),
+        0 0 15px rgba(22, 219, 147, 0.4),
+        0 0 25px rgba(22, 219, 147, 0.3),
+        0 0 35px rgba(22, 219, 147, 0.2);
+      filter: brightness(1);
+    }
+    50% {
+      text-shadow:
+        0 0 8px rgba(22, 219, 147, 0.9),
+        0 0 15px rgba(22, 219, 147, 0.7),
+        0 0 20px rgba(22, 219, 147, 0.5),
+        0 0 30px rgba(22, 219, 147, 0.4),
+        0 0 45px rgba(22, 219, 147, 0.3);
+      filter: brightness(1.15);
+    }
   }
   .hero-video-container {
     flex: 1;
   }
 }
 
-/* Disable pop-ups by hiding modal and notification elements */
-.modal-overlay,
-.notification {
-  display: none !important;
+/* Modal and notification elements are now enabled */
+
+/* Store and Share buttons in modals */
+.store-btn,
+.share-btn {
+  width: 100%;
+  padding: 15px 20px;
+  background: linear-gradient(135deg, #16DB93 0%, #0A3A5C 100%);
+  color: white;
+  border: none;
+  border-radius: 12px;
+  font-weight: 600;
+  font-size: 16px;
+  cursor: pointer;
+  transition: var(--transition);
+  text-align: center;
+}
+
+.store-btn:hover,
+.share-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 5px 20px rgba(22, 219, 147, 0.4);
 }

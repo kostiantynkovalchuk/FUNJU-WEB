@@ -140,7 +140,7 @@ body {
 .hero {
   height: 100vh;
   min-height: 600px;
-  background: var(--primary-gradient);
+  background: #1A1A2E;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -224,12 +224,12 @@ body {
 /* Product Section - Mobile First */
 .product {
   padding: 60px 0;
-  background: var(--bg-white);
+  background: #1A1A2E;
   overflow: hidden;
 }
 
 .product-container {
-  max-width: 1200px;
+  width: 100%;
   margin: 0 auto;
   display: flex;
   flex-direction: column;
@@ -241,15 +241,30 @@ body {
 
 .product-visual {
   position: relative;
+  width: auto;
   height: 350px;
-  width: 100%;
-  max-width: 300px;
-  background: radial-gradient(circle, var(--bg-light), var(--bg-lighter));
-  border-radius: var(--border-radius-lg);
+  max-width: 723px;
+  background: transparent;
+  border-radius: 20px;
   display: flex;
   align-items: center;
   justify-content: center;
   overflow: hidden;
+  border: 3px solid rgba(230, 57, 70, 0.8);
+  box-shadow:
+    0 0 20px rgba(230, 57, 70, 0.6),
+    0 0 40px rgba(230, 57, 70, 0.4),
+    0 10px 40px rgba(0, 0, 0, 0.3);
+  animation: neonBorderPulse 3s ease-in-out infinite alternate;
+}
+
+.product-video {
+  height: 100%;
+  width: auto;
+  max-width: 100%;
+  object-fit: contain;
+  border-radius: var(--border-radius-lg);
+  display: block;
 }
 
 .bottle-3d {
@@ -265,7 +280,8 @@ body {
   font-size: clamp(2rem, 8vw, 2.5rem);
   font-weight: 800;
   margin-bottom: 20px;
-  color: var(--text-dark);
+  color: #16DB93;
+  text-shadow: 0 0 8px rgba(22, 219, 147, 0.3);
 }
 
 .features {
@@ -274,22 +290,28 @@ body {
 }
 
 .features li {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin-bottom: 15px;
+  display: inline-block;
+  padding: 12px 24px;
+  background: rgba(22, 219, 147, 0.1);
+  border: 2px solid #16DB93;
+  border-radius: 50px;
+  color: #16DB93;
   font-size: 16px;
+  font-weight: 500;
   text-align: center;
+  transition: var(--transition);
+}
+
+.features li:hover {
+  background: rgba(22, 219, 147, 0.2);
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(22, 219, 147, 0.3);
 }
 
 /* Find Funju Section - Mobile First */
 .find-funju {
   padding: 60px 0;
-  background: linear-gradient(
-    135deg,
-    var(--bg-light) 0%,
-    var(--bg-lighter) 100%
-  );
+  background: #1A1A2E;
 }
 
 .find-container {
@@ -312,7 +334,8 @@ body {
   font-size: clamp(1.8rem, 6vw, 2.2rem);
   font-weight: 800;
   margin-bottom: 15px;
-  color: var(--text-dark);
+  color: #16DB93;
+  text-shadow: 0 0 8px rgba(22, 219, 147, 0.3);
   text-align: center;
 }
 
@@ -360,7 +383,7 @@ body {
 /* Event Section - Mobile First */
 .events {
   padding: 60px 0;
-  background: var(--bg-white);
+  background: #1A1A2E;
   overflow: hidden;
 }
 
@@ -375,7 +398,8 @@ body {
   font-weight: 800;
   text-align: center;
   margin-bottom: 40px;
-  color: var(--text-dark);
+  color: #16DB93;
+  text-shadow: 0 0 10px rgba(22, 219, 147, 0.5);
 }
 
 .events-grid {
@@ -489,7 +513,7 @@ body {
 /* Fans Section - Mobile First (Masonry on Desktop) */
 .fans {
   padding: 60px 0;
-  background: var(--bg-light);
+  background: #1A1A2E;
 }
 
 .fans-container {
@@ -503,7 +527,8 @@ body {
   font-weight: 800;
   text-align: center;
   margin-bottom: 40px;
-  color: var(--text-dark);
+  color: #16DB93;
+  text-shadow: 0 0 10px rgba(22, 219, 147, 0.5);
 }
 
 .fans-grid {
@@ -528,7 +553,7 @@ body {
 
 /* Footer - Mobile First */
 .footer {
-  background: var(--text-dark);
+  background: #1A1A2E;
   color: white;
   padding: 40px 0 20px;
 }
@@ -684,14 +709,30 @@ body {
   }
 
   .product-container {
-    grid-template-columns: 1fr 1fr;
+    width: 100%;
+    display: grid;
+    grid-template-columns: auto 1fr;
     text-align: left;
-    gap: 60px;
+    gap: 80px;
+    padding: 0 40px 0 40px;
+  }
+
+  .product-info {
+    justify-self: start;
+    max-width: 650px;
+    padding-right: 40px;
   }
 
   .product-visual {
+    width: auto;
     height: 400px;
-    max-width: none;
+    max-width: 723px;
+  }
+
+  .product-video {
+    height: 400px;
+    width: auto;
+    max-width: 723px;
   }
 
   .bottle-3d {
@@ -780,7 +821,16 @@ body {
   }
 
   .product-container {
+    width: 100%;
+    grid-template-columns: auto 1fr;
     gap: 80px;
+    padding: 0 40px 0 40px;
+  }
+
+  .product-info {
+    justify-self: start;
+    max-width: 650px;
+    padding-right: 40px;
   }
 
   .bottle-3d {
@@ -828,12 +878,15 @@ body {
 /* Large Desktop Styles */
 @media (min-width: 1440px) {
   .header-content,
-  .product-container,
   .find-container,
   .events-container,
   .reviews-container,
   .footer-container {
     max-width: 1400px;
+  }
+
+  .product-container {
+    width: 100%;
   }
 }
 

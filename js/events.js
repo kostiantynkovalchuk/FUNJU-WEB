@@ -125,18 +125,7 @@ class Events {
     setTimeout(() => modal.remove(), 300);
 
     // Show success message
-    showNotification(
-      "🎉 You're IN! Check your email for event details and your FREE welcome drink voucher!",
-      "success"
-    );
-
-    // Follow-up notification
-    setTimeout(() => {
-      showNotification(
-        "💡 Follow us @funju_ukraine for exclusive behind-the-scenes content!",
-        "info"
-      );
-    }, 4000);
+    alert("🎉 You're IN! Check your email for event details and your FREE welcome drink voucher!");
   }
 }
 

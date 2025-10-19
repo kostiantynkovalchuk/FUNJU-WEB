@@ -127,18 +127,6 @@ class Marketing {
 
     // Update map with store locations
     this.updateStoreMap(userData.city);
-
-    // Show success message
-    showNotification(
-      "🎉 Amazing! Check your email for your personal discount code and party invitations!",
-      "success"
-    );
-
-    // Auto-scroll to events section
-    setTimeout(() => {
-      document.getElementById("events").scrollIntoView({ behavior: "smooth" });
-      showNotification("👇 Ready for exclusive Funju experiences?", "info");
-    }, 3000);
   }
 
   updateStoreMap(city) {
@@ -249,10 +237,7 @@ class Marketing {
     const email = this.newsletterEmail.value.trim();
 
     if (!email) {
-      showNotification(
-        "💌 Please enter your email to join the Funju family!",
-        "error"
-      );
+      alert("Please enter your email to join the Funju family!");
       return;
     }
 
@@ -260,72 +245,28 @@ class Marketing {
       trackEvent("newsletter_signup", { email: email });
     }
 
-    showNotification(
-      "🎉 Welcome to the family! Check your email for your welcome gift!",
-      "success"
-    );
-
     // Clear input
     this.newsletterEmail.value = "";
 
-    // Follow-up notification
-    setTimeout(() => {
-      showNotification(
-        "📱 Follow @funju_ukraine for daily party inspiration!",
-        "info"
-      );
-    }, 3000);
+    alert("🎉 Welcome to the family! Check your email for your welcome gift!");
   }
 
   initScrollTriggers() {
-    let hasTriggeredInterest = false;
-    let hasTriggeredDesire = false;
-    let hasTriggeredAction = false;
-
+    // Scroll triggers disabled - no automatic notifications
     window.addEventListener("scroll", () => {
       const scrollPercent =
         (window.scrollY / (document.body.scrollHeight - window.innerHeight)) *
         100;
 
-      // INTEREST trigger (25% scroll)
-      if (scrollPercent > 25 && !hasTriggeredInterest) {
-        hasTriggeredInterest = true;
-        setTimeout(() => {
-          showNotification(
-            "🇰🇷 Did you know? Funju uses traditional Korean distillation methods!",
-            "info"
-          );
-        }, 1000);
+      // Track scroll events without notifications
+      if (scrollPercent > 25 && typeof trackEvent === "function") {
+        trackEvent("quarter_page_reached");
       }
-
-      // DESIRE trigger (50% scroll)
-      if (scrollPercent > 50 && !hasTriggeredDesire) {
-        hasTriggeredDesire = true;
-        if (typeof trackEvent === "function") {
-          trackEvent("middle_page_reached");
-        }
-        setTimeout(() => {
-          showNotification(
-            "💡 Pro tip: Use code FUNJU15 for 15% off your first bottle!",
-            "success"
-          );
-        }, 1500);
+      if (scrollPercent > 50 && typeof trackEvent === "function") {
+        trackEvent("middle_page_reached");
       }
-
-      // ACTION trigger (75% scroll)
-      if (scrollPercent > 75 && !hasTriggeredAction) {
-        hasTriggeredAction = true;
-        if (typeof trackEvent === "function") {
-          trackEvent("bottom_page_reached");
-        }
-        setTimeout(() => {
-          if (!document.querySelector(".modal-overlay")) {
-            showNotification(
-              "🔥 Ready to join the Funju experience? Tap the Buy button!",
-              "info"
-            );
-          }
-        }, 2000);
+      if (scrollPercent > 75 && typeof trackEvent === "function") {
+        trackEvent("bottom_page_reached");
       }
     });
   }
