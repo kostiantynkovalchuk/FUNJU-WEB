@@ -1052,9 +1052,7 @@ body {
   right: 20px;
   width: 70px;
   height: 70px;
-  background: rgba(22, 219, 147, 0.15);
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
+  background: #0A3A5C;
   border-radius: 50%;
   box-shadow:
     0 0 20px rgba(22, 219, 147, 0.7),
