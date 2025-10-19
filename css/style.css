@@ -1050,23 +1050,53 @@ body {
   position: fixed;
   bottom: 20px;
   right: 20px;
-  width: 60px;
-  height: 60px;
-  background: var(--primary-gradient);
-  color: white;
+  width: 70px;
+  height: 70px;
+  background: rgba(22, 219, 147, 0.15);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
   border-radius: 50%;
-  box-shadow: 0 5px 20px rgba(102, 126, 234, 0.4);
+  box-shadow:
+    0 0 20px rgba(22, 219, 147, 0.7),
+    0 0 40px rgba(22, 219, 147, 0.5),
+    0 8px 25px rgba(0, 0, 0, 0.4);
+  border: 3px solid #16DB93;
   z-index: 999;
   display: flex;
   align-items: center;
   justify-content: center;
   text-decoration: none;
-  font-size: 24px;
+  font-size: 32px;
   transition: var(--transition);
+  animation: greenCartPulse 3s ease-in-out infinite alternate;
+  filter: drop-shadow(0 0 8px rgba(22, 219, 147, 0.8));
+}
+
+@keyframes greenCartPulse {
+  0%, 100% {
+    box-shadow:
+      0 0 20px rgba(22, 219, 147, 0.7),
+      0 0 40px rgba(22, 219, 147, 0.5),
+      0 8px 25px rgba(0, 0, 0, 0.4);
+    border-color: rgba(22, 219, 147, 0.9);
+    transform: scale(1);
+  }
+  50% {
+    box-shadow:
+      0 0 25px rgba(22, 219, 147, 0.9),
+      0 0 50px rgba(22, 219, 147, 0.7),
+      0 8px 25px rgba(0, 0, 0, 0.4);
+    border-color: rgba(22, 219, 147, 1);
+    transform: scale(1.05);
+  }
 }
 
 .sticky-buy:hover {
-  transform: scale(1.1);
+  transform: scale(1.15);
+  box-shadow:
+    0 0 30px rgba(22, 219, 147, 1),
+    0 0 60px rgba(22, 219, 147, 0.8),
+    0 10px 30px rgba(0, 0, 0, 0.5);
 }
 
 /* Animations */
