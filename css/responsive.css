@@ -252,12 +252,8 @@ body {
     0 0 40px rgba(230, 57, 70, 0.4),
     0 10px 40px rgba(0, 0, 0, 0.3);
   animation: neonBorderPulse 3s ease-in-out infinite alternate;
-}
-
-.product-visual::after {
-  content: '';
-  display: block;
-  clear: both;
+  font-size: 0;
+  line-height: 0;
 }
 
 .product-video {
@@ -265,8 +261,7 @@ body {
   height: auto;
   display: block;
   border-radius: 20px;
-  margin: 0;
-  padding: 0;
+  vertical-align: top;
 }
 
 .bottle-3d {
