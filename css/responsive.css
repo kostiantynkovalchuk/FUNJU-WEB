@@ -959,18 +959,7 @@ body {
 
 @media (max-width: 600px) {
   .cta-buy {
-    font-size: 0.7rem;
-    font-weight: 500;
-    padding: 0.5em 1em;
-    border-radius: 1em;
-    min-width: 70px;
-    max-width: 70vw;
-    height: 32px;
-    line-height: 32px;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    vertical-align: middle;
+    display: none;
   }
   .lang-switcher span {
     height: 32px;
