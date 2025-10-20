@@ -20,9 +20,12 @@ body {
   position: fixed;
   top: 0;
   width: 100%;
-  background: rgba(255, 255, 255, 0.98);
+  background: rgba(26, 26, 46, 0.85);
   backdrop-filter: blur(20px);
-  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+  -webkit-backdrop-filter: blur(20px);
+  border-bottom: 1px solid;
+  border-image: linear-gradient(90deg, rgba(22, 219, 147, 0.2), transparent) 1;
+  box-shadow: 0 0 10px rgba(22, 219, 147, 0.08), 0 4px 20px rgba(0, 0, 0, 0.3);
   z-index: 1000;
   transition: var(--transition);
 }
@@ -38,10 +41,11 @@ body {
 .logo {
   font-weight: 800;
   font-size: 22px;
-  background: var(--primary-gradient);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
+  color: #E63946;
+  text-shadow:
+    0 0 10px rgba(230, 57, 70, 0.6),
+    0 0 20px rgba(230, 57, 70, 0.4);
+  margin-right: 0;
 }
 
 /* Mobile Navigation - Hidden by default, hamburger menu */
@@ -51,12 +55,10 @@ body {
   top: 100%;
   left: 0;
   width: 100%;
-  background: rgba(255, 255, 255, 0.98);
-  backdrop-filter: blur(20px);
+  background: none;
   flex-direction: column;
   padding: 20px;
   gap: 20px;
-  box-shadow: var(--shadow-medium);
 }
 
 .nav.active {
@@ -65,12 +67,22 @@ body {
 
 .nav a {
   text-decoration: none;
-  color: var(--text-dark);
-  font-weight: 500;
-  font-size: 18px;
+  color: rgba(255, 255, 255, 0.85);
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 600;
+  font-size: 16px;
+  letter-spacing: 0.8px;
+  text-transform: uppercase;
   padding: 10px;
   transition: var(--transition);
   text-align: center;
+  border-radius: 8px;
+}
+
+.nav a:hover {
+  color: #16DB93;
+  background: rgba(22, 219, 147, 0.1);
+  text-shadow: 0 0 10px rgba(22, 219, 147, 0.5);
 }
 
 /* Hamburger Menu */
@@ -86,7 +98,8 @@ body {
 .hamburger span {
   width: 25px;
   height: 3px;
-  background: var(--text-dark);
+  background: #16DB93;
+  box-shadow: 0 0 5px rgba(22, 219, 147, 0.5);
   margin: 3px 0;
   transition: 0.3s;
   border-radius: 2px;
@@ -664,6 +677,7 @@ body {
 
   .logo {
     font-size: 26px;
+    margin-right: 40px;
   }
 
   .hamburger {
