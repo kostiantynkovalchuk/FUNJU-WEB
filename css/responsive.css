@@ -253,8 +253,16 @@ body {
   text-align: center;
 }
 
-.product-info {
-  order: -1;
+.product-heading {
+  font-size: clamp(2rem, 8vw, 2.5rem);
+  font-weight: 800;
+  margin-bottom: 0;
+  color: #16DB93;
+  text-shadow: 0 0 8px rgba(22, 219, 147, 0.3);
+}
+
+.product-info h2 {
+  display: none;
 }
 
 .product-container .product-visual {
@@ -745,11 +753,23 @@ body {
     padding: 0 40px 0 40px;
   }
 
+  .product-heading {
+    display: none;
+  }
+
   .product-info {
     justify-self: start;
     max-width: 650px;
     padding-right: 40px;
-    order: 0;
+  }
+
+  .product-info h2 {
+    display: block;
+    font-size: 3rem;
+    font-weight: 800;
+    margin-bottom: 30px;
+    color: #16DB93;
+    text-shadow: 0 0 10px rgba(22, 219, 147, 0.5);
   }
 
   .product-visual {
