@@ -253,6 +253,10 @@ body {
   text-align: center;
 }
 
+.product-info {
+  order: -1;
+}
+
 .product-container .product-visual {
   align-self: center;
 }
@@ -745,6 +749,7 @@ body {
     justify-self: start;
     max-width: 650px;
     padding-right: 40px;
+    order: 0;
   }
 
   .product-visual {
