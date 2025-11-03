@@ -53,17 +53,14 @@ class Marketing {
     modal.innerHTML = `
             <div class="modal-content">
                 <button class="modal-close">&times;</button>
-                <h2 style="margin-bottom: 15px; color: #333;">🚀 Get Funju Now!</h2>
-                <p style="color: #666; margin-bottom: 25px; font-size: 14px;">⚡ Limited stock available at these locations</p>
+                <h2 style="margin-bottom: 15px; color: #333;">🚀 Купити Funju зараз!</h2>
+                <p style="color: #666; margin-bottom: 25px; font-size: 14px;">⚡ Замовте Funju онлайн з доставкою додому</p>
                 <div style="display: flex; flex-direction: column; gap: 12px;">
-                    <button class="store-btn" data-store="silpo">🏪 Silpo - Available Now</button>
-                    <button class="store-btn" data-store="auchan">🛒 Auchan - In Stock</button>
-                    <button class="store-btn" data-store="novus">🏬 Novus - Order Online</button>
-                    <div style="margin: 15px 0; padding: 10px; background: #f0f8ff; border-radius: 8px; border-left: 4px solid #667eea;">
-                        <small style="color: #667eea; font-weight: 600;">💎 Use code FUNJU15 for 15% off your first purchase!</small>
-                    </div>
+                    <a href="https://rozetka.com.ua/ua/vodka/c4649154/producer=funju/" target="_blank" class="store-btn" style="text-decoration: none; display: block; text-align: center; padding: 15px 20px; background: linear-gradient(45deg, #4CAF50, #45a049); color: white; border: none; border-radius: 12px; font-weight: 600; font-size: 16px; cursor: pointer; transition: all 0.3s;">
+                        🛒 ROZETKA - В наявності
+                    </a>
                 </div>
-                <button class="btn-secondary" style="margin-top: 15px; width: 100%;">Maybe Later</button>
+                <button class="btn-secondary" style="margin-top: 15px; width: 100%;">Може пізніше</button>
             </div>
         `;
 
@@ -74,7 +71,6 @@ class Marketing {
   bindPurchaseModalEvents(modal) {
     const closeBtn = modal.querySelector(".modal-close");
     const laterBtn = modal.querySelector(".btn-secondary");
-    const storeBtns = modal.querySelectorAll(".store-btn");
 
     const closeModal = () => {
       modal.style.animation = "slideDown 0.3s ease";
@@ -83,14 +79,6 @@ class Marketing {
 
     closeBtn.addEventListener("click", closeModal);
     laterBtn.addEventListener("click", closeModal);
-
-    storeBtns.forEach((btn) => {
-      btn.addEventListener("click", () => {
-        const store = btn.getAttribute("data-store");
-        this.redirectToStore(store);
-        closeModal();
-      });
-    });
 
     modal.addEventListener("click", (e) => {
       if (e.target === modal) closeModal();
