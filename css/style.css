@@ -794,7 +794,7 @@ body {
 }
 
 .fans-container {
-  max-width: 1200px;
+  max-width: 1400px;
   margin: 0 auto;
   padding: 0 20px;
 }
@@ -809,8 +809,7 @@ body {
 }
 
 .fans-grid {
-  column-count: 3;
-  column-gap: 20px;
+  /* Base removed - responsive.css handles all breakpoints */
   margin-bottom: 40px;
 }
 
@@ -974,6 +973,185 @@ body {
 
 .share-moment {
   text-align: center;
+}
+
+/* Social Media Cards */
+.social-card {
+  background: var(--bg-white);
+  border-radius: 15px;
+  padding: 20px;
+  box-shadow: var(--shadow-light);
+  break-inside: avoid;
+  margin-bottom: 20px;
+  display: inline-block;
+  width: 100%;
+  transition: var(--transition);
+}
+
+.social-card:hover {
+  transform: translateY(-5px);
+  box-shadow: var(--shadow-medium);
+}
+
+.social-header {
+  display: flex;
+  align-items: center;
+  margin-bottom: 15px;
+}
+
+.social-avatar {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  margin-right: 15px;
+  flex-shrink: 0;
+}
+
+.instagram-avatar {
+  background: linear-gradient(
+    45deg,
+    #f09433 0%,
+    #e6683c 25%,
+    #dc2743 50%,
+    #cc2366 75%,
+    #bc1888 100%
+  );
+}
+
+.tiktok-avatar {
+  background: linear-gradient(45deg, #00f2ea 0%, #ff0050 50%, #000000 100%);
+}
+
+.social-info h4 {
+  margin-bottom: 5px;
+  color: var(--text-dark);
+  font-size: 1rem;
+  font-weight: 600;
+}
+
+.social-info span {
+  color: var(--text-light);
+  font-size: 0.85rem;
+  font-weight: 500;
+}
+
+/* Social Media Placeholder */
+.social-media-placeholder {
+  position: relative;
+  width: 100%;
+  min-height: 280px;
+  border-radius: 12px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 15px;
+  cursor: pointer;
+  transition: var(--transition);
+  overflow: hidden;
+}
+
+.instagram-placeholder {
+  background: linear-gradient(135deg, #f09433 0%, #e6683c 50%, #dc2743 100%);
+}
+
+.tiktok-placeholder {
+  background: linear-gradient(135deg, #00f2ea 0%, #ff0050 50%, #000000 100%);
+}
+
+.social-media-placeholder:hover {
+  transform: scale(1.02);
+}
+
+.placeholder-icon {
+  font-size: 4rem;
+  filter: drop-shadow(0 4px 10px rgba(0, 0, 0, 0.3));
+}
+
+.social-media-placeholder p {
+  color: white;
+  font-size: 1.1rem;
+  font-weight: 700;
+  margin: 0;
+  text-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+}
+
+.view-post-btn {
+  padding: 12px 24px;
+  background: rgba(255, 255, 255, 0.95);
+  color: #333;
+  border: none;
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 0.9rem;
+  text-decoration: none;
+  transition: all 0.3s;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+}
+
+.view-post-btn:hover {
+  background: white;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+}
+
+/* Randomize card heights for masonry effect */
+.social-card:nth-child(1) .social-media-placeholder {
+  min-height: 320px;
+}
+
+.social-card:nth-child(2) .social-media-placeholder {
+  min-height: 250px;
+}
+
+.social-card:nth-child(3) .social-media-placeholder {
+  min-height: 380px;
+}
+
+.social-card:nth-child(4) .social-media-placeholder {
+  min-height: 290px;
+}
+
+.social-card:nth-child(5) .social-media-placeholder {
+  min-height: 350px;
+}
+
+.social-card:nth-child(6) .social-media-placeholder {
+  min-height: 270px;
+}
+
+/* Instagram Embed Fixes for Masonry */
+.social-card .instagram-media,
+.social-card .instagram-media iframe {
+  max-width: 100% !important;
+  min-width: 100% !important;
+  width: 100% !important;
+  margin: 0 !important;
+}
+
+/* TikTok Embed Fixes for Masonry */
+.social-card .tiktok-embed,
+.social-card .tiktok-embed iframe {
+  max-width: 100% !important;
+  min-width: 100% !important;
+  width: 100% !important;
+  margin: 0 !important;
+}
+
+/* Hide Instagram "View this post" external wrapper */
+.social-card blockquote {
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
+/* Force social cards to respect masonry column width */
+.social-card,
+.social-card * {
+  box-sizing: border-box !important;
+}
+
+.social-card > * {
+  max-width: 100% !important;
 }
 
 /* Footer */
