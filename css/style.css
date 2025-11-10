@@ -785,8 +785,8 @@ body {
 
 /* Video placeholder for events */
 
-/* Fans Section - Masonry Layout */
-.fans {
+/* Moments Section - Masonry Layout */
+.moments {
   padding: 100px 0;
   background: #1A1A2E;
 }
@@ -797,7 +797,7 @@ body {
   padding: 0 20px;
 }
 
-.fans h2 {
+.moments h2 {
   font-size: 3rem;
   font-weight: 800;
   text-align: center;

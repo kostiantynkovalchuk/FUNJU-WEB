@@ -545,8 +545,8 @@ body {
   box-shadow: var(--shadow-medium);
 }
 
-/* Fans Section - Mobile First (Masonry on Desktop) */
-.fans {
+/* Moments Section - Mobile First (Masonry on Desktop) */
+.moments {
   padding: 60px 0;
   background: #1A1A2E;
 }
@@ -557,7 +557,7 @@ body {
   padding: 0 15px;
 }
 
-.fans h2 {
+.moments h2 {
   font-size: clamp(2rem, 8vw, 2.5rem);
   font-weight: 800;
   text-align: center;
