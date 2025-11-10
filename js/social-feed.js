@@ -10,15 +10,39 @@ class SocialFeed {
     this.posts = [
       {
         type: "tiktok",
-        url: "https://www.tiktok.com/@funju.soju/photo/7568434400984173836",
-      },
-      {
-        type: "tiktok",
-        url: "https://www.tiktok.com/@funju.soju/video/7565908769037700408",
+        url: "https://www.tiktok.com/@slesariusss/video/7565118925277580600",
       },
       {
         type: "instagram",
-        url: "https://www.instagram.com/p/DQmMQKVCEn4/",
+        url: "https://www.instagram.com/reel/DQCaP03DF6k/",
+      },
+      {
+        type: "tiktok",
+        url: "https://www.tiktok.com/@lessyk_inst/video/7568907598938869003",
+      },
+      {
+        type: "instagram",
+        url: "https://www.instagram.com/reel/DQJMwjgjLtY/",
+      },
+      {
+        type: "instagram",
+        url: "https://www.instagram.com/reel/DQb1GQZDBVn/",
+      },
+      {
+        type: "tiktok",
+        url: "https://www.tiktok.com/@sviiiiy/video/7565947315932925196",
+      },
+      {
+        type: "instagram",
+        url: "https://www.instagram.com/reel/DQEztMRCmZ9/",
+      },
+      {
+        type: "tiktok",
+        url: "https://www.tiktok.com/@xyda_ja_sterva/video/7563294418929847608",
+      },
+      {
+        type: "tiktok",
+        url: "https://www.tiktok.com/@xrama.soma/video/7564444213828439307",
       },
     ];
 
@@ -64,7 +88,8 @@ class SocialFeed {
     const header = document.createElement("div");
     header.className = "social-header";
 
-    const avatarClass = type === "instagram" ? "instagram-avatar" : "tiktok-avatar";
+    const avatarClass =
+      type === "instagram" ? "instagram-avatar" : "tiktok-avatar";
     const platformName = type === "instagram" ? "Instagram" : "TikTok";
 
     header.innerHTML = `
@@ -154,11 +179,11 @@ class SocialFeed {
 
     // Force masonry reflow after embeds load
     setTimeout(() => {
-      const grid = document.querySelector('.fans-grid');
+      const grid = document.querySelector(".fans-grid");
       if (grid) {
-        grid.style.display = 'none';
+        grid.style.display = "none";
         grid.offsetHeight; // Force reflow
-        grid.style.display = '';
+        grid.style.display = "";
       }
     }, 1000);
   }
