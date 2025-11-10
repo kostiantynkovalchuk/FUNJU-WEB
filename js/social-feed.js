@@ -95,7 +95,6 @@ class SocialFeed {
     header.innerHTML = `
       <div class="social-avatar ${avatarClass}"></div>
       <div class="social-info">
-        <h4>@funju.soju</h4>
         <span>${platformName}</span>
       </div>
     `;
