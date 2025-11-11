@@ -594,6 +594,10 @@ body {
   font-size: 18px;
 }
 
+.footer-section p {
+  margin-bottom: 20px;
+}
+
 .social-icons {
   display: flex;
   gap: 10px;
