@@ -1255,7 +1255,7 @@ body {
 .social-icon {
   width: 40px;
   height: 40px;
-  background: rgba(255, 255, 255, 0.1);
+  background: var(--primary-color);
   border-radius: 50%;
   display: flex;
   align-items: center;
@@ -1272,18 +1272,8 @@ body {
 
 .social-icon:hover {
   transform: translateY(-3px);
-}
-
-.social-icon-instagram:hover {
-  background: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%);
-}
-
-.social-icon-tiktok:hover {
-  background: #000000;
-}
-
-.social-icon-youtube:hover {
-  background: #FF0000;
+  background: var(--primary-gradient);
+  box-shadow: 0 0 20px rgba(230, 57, 70, 0.6);
 }
 
 .newsletter {
