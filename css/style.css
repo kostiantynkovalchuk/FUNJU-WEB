@@ -814,7 +814,9 @@ body {
 }
 
 .fans-grid {
-  /* Base removed - responsive.css handles all breakpoints */
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
   margin-bottom: 40px;
 }
 
