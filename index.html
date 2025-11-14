@@ -9,6 +9,9 @@
     <link rel="stylesheet" href="css/style.css" />
     <link rel="stylesheet" href="css/responsive.css" />
 
+    <!-- Leaflet CSS for Maps -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+
     <!-- Preload critical resources -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -100,42 +103,85 @@
     <section class="find-funju" id="find">
       <div class="find-container">
         <h2>📍 Знайди Funju поруч</h2>
-        <div class="find-grid">
-          <div class="find-form">
-            <p>Введи свої дані, і ми покажемо найближчі магазини з Funju!</p>
-            <form id="findForm">
-              <div class="form-group">
-                <input
-                  type="text"
-                  class="form-input"
-                  placeholder="Ваше ім'я"
-                  required
-                />
-              </div>
-              <div class="form-group">
-                <input
-                  type="text"
-                  class="form-input"
-                  placeholder="Ваше місто (наприклад, Київ)"
-                  required
-                />
-              </div>
-              <div class="form-group">
-                <input
-                  type="email"
-                  class="form-input"
-                  placeholder="Ваш Email"
-                  required
-                />
-              </div>
-              <button type="submit" class="btn btn-primary">
-                Знайти Funju
-              </button>
-            </form>
+
+        <!-- Success Message -->
+        <div class="success-message" id="successMessage">
+          <span>✅</span>
+          <span id="successText"></span>
+        </div>
+
+        <!-- Map Container -->
+        <div class="map-container">
+          <div id="storeMap"></div>
+
+          <!-- Form Overlay -->
+          <div class="map-overlay" id="mapOverlay">
+            <div class="form-card">
+              <h3>🎁 Знайди свій Funju</h3>
+              <p>Введи свої дані та знайди найближчі магазини з Funju на карті!</p>
+
+              <form id="findForm">
+                <div class="form-group">
+                  <label class="form-label">Твоє ім'я</label>
+                  <input
+                    type="text"
+                    class="form-input"
+                    id="userName"
+                    placeholder="Олександр"
+                    required
+                  />
+                </div>
+
+                <div class="form-group">
+                  <label class="form-label">Твоє місто</label>
+                  <select class="form-input" id="userCity" required>
+                    <option value="">Обери місто...</option>
+                    <option value="Київ">Київ</option>
+                    <option value="Львів">Львів</option>
+                    <option value="Одеса">Одеса</option>
+                    <option value="Тернопіль">Тернопіль</option>
+                    <option value="Полтава">Полтава</option>
+                    <option value="Запоріжжя">Запоріжжя</option>
+                    <option value="Турка">Турка</option>
+                    <option value="Стебник">Стебник</option>
+                    <option value="Стрий">Стрий</option>
+                    <option value="Новояворівськ">Новояворівськ</option>
+                  </select>
+                </div>
+
+                <div class="form-group">
+                  <label class="form-label">Твій Email</label>
+                  <input
+                    type="email"
+                    class="form-input"
+                    id="userEmail"
+                    placeholder="example@email.com"
+                    required
+                  />
+                </div>
+
+                <button type="submit" class="btn btn-primary" id="submitBtn">
+                  🔍 Знайти магазини
+                </button>
+
+                <div class="privacy-note">
+                  🔒 Ми поважаємо твою приватність. Твої дані використовуються тільки для показу найближчих магазинів.
+                </div>
+              </form>
+            </div>
           </div>
-          <div class="map-placeholder" id="storeMap">
-            Інтерактивна карта з'явиться тут
-          </div>
+
+          <!-- My Location Button -->
+          <button class="location-btn" id="locationBtn">
+            <span>📍</span>
+            <span>Моя локація</span>
+          </button>
+        </div>
+
+        <!-- Store Info Panel -->
+        <div class="store-panel" id="storePanel">
+          <h3>📍 Найближчий магазин</h3>
+          <div class="store-info" id="storeInfo"></div>
         </div>
       </div>
     </section>
@@ -463,6 +509,15 @@
     <script src="js/marketing.js"></script>
     <script src="js/social-feed.js"></script>
     <script src="js/app.js"></script>
+
+    <!-- Leaflet JS for Maps -->
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+
+    <!-- Supabase JS -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+    <!-- Store Finder -->
+    <script src="js/store-finder.js"></script>
 
     <!-- Instagram Embed Script -->
     <script async src="https://www.instagram.com/embed.js"></script>

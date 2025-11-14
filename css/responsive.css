@@ -358,28 +358,32 @@ body {
   padding: 0 15px;
 }
 
-.find-form {
-  background: var(--bg-white);
+.form-card {
   padding: 30px 20px;
-  border-radius: var(--border-radius-lg);
-  box-shadow: var(--shadow-medium);
 }
 
-.find-form h2 {
-  font-size: 40px;
-  font-weight: 800;
-  margin-bottom: 15px;
-  color: #16DB93;
-  text-shadow: 0 0 8px rgba(22, 219, 147, 0.3);
-  text-align: center;
+.form-card h3 {
+  font-size: 22px;
 }
 
-.find-form p {
-  text-align: center;
-  color: var(--text-light);
-  margin-bottom: 25px;
+#storeMap {
+  height: 350px;
+}
+
+.location-btn {
+  bottom: 10px;
+  right: 10px;
+  padding: 12px 20px;
   font-size: 14px;
-  line-height: 1.5;
+}
+
+.store-panel {
+  padding: 20px;
+}
+
+.success-message {
+  font-size: 14px;
+  padding: 12px 15px;
 }
 
 .form-group {
