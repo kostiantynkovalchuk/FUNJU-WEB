@@ -207,6 +207,11 @@ function trackEvent(eventName, properties = {}) {
 
 // Example backend integration
 function sendToBackend(eventData) {
+  // Skip analytics when running locally (file:// protocol)
+  if (window.location.protocol === 'file:') {
+    return;
+  }
+
   // This would be your actual backend endpoint
   const endpoint = "/api/analytics";
 
