@@ -262,20 +262,26 @@ document.getElementById('findForm').addEventListener('submit', async function(e)
 
             // Hide form (no scroll to keep success message visible)
             document.getElementById('formCard').style.display = 'none';
+
+            // Stop spinner
+            submitBtn.innerHTML = originalText;
+            submitBtn.disabled = false;
           }
         }, 200);
       } else {
         // Desktop or map already initialized
-        setTimeout(() => {
-          if (map) {
-            map.invalidateSize();
+        if (map) {
+          map.invalidateSize();
 
-            // Zoom to city and show stores
-            const cityCenter = [cityStores[0].lat, cityStores[0].lng];
-            map.setView(cityCenter, 12);
-            displayStoresOnMap(cityStores);
-          }
-        }, 100);
+          // Zoom to city and show stores
+          const cityCenter = [cityStores[0].lat, cityStores[0].lng];
+          map.setView(cityCenter, 12);
+          displayStoresOnMap(cityStores);
+
+          // Stop spinner
+          submitBtn.innerHTML = originalText;
+          submitBtn.disabled = false;
+        }
       }
 
       // Show "My Location" button
@@ -357,14 +363,17 @@ document.getElementById('locationBtn').addEventListener('click', function() {
 // INITIALIZATION
 // ============================================
 
-window.addEventListener('load', function() {
+// Use DOMContentLoaded instead of 'load' for faster initialization
+document.addEventListener('DOMContentLoaded', function() {
   // Only initialize map on desktop (where it's visible)
   // On mobile, we'll initialize it when the form is submitted
   if (window.innerWidth >= 768) {
+    // Initialize immediately, don't wait
     initMap();
-    setTimeout(() => {
+    // Invalidate size after a short delay to ensure container is rendered
+    requestAnimationFrame(() => {
       map.invalidateSize();
-    }, 100);
+    });
   }
 
   console.log('Funju Store Finder loaded successfully');

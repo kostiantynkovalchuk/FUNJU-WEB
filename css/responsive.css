@@ -721,10 +721,13 @@ body {
   }
 
   .hero {
-    display: grid;
+    padding: 100px 0 100px;
+  }
+
+  .hero-wrapper {
     grid-template-columns: 1fr 1fr;
-    padding: 100px 20px 40px;
     gap: 30px;
+    padding: 0 20px;
   }
 
   .hero-content {
@@ -741,23 +744,38 @@ body {
   }
 
   /* Find Section - Desktop: Show grid layout */
+  .find-container {
+    padding: 0 20px; /* Match other sections */
+  }
+
   .find-grid {
     display: grid;
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: 7fr 3fr; /* 70/30 ratio */
     gap: 30px;
+    align-items: stretch; /* Make both columns same height */
+    max-width: 100%; /* Don't overflow container */
   }
 
   /* Always show map on desktop */
   .map-container {
     display: block !important;
+    height: 100%; /* Match form height */
+    min-width: 0; /* Allow grid to shrink if needed */
   }
 
   #storeMap {
-    height: 500px;
+    height: 100%; /* Fill container */
+    min-height: 500px;
   }
 
   .form-card {
     padding: 40px;
+    height: 100%; /* Fill grid cell */
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    min-width: 0; /* Allow grid to shrink if needed */
+    box-sizing: border-box;
   }
 
   .btn {
@@ -820,23 +838,7 @@ body {
     height: 300px;
   }
 
-  .find-grid {
-    display: grid;
-    grid-template-columns: 1fr 1.2fr;
-    gap: 40px;
-  }
-
-  .find-form {
-    padding: 40px 30px;
-  }
-
-  .find-form p {
-    text-align: left;
-  }
-
-  .map-placeholder {
-    min-height: 350px;
-  }
+  /* Old find-grid styles removed - now handled in @media (min-width: 768px) */
 
   .events-grid {
     display: grid;
@@ -933,21 +935,7 @@ body {
     height: 400px;
   }
 
-  .find-grid {
-    display: grid;
-    grid-template-columns: 70% 30%;
-    gap: 40px;
-  }
-
-  .find-form {
-    order: 2;
-    padding: 30px 20px;
-  }
-
-  .map-placeholder {
-    order: 1;
-    min-height: 500px;
-  }
+  /* Old find-grid styles removed - now handled in @media (min-width: 768px) */
 
   .events-grid {
     grid-template-columns: repeat(3, 1fr);
@@ -994,6 +982,7 @@ body {
   .fans-container,
   .footer-container {
     max-width: 1400px;
+    margin: 0 auto;
   }
 
   .product-container {
