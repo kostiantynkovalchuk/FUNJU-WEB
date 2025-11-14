@@ -93,6 +93,26 @@ async function fetchStoresFromDatabase(city) {
   }
 }
 
+async function fetchAllStores() {
+  try {
+    const { data, error } = await supabase
+      .from('stores')
+      .select('*')
+      .eq('in_stock', true);
+
+    if (error) {
+      console.error('Supabase Error:', error);
+      return [];
+    }
+
+    console.log('All stores fetched from Supabase:', data?.length || 0);
+    return data;
+  } catch (err) {
+    console.error('Error fetching all stores:', err);
+    return [];
+  }
+}
+
 // ============================================
 // MAP FUNCTIONS
 // ============================================
@@ -100,8 +120,12 @@ async function fetchStoresFromDatabase(city) {
 function initMap() {
   map = L.map('storeMap', {
     zoomControl: true,
-    scrollWheelZoom: true,
-    dragging: true
+    scrollWheelZoom: false, // Disable scroll zoom initially
+    dragging: false, // Disable dragging initially
+    touchZoom: false, // Disable touch zoom initially
+    doubleClickZoom: false, // Disable double click zoom initially
+    boxZoom: false, // Disable box zoom initially
+    keyboard: false // Disable keyboard navigation initially
   }).setView([48.3794, 31.1656], 6); // Ukraine center
 
   L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
@@ -109,7 +133,26 @@ function initMap() {
     maxZoom: 19
   }).addTo(map);
 
-  console.log('Map initialized');
+  console.log('Map initialized (interactions disabled)');
+}
+
+function enableMapInteractions() {
+  if (map) {
+    map.scrollWheelZoom.enable();
+    map.dragging.enable();
+    map.touchZoom.enable();
+    map.doubleClickZoom.enable();
+    map.boxZoom.enable();
+    map.keyboard.enable();
+
+    // Remove disabled class from map container
+    const mapContainer = document.querySelector('.map-container');
+    if (mapContainer) {
+      mapContainer.classList.remove('disabled');
+    }
+
+    console.log('Map interactions enabled');
+  }
 }
 
 function displayStoresOnMap(stores, highlightNearest = false) {
@@ -260,6 +303,9 @@ document.getElementById('findForm').addEventListener('submit', async function(e)
             map.setView(cityCenter, 12);
             displayStoresOnMap(cityStores);
 
+            // Enable map interactions after form submission
+            enableMapInteractions();
+
             // Hide form (no scroll to keep success message visible)
             document.getElementById('formCard').style.display = 'none';
 
@@ -277,6 +323,9 @@ document.getElementById('findForm').addEventListener('submit', async function(e)
           const cityCenter = [cityStores[0].lat, cityStores[0].lng];
           map.setView(cityCenter, 12);
           displayStoresOnMap(cityStores);
+
+          // Enable map interactions after form submission
+          enableMapInteractions();
 
           // Stop spinner
           submitBtn.innerHTML = originalText;
@@ -364,7 +413,7 @@ document.getElementById('locationBtn').addEventListener('click', function() {
 // ============================================
 
 // Use DOMContentLoaded instead of 'load' for faster initialization
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', async function() {
   // Only initialize map on desktop (where it's visible)
   // On mobile, we'll initialize it when the form is submitted
   if (window.innerWidth >= 768) {
@@ -374,6 +423,19 @@ document.addEventListener('DOMContentLoaded', function() {
     requestAnimationFrame(() => {
       map.invalidateSize();
     });
+
+    // Add disabled class to map container initially
+    const mapContainer = document.querySelector('.map-container');
+    if (mapContainer) {
+      mapContainer.classList.add('disabled');
+    }
+
+    // Load and display all stores on the map (non-interactive)
+    const allStores = await fetchAllStores();
+    if (allStores && allStores.length > 0) {
+      displayStoresOnMap(allStores);
+      console.log(`Loaded ${allStores.length} stores on map (non-interactive)`);
+    }
   }
 
   console.log('Funju Store Finder loaded successfully');

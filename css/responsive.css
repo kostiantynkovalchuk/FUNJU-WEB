@@ -356,7 +356,7 @@ body {
 }
 
 .find-container h2 {
-  font-size: 32px;
+  font-size: 40px;
   margin-bottom: 20px;
 }
 
@@ -721,13 +721,13 @@ body {
   }
 
   .hero {
-    padding: 100px 0 100px;
+    padding: 160px 0 120px;
   }
 
   .hero-wrapper {
     grid-template-columns: 1fr 1fr;
     gap: 30px;
-    padding: 0 20px;
+    padding: 100px 20px 100px 20px;
   }
 
   .hero-content {
@@ -746,6 +746,10 @@ body {
   /* Find Section - Desktop: Show grid layout */
   .find-container {
     padding: 0 20px; /* Match other sections */
+  }
+
+  .find-container h2 {
+    margin-bottom: 60px; /* Match other sections */
   }
 
   .find-grid {
