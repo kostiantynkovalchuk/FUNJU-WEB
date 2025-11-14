@@ -352,22 +352,75 @@ body {
 .find-container {
   max-width: 1200px;
   margin: 0 auto;
-  display: flex;
-  flex-direction: column;
-  gap: 40px;
   padding: 0 15px;
 }
 
-.form-card {
-  padding: 30px 20px;
+.find-container h2 {
+  font-size: 32px;
+  margin-bottom: 20px;
 }
 
-.form-card h3 {
-  font-size: 22px;
+/* Mobile: Single column layout */
+.find-grid {
+  display: flex;
+  flex-direction: column-reverse; /* Form first, map second */
+  gap: 20px;
+  width: 100%;
+}
+
+/* Mobile: Hide map initially */
+.map-container {
+  display: none;
+  width: 100%;
+}
+
+/* Show map after form submission */
+.map-container.active {
+  display: block !important;
 }
 
 #storeMap {
-  height: 350px;
+  height: 400px;
+  min-height: 400px;
+  width: 100%;
+}
+
+.form-card {
+  padding: 25px 20px;
+}
+
+.form-card h3 {
+  font-size: 20px;
+}
+
+.form-card p {
+  font-size: 13px;
+}
+
+.form-group {
+  margin-bottom: 15px;
+}
+
+.form-label {
+  font-size: 13px;
+  margin-bottom: 6px;
+}
+
+.form-input {
+  width: 100%;
+  padding: 12px;
+  font-size: 16px;
+}
+
+.btn-primary {
+  padding: 14px 20px;
+  font-size: 15px;
+}
+
+.privacy-note {
+  margin-top: 12px;
+  padding: 10px;
+  font-size: 11px;
 }
 
 .location-btn {
@@ -384,39 +437,6 @@ body {
 .success-message {
   font-size: 14px;
   padding: 12px 15px;
-}
-
-.form-group {
-  margin-bottom: 20px;
-}
-
-.form-input {
-  width: 100%;
-  padding: 15px;
-  border: 2px solid var(--border-light);
-  border-radius: var(--border-radius);
-  font-size: 16px; /* Prevents zoom on iOS */
-  transition: var(--transition);
-  -webkit-appearance: none;
-}
-
-.form-input:focus {
-  outline: none;
-  border-color: var(--primary-color);
-}
-
-.map-placeholder {
-  background: var(--border-light);
-  border-radius: var(--border-radius-lg);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: var(--text-light);
-  font-size: 16px;
-  font-weight: 600;
-  min-height: 250px;
-  text-align: center;
-  padding: 20px;
 }
 
 /* Event Section - Mobile First */
@@ -718,6 +738,26 @@ body {
     flex-direction: row;
     max-width: 400px;
     gap: 20px;
+  }
+
+  /* Find Section - Desktop: Show grid layout */
+  .find-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 30px;
+  }
+
+  /* Always show map on desktop */
+  .map-container {
+    display: block !important;
+  }
+
+  #storeMap {
+    height: 500px;
+  }
+
+  .form-card {
+    padding: 40px;
   }
 
   .btn {

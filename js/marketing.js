@@ -25,8 +25,8 @@ class Marketing {
       });
     });
 
-    // Find form submission
-    this.findForm.addEventListener("submit", (e) => this.handleFindForm(e));
+    // Find form submission - Disabled (handled by store-finder.js)
+    // this.findForm.addEventListener("submit", (e) => this.handleFindForm(e));
 
     // Share moment
     this.shareButton.addEventListener("click", () => this.showShareModal());

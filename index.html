@@ -110,70 +110,71 @@
           <span id="successText"></span>
         </div>
 
-        <!-- Map Container -->
-        <div class="map-container">
-          <div id="storeMap"></div>
+        <!-- Find Grid (Map + Form) -->
+        <div class="find-grid">
+          <!-- Map Container -->
+          <div class="map-container">
+            <div id="storeMap"></div>
 
-          <!-- Form Overlay -->
-          <div class="map-overlay" id="mapOverlay">
-            <div class="form-card">
-              <h3>🎁 Знайди свій Funju</h3>
-              <p>Введи свої дані та знайди найближчі магазини з Funju на карті!</p>
-
-              <form id="findForm">
-                <div class="form-group">
-                  <label class="form-label">Твоє ім'я</label>
-                  <input
-                    type="text"
-                    class="form-input"
-                    id="userName"
-                    placeholder="Олександр"
-                    required
-                  />
-                </div>
-
-                <div class="form-group">
-                  <label class="form-label">Твоє місто</label>
-                  <select class="form-input" id="userCity" required>
-                    <option value="">Обери місто...</option>
-                    <option value="Львів">Львів</option>
-                    <option value="Тернопіль">Тернопіль</option>
-                    <option value="Запоріжжя">Запоріжжя</option>
-                    <option value="Полтава">Полтава</option>
-                    <option value="Турка">Турка</option>
-                    <option value="Стебник">Стебник</option>
-                    <option value="Стрий">Стрий</option>
-                    <option value="Новояворівськ">Новояворівськ</option>
-                  </select>
-                </div>
-
-                <div class="form-group">
-                  <label class="form-label">Твій Email</label>
-                  <input
-                    type="email"
-                    class="form-input"
-                    id="userEmail"
-                    placeholder="example@email.com"
-                    required
-                  />
-                </div>
-
-                <button type="submit" class="btn btn-primary" id="submitBtn">
-                  🔍 Знайти магазини
-                </button>
-
-                <div class="privacy-note">
-                  🔒 Ми поважаємо твою приватність. Твої дані використовуються тільки для показу найближчих магазинів.
-                </div>
-              </form>
-            </div>
+            <!-- My Location Button -->
+            <button class="location-btn" id="locationBtn">
+              <span>📍</span>
+              <span>Моя локація</span>
+            </button>
           </div>
 
-          <!-- My Location Button -->
-          <button class="location-btn" id="locationBtn">
-            <span>📍</span>
-            <span>Моя локація</span>
-          </button>
+          <!-- Form Card -->
+          <div class="form-card" id="formCard">
+            <h3>🎁 Знайди свій Funju</h3>
+            <p>Введи свої дані та знайди найближчі магазини з Funju на карті!</p>
+
+            <form id="findForm">
+              <div class="form-group">
+                <label class="form-label">Твоє ім'я</label>
+                <input
+                  type="text"
+                  class="form-input"
+                  id="userName"
+                  placeholder="Олександр"
+                  required
+                />
+              </div>
+
+              <div class="form-group">
+                <label class="form-label">Твоє місто</label>
+                <select class="form-input" id="userCity" required>
+                  <option value="">Обери місто...</option>
+                  <option value="Львів">Львів</option>
+                  <option value="Тернопіль">Тернопіль</option>
+                  <option value="Запоріжжя">Запоріжжя</option>
+                  <option value="Полтава">Полтава</option>
+                  <option value="Турка">Турка</option>
+                  <option value="Стебник">Стебник</option>
+                  <option value="Стрий">Стрий</option>
+                  <option value="Новояворівськ">Новояворівськ</option>
+                </select>
+              </div>
+
+              <div class="form-group">
+                <label class="form-label">Твій Email</label>
+                <input
+                  type="email"
+                  class="form-input"
+                  id="userEmail"
+                  placeholder="example@email.com"
+                  required
+                />
+              </div>
+
+              <button type="submit" class="btn btn-primary" id="submitBtn">
+                🔍 Знайти магазини
+              </button>
+
+              <div class="privacy-note">
+                🔒 Ми поважаємо твою приватність. Твої дані використовуються тільки для показу найближчих магазинів.
+              </div>
+            </form>
+          </div>
         </div>
 
         <!-- Store Info Panel -->

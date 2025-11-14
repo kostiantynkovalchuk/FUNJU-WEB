@@ -243,13 +243,40 @@ document.getElementById('findForm').addEventListener('submit', async function(e)
     cityStores = await fetchStoresFromDatabase(city);
 
     if (cityStores.length > 0) {
-      // Hide overlay
-      document.getElementById('mapOverlay').classList.add('hidden');
+      const isMobile = window.innerWidth < 768;
+      const mapContainer = document.querySelector('.map-container');
 
-      // Zoom to city and show stores
-      const cityCenter = [cityStores[0].lat, cityStores[0].lng];
-      map.setView(cityCenter, 12);
-      displayStoresOnMap(cityStores);
+      // Initialize map on mobile if not already initialized
+      if (isMobile && !map) {
+        mapContainer.classList.add('active');
+
+        // Wait for CSS to apply, then initialize map
+        setTimeout(() => {
+          initMap();
+
+          if (map) {
+            // Now zoom to city and show stores
+            const cityCenter = [cityStores[0].lat, cityStores[0].lng];
+            map.setView(cityCenter, 12);
+            displayStoresOnMap(cityStores);
+
+            // Hide form (no scroll to keep success message visible)
+            document.getElementById('formCard').style.display = 'none';
+          }
+        }, 200);
+      } else {
+        // Desktop or map already initialized
+        setTimeout(() => {
+          if (map) {
+            map.invalidateSize();
+
+            // Zoom to city and show stores
+            const cityCenter = [cityStores[0].lat, cityStores[0].lng];
+            map.setView(cityCenter, 12);
+            displayStoresOnMap(cityStores);
+          }
+        }, 100);
+      }
 
       // Show "My Location" button
       document.getElementById('locationBtn').classList.add('visible');
@@ -331,6 +358,14 @@ document.getElementById('locationBtn').addEventListener('click', function() {
 // ============================================
 
 window.addEventListener('load', function() {
-  initMap();
+  // Only initialize map on desktop (where it's visible)
+  // On mobile, we'll initialize it when the form is submitted
+  if (window.innerWidth >= 768) {
+    initMap();
+    setTimeout(() => {
+      map.invalidateSize();
+    }, 100);
+  }
+
   console.log('Funju Store Finder loaded successfully');
 });
