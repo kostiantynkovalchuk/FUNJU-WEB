@@ -53,10 +53,9 @@ body {
     Ubuntu, Cantarell, sans-serif;
   line-height: 1.6;
   color: white;
-  background: linear-gradient(90deg, rgba(230, 57, 70, 0.3) 0.5px, transparent 0.5px),
-    linear-gradient(0deg, rgba(230, 57, 70, 0.3) 0.5px, transparent 0.5px);
+  background: linear-gradient(90deg, #e63946 1px, transparent 1px),
+    linear-gradient(0deg, #e63946 1px, transparent 1px);
   background-size: 40px 40px;
-  background-position: 0 0;
   background-color: #1a1a2e;
   overflow-x: hidden;
   position: relative;
@@ -306,8 +305,8 @@ body {
   left: 0;
   width: 100%;
   height: 100%;
-  background: linear-gradient(90deg, rgba(230, 57, 70, 0.3) 0.5px, transparent 0.5px),
-    linear-gradient(0deg, rgba(230, 57, 70, 0.3) 0.5px, transparent 0.5px);
+  background: linear-gradient(90deg, #e63946 1px, transparent 1px),
+    linear-gradient(0deg, #e63946 1px, transparent 1px);
   background-size: 40px 40px;
   opacity: 0.3;
   pointer-events: none;
@@ -654,7 +653,7 @@ body {
 /* Find Funju Section */
 .find-funju {
   padding: 100px 0;
-  background: transparent;
+  background: #1A1A2E;
 }
 
 .find-container {
@@ -1128,7 +1127,7 @@ body {
 /* Moments Section - Masonry Layout */
 .moments {
   padding: 100px 0;
-  background: transparent;
+  background: #1A1A2E;
 }
 
 .fans-container {

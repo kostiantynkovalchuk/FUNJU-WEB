@@ -163,7 +163,7 @@ body {
 .hero {
   height: 100vh;
   min-height: 600px;
-  background: transparent;
+  background: #1A1A2E;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -373,7 +373,7 @@ body {
 /* Find Funju Section - Mobile First */
 .find-funju {
   padding: 60px 0;
-  background: transparent;
+  background: #1A1A2E;
 }
 
 .find-container {
@@ -599,7 +599,7 @@ body {
 /* Moments Section - Mobile First (Masonry on Desktop) */
 .moments {
   padding: 60px 0;
-  background: transparent;
+  background: #1A1A2E;
 }
 
 .fans-container {
