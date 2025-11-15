@@ -736,8 +736,10 @@ body {
     display: flex !important;
     position: static;
     flex-direction: row;
-    background: none;
-    box-shadow: none;
+    background: transparent !important;
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+    box-shadow: none !important;
     padding: 0;
     gap: 25px;
     border-top: none;
@@ -749,7 +751,7 @@ body {
     font-size: 16px;
     padding: 5px;
     color: rgba(255, 255, 255, 0.85);
-    background: none;
+    background: transparent !important;
     text-shadow: none;
     border: none;
     box-shadow: none;
