@@ -10,6 +10,7 @@ class FunjuApp {
     this.initPerformanceMonitoring();
     this.initTouchImprovements();
     this.initErrorHandling();
+    this.initParallax();
   }
 
   trackPageLoad() {
@@ -149,6 +150,35 @@ class FunjuApp {
         trackEvent("promise_rejection", {
           reason: event.reason?.toString() || "Unknown error",
         });
+      }
+    });
+  }
+
+  initParallax() {
+    // Check if user prefers reduced motion
+    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    if (prefersReducedMotion) {
+      return; // Skip parallax for accessibility
+    }
+
+    let ticking = false;
+
+    const updateParallax = () => {
+      const scrolled = window.pageYOffset;
+      // Move background at 0.5x speed (slower than scroll)
+      const yPos = scrolled * 0.5;
+
+      // Apply transform to body background
+      document.body.style.backgroundPosition = `0 ${yPos}px`;
+
+      ticking = false;
+    };
+
+    window.addEventListener('scroll', () => {
+      if (!ticking) {
+        window.requestAnimationFrame(updateParallax);
+        ticking = true;
       }
     });
   }
