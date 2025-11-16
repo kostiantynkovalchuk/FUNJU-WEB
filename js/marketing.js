@@ -152,28 +152,49 @@ class Marketing {
     modal.innerHTML = `
             <div class="modal-content">
                 <button class="modal-close">&times;</button>
-                <h2 style="margin-bottom: 15px; color: #333;">📸 Share & Get Rewarded!</h2>
+                <h2 style="margin-bottom: 15px; color: #333;">📸 Поділіться і отримайте винагороду!</h2>
                 <p style="margin-bottom: 25px; color: #666; font-size: 14px; line-height: 1.5;">
-                    Post your Funju moment with <strong>#FunjuMoments</strong> and <strong>@funju_ukraine</strong> to get featured on our page + win exclusive prizes!
+                    Опублікуйте ваш Funju момент з <strong>#FunjuMoments</strong> та <strong>@funju.soju</strong>, щоб потрапити на наш сайт + виграти ексклюзивні призи!
                 </p>
-                
+
                 <div style="background: linear-gradient(45deg, #f8f9ff, #e8ebff); padding: 20px; border-radius: 15px; margin-bottom: 25px;">
-                    <h3 style="color: #667eea; margin-bottom: 15px;">🎁 What You Can Win:</h3>
+                    <h3 style="color: #667eea; margin-bottom: 15px;">🎁 Що ви можете виграти:</h3>
                     <div style="text-align: left; font-size: 14px; color: #333;">
-                        • 🍾 <strong>Free Funju bottles</strong><br>
-                        • 🎫 <strong>VIP party invitations</strong><br>
-                        • 👕 <strong>Exclusive merchandise</strong><br>
-                        • 📱 <strong>Feature on our social media</strong>
+                        • 🍾 <strong>Безкоштовні пляшки Funju</strong><br>
+                        • 🎫 <strong>VIP запрошення на вечірки</strong><br>
+                        • 👕 <strong>Ексклюзивний мерч</strong><br>
+                        • 📱 <strong>Публікація в наших соцмережах</strong>
                     </div>
                 </div>
-                
-                <div style="display: flex; flex-direction: column; gap: 12px; margin-bottom: 20px;">
-                    <button class="share-btn" data-platform="instagram">📷 Share on Instagram</button>
-                    <button class="share-btn" data-platform="tiktok">🎵 Share on TikTok</button>
-                    <button class="share-btn" data-platform="facebook">📘 Share on Facebook</button>
-                </div>
-                
-                <button class="btn-secondary" style="width: 100%;">Close</button>
+
+                <form id="ugcSubmissionForm">
+                    <div style="margin-bottom: 15px;">
+                        <input type="text" name="userName" placeholder="Ваше ім'я *" required
+                               style="width: 100%; padding: 12px; border: 2px solid #e0e0e0; border-radius: 10px; font-size: 16px; box-sizing: border-box;">
+                    </div>
+                    <div style="margin-bottom: 15px;">
+                        <input type="email" name="userEmail" placeholder="Ваш Email *" required
+                               style="width: 100%; padding: 12px; border: 2px solid #e0e0e0; border-radius: 10px; font-size: 16px; box-sizing: border-box;">
+                    </div>
+                    <div style="margin-bottom: 15px;">
+                        <select name="platform" required style="width: 100%; padding: 12px; border: 2px solid #e0e0e0; border-radius: 10px; font-size: 16px; box-sizing: border-box;">
+                            <option value="">Оберіть платформу *</option>
+                            <option value="instagram">📷 Instagram</option>
+                            <option value="tiktok">🎵 TikTok</option>
+                            <option value="youtube">📺 YouTube</option>
+                        </select>
+                    </div>
+                    <div style="margin-bottom: 20px;">
+                        <input type="url" name="contentUrl" placeholder="Посилання на ваш пост/відео *" required
+                               style="width: 100%; padding: 12px; border: 2px solid #e0e0e0; border-radius: 10px; font-size: 16px; box-sizing: border-box;">
+                        <small style="color: #999; font-size: 12px; display: block; margin-top: 5px;">Вставте повне посилання на ваш пост</small>
+                    </div>
+
+                    <div style="display: flex; gap: 10px;">
+                        <button type="submit" style="flex: 1; padding: 15px; background: linear-gradient(45deg, #667eea, #764ba2); color: white; border: none; border-radius: 12px; cursor: pointer; font-weight: 600; font-size: 16px;">✨ Відправити на перевірку</button>
+                        <button type="button" class="btn-secondary" style="padding: 15px 20px;">Скасувати</button>
+                    </div>
+                </form>
             </div>
         `;
 
@@ -184,7 +205,7 @@ class Marketing {
   bindShareModalEvents(modal) {
     const closeBtn = modal.querySelector(".modal-close");
     const closeBtn2 = modal.querySelector(".btn-secondary");
-    const shareBtns = modal.querySelectorAll(".share-btn");
+    const form = modal.querySelector("#ugcSubmissionForm");
 
     const closeModal = () => {
       modal.style.animation = "slideDown 0.3s ease";
@@ -194,12 +215,9 @@ class Marketing {
     closeBtn.addEventListener("click", closeModal);
     closeBtn2.addEventListener("click", closeModal);
 
-    shareBtns.forEach((btn) => {
-      btn.addEventListener("click", () => {
-        const platform = btn.getAttribute("data-platform");
-        this.handleShare(platform);
-        closeModal();
-      });
+    form.addEventListener("submit", (e) => {
+      e.preventDefault();
+      this.handleUGCSubmission(e, modal);
     });
 
     modal.addEventListener("click", (e) => {
@@ -207,18 +225,83 @@ class Marketing {
     });
   }
 
-  handleShare(platform) {
-    const shareUrls = {
-      instagram: "https://instagram.com",
-      tiktok: "https://tiktok.com",
-      facebook: "https://facebook.com",
-    };
+  async handleUGCSubmission(e, modal) {
+    const formData = new FormData(e.target);
+    const ugcData = Object.fromEntries(formData);
 
-    if (typeof trackEvent === "function") {
-      trackEvent("social_share", { platform: platform });
+    const submitBtn = e.target.querySelector('button[type="submit"]');
+    const originalText = submitBtn.innerHTML;
+    submitBtn.innerHTML = '⏳ Відправляємо...';
+    submitBtn.disabled = true;
+
+    try {
+      // Save to Supabase
+      const { data, error } = await supabase
+        .from('ugc_submissions')
+        .insert([
+          {
+            user_name: ugcData.userName,
+            user_email: ugcData.userEmail,
+            platform: ugcData.platform,
+            content_url: ugcData.contentUrl,
+            status: 'pending',
+            created_at: new Date().toISOString(),
+          }
+        ]);
+
+      if (error) {
+        console.error('Supabase error:', error);
+        throw error;
+      }
+
+      // Send email notification via backend endpoint
+      await fetch('/api/send-ugc-notification', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          to: 'sojufunju@gmail.com',
+          subject: `New UGC Submission - ${ugcData.platform}`,
+          userName: ugcData.userName,
+          userEmail: ugcData.userEmail,
+          platform: ugcData.platform,
+          contentUrl: ugcData.contentUrl,
+        }),
+      }).catch(err => {
+        console.error('Email notification failed:', err);
+        // Continue even if email fails - data is saved in DB
+      });
+
+      // Track submission
+      if (typeof trackEvent === "function") {
+        trackEvent("ugc_submission", {
+          platform: ugcData.platform,
+          timestamp: Date.now(),
+        });
+      }
+
+      // Close modal
+      modal.style.animation = "slideDown 0.3s ease";
+      setTimeout(() => modal.remove(), 300);
+
+      // Show success message
+      if (typeof showNotification === "function") {
+        showNotification("✨ Дякуємо! Ваш контент надіслано на перевірку. Ми зв'яжемося з вами найближчим часом!", "success");
+      } else {
+        alert("✨ Дякуємо! Ваш контент надіслано на перевірку. Ми зв'яжемося з вами найближчим часом!");
+      }
+    } catch (error) {
+      console.error('UGC submission error:', error);
+      submitBtn.innerHTML = originalText;
+      submitBtn.disabled = false;
+
+      if (typeof showNotification === "function") {
+        showNotification("❌ Помилка відправки. Спробуйте ще раз або напишіть нам на sojufunju@gmail.com", "error");
+      } else {
+        alert("❌ Помилка відправки. Спробуйте ще раз або напишіть нам на sojufunju@gmail.com");
+      }
     }
-
-    window.open(shareUrls[platform], "_blank");
   }
 
   handleNewsletterSubscription() {
