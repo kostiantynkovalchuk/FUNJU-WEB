@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Debug UGC Submission</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 40px auto;
+            padding: 20px;
+            background: #1a1a2e;
+            color: white;
+        }
+        .test-form {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 30px;
+            border-radius: 15px;
+            margin: 20px 0;
+        }
+        input, select {
+            width: 100%;
+            padding: 12px;
+            margin: 10px 0;
+            border-radius: 8px;
+            border: 2px solid #667eea;
+            box-sizing: border-box;
+        }
+        button {
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            width: 100%;
+            margin-top: 10px;
+        }
+        button:hover {
+            transform: translateY(-2px);
+        }
+        #console {
+            background: #000;
+            padding: 20px;
+            border-radius: 8px;
+            font-family: monospace;
+            font-size: 12px;
+            margin-top: 20px;
+            max-height: 400px;
+            overflow-y: auto;
+            border: 2px solid #16DB93;
+        }
+        .log-success { color: #16DB93; }
+        .log-error { color: #E63946; }
+        .log-info { color: #667eea; }
+        .log-warning { color: #FFB347; }
+    </style>
+</head>
+<body>
+    <h1>🐛 Debug UGC Submission Form</h1>
+    <p>This page will show exactly what's happening when you submit UGC</p>
+
+    <div class="test-form">
+        <h2>Test UGC Submission</h2>
+        <form id="testUGCForm">
+            <input type="text" name="userName" placeholder="Ваше ім'я *" required>
+            <input type="email" name="userEmail" placeholder="Ваш Email *" required>
+            <select name="platform" required>
+                <option value="">Оберіть платформу *</option>
+                <option value="instagram">📷 Instagram</option>
+                <option value="tiktok">🎵 TikTok</option>
+                <option value="youtube">📺 YouTube</option>
+            </select>
+            <input type="url" name="contentUrl" placeholder="Посилання на ваш пост/відео *" required>
+            <button type="submit">✨ Відправити тест</button>
+        </form>
+    </div>
+
+    <h2>📋 Console Log</h2>
+    <div id="console"></div>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script>
+        const consoleDiv = document.getElementById('console');
+
+        function log(message, type = 'info') {
+            const timestamp = new Date().toLocaleTimeString();
+            const line = document.createElement('div');
+            line.className = `log-${type}`;
+            line.textContent = `[${timestamp}] ${message}`;
+            consoleDiv.appendChild(line);
+            consoleDiv.scrollTop = consoleDiv.scrollHeight;
+            console.log(message);
+        }
+
+        // Initialize Supabase
+        log('🔌 Initializing Supabase...', 'info');
+        const SUPABASE_URL = 'https://luucktzqourzszzxzlyn.supabase.co';
+        const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imx1dWNrdHpxb3VyenN6enh6bHluIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjMxMzA3NjAsImV4cCI6MjA3ODcwNjc2MH0.rungPxQ4hzZGVWhdf2mlkujkq9UuLVKYQFFX4626hR4';
+
+        let supabase;
+        try {
+            supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+            log('✅ Supabase client created successfully', 'success');
+        } catch (err) {
+            log(`❌ Failed to create Supabase client: ${err.message}`, 'error');
+        }
+
+        // Form submission
+        document.getElementById('testUGCForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            log('📤 Form submitted!', 'info');
+
+            const formData = new FormData(e.target);
+            const ugcData = {
+                userName: formData.get('userName'),
+                userEmail: formData.get('userEmail'),
+                platform: formData.get('platform'),
+                contentUrl: formData.get('contentUrl')
+            };
+
+            log(`📝 Form data: ${JSON.stringify(ugcData, null, 2)}`, 'info');
+
+            try {
+                log('💾 Attempting to insert into Supabase...', 'info');
+
+                const insertData = {
+                    user_name: ugcData.userName,
+                    user_email: ugcData.userEmail,
+                    platform: ugcData.platform,
+                    content_url: ugcData.contentUrl,
+                    status: 'pending',
+                    created_at: new Date().toISOString()
+                };
+
+                log(`📊 Insert data: ${JSON.stringify(insertData, null, 2)}`, 'info');
+
+                const { data, error } = await supabase
+                    .from('ugc_submissions')
+                    .insert([insertData])
+                    .select();
+
+                if (error) {
+                    log(`❌ Supabase error: ${error.message}`, 'error');
+                    log(`❌ Error details: ${JSON.stringify(error, null, 2)}`, 'error');
+                    if (error.hint) {
+                        log(`💡 Hint: ${error.hint}`, 'warning');
+                    }
+                } else {
+                    log(`✅ SUCCESS! Data inserted into database!`, 'success');
+                    log(`📦 Returned data: ${JSON.stringify(data, null, 2)}`, 'success');
+
+                    // Try to read it back
+                    setTimeout(async () => {
+                        log('🔍 Verifying submission by reading it back...', 'info');
+                        const { data: readData, error: readError } = await supabase
+                            .from('ugc_submissions')
+                            .select('*')
+                            .eq('user_email', ugcData.userEmail)
+                            .order('created_at', { ascending: false })
+                            .limit(1);
+
+                        if (readError) {
+                            log(`⚠️ Could not read back: ${readError.message}`, 'warning');
+                        } else {
+                            log(`✅ Found in database: ${JSON.stringify(readData, null, 2)}`, 'success');
+                        }
+                    }, 500);
+                }
+
+            } catch (err) {
+                log(`❌ Unexpected error: ${err.message}`, 'error');
+                log(`❌ Stack: ${err.stack}`, 'error');
+            }
+        });
+
+        // Check if supabase is defined
+        window.addEventListener('load', () => {
+            if (typeof window.supabase === 'undefined') {
+                log('❌ Supabase library not loaded!', 'error');
+            } else {
+                log('✅ Supabase library loaded successfully', 'success');
+            }
+        });
+    </script>
+</body>
+</html>

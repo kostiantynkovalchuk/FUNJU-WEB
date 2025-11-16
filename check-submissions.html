@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Check UGC Submissions - Funju</title>
+    <style>
+        body {
+            font-family: 'Courier New', monospace;
+            background: #1a1a2e;
+            color: #16DB93;
+            padding: 40px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        h1 {
+            color: #E63946;
+            text-align: center;
+        }
+        .section {
+            background: rgba(255, 255, 255, 0.05);
+            border: 2px solid #16DB93;
+            border-radius: 10px;
+            padding: 20px;
+            margin: 20px 0;
+        }
+        button {
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            margin: 10px 5px;
+        }
+        button:hover {
+            transform: translateY(-2px);
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        th, td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid rgba(22, 219, 147, 0.3);
+        }
+        th {
+            background: rgba(22, 219, 147, 0.2);
+            color: #E63946;
+            font-weight: bold;
+        }
+        tr:hover {
+            background: rgba(255, 255, 255, 0.05);
+        }
+        .status-pending {
+            color: #FFB347;
+            font-weight: bold;
+        }
+        .status-approved {
+            color: #16DB93;
+            font-weight: bold;
+        }
+        .status-rejected {
+            color: #E63946;
+            font-weight: bold;
+        }
+        .empty {
+            text-align: center;
+            padding: 40px;
+            color: #999;
+            font-style: italic;
+        }
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+        .stat-card {
+            background: rgba(102, 126, 234, 0.2);
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+            border: 2px solid rgba(102, 126, 234, 0.5);
+        }
+        .stat-number {
+            font-size: 32px;
+            font-weight: bold;
+            color: #667eea;
+        }
+        .stat-label {
+            font-size: 14px;
+            color: #999;
+            margin-top: 5px;
+        }
+        .link {
+            color: #667eea;
+            text-decoration: none;
+            word-break: break-all;
+        }
+        .link:hover {
+            text-decoration: underline;
+        }
+        .loading {
+            text-align: center;
+            padding: 40px;
+            color: #667eea;
+        }
+    </style>
+</head>
+<body>
+    <h1>📊 UGC Submissions Dashboard</h1>
+
+    <div class="section">
+        <button onclick="loadSubmissions()">🔄 Refresh Submissions</button>
+        <button onclick="loadStats()">📈 Load Statistics</button>
+        <div id="stats"></div>
+    </div>
+
+    <div class="section">
+        <h2 style="color: #E63946;">Latest UGC Submissions</h2>
+        <div id="submissions">
+            <div class="loading">Click "Refresh Submissions" to load data...</div>
+        </div>
+    </div>
+
+    <div class="section">
+        <h2 style="color: #E63946;">Event Registrations</h2>
+        <button onclick="loadEvents()">🔄 Load Event Registrations</button>
+        <div id="events">
+            <div class="loading">Click "Load Event Registrations" to load data...</div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script>
+        const SUPABASE_URL = 'https://luucktzqourzszzxzlyn.supabase.co';
+        const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imx1dWNrdHpxb3VyenN6enh6bHluIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjMxMzA3NjAsImV4cCI6MjA3ODcwNjc2MH0.rungPxQ4hzZGVWhdf2mlkujkq9UuLVKYQFFX4626hR4';
+        const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+        async function loadSubmissions() {
+            const container = document.getElementById('submissions');
+            container.innerHTML = '<div class="loading">⏳ Loading submissions...</div>';
+
+            try {
+                const { data, error, count } = await supabase
+                    .from('ugc_submissions')
+                    .select('*', { count: 'exact' })
+                    .order('created_at', { ascending: false });
+
+                if (error) {
+                    container.innerHTML = `<div class="empty">❌ Error: ${error.message}</div>`;
+                    return;
+                }
+
+                if (!data || data.length === 0) {
+                    container.innerHTML = '<div class="empty">No submissions found yet. Make sure you submitted from the website!</div>';
+                    return;
+                }
+
+                let html = `<p style="color: #16DB93; margin-bottom: 15px;">📊 Total: ${count} submission(s)</p>`;
+                html += '<table><thead><tr>';
+                html += '<th>Date</th><th>Name</th><th>Email</th><th>Platform</th><th>Content URL</th><th>Status</th>';
+                html += '</tr></thead><tbody>';
+
+                data.forEach(sub => {
+                    const date = new Date(sub.created_at).toLocaleString();
+                    const statusClass = `status-${sub.status}`;
+                    html += `<tr>`;
+                    html += `<td>${date}</td>`;
+                    html += `<td>${sub.user_name}</td>`;
+                    html += `<td>${sub.user_email}</td>`;
+                    html += `<td>${sub.platform.toUpperCase()}</td>`;
+                    html += `<td><a href="${sub.content_url}" target="_blank" class="link">${sub.content_url.substring(0, 50)}...</a></td>`;
+                    html += `<td class="${statusClass}">${sub.status.toUpperCase()}</td>`;
+                    html += `</tr>`;
+                });
+
+                html += '</tbody></table>';
+                container.innerHTML = html;
+
+            } catch (err) {
+                container.innerHTML = `<div class="empty">❌ Error: ${err.message}</div>`;
+            }
+        }
+
+        async function loadStats() {
+            const container = document.getElementById('stats');
+            container.innerHTML = '<div class="loading">⏳ Loading statistics...</div>';
+
+            try {
+                const { data, error } = await supabase
+                    .from('ugc_submissions')
+                    .select('*');
+
+                if (error) {
+                    container.innerHTML = `<div class="empty">❌ Error: ${error.message}</div>`;
+                    return;
+                }
+
+                const stats = {
+                    total: data.length,
+                    pending: data.filter(s => s.status === 'pending').length,
+                    approved: data.filter(s => s.status === 'approved').length,
+                    rejected: data.filter(s => s.status === 'rejected').length,
+                    instagram: data.filter(s => s.platform === 'instagram').length,
+                    tiktok: data.filter(s => s.platform === 'tiktok').length,
+                    youtube: data.filter(s => s.platform === 'youtube').length,
+                };
+
+                let html = '<div class="stats">';
+                html += `<div class="stat-card"><div class="stat-number">${stats.total}</div><div class="stat-label">Total Submissions</div></div>`;
+                html += `<div class="stat-card"><div class="stat-number" style="color: #FFB347">${stats.pending}</div><div class="stat-label">Pending</div></div>`;
+                html += `<div class="stat-card"><div class="stat-number" style="color: #16DB93">${stats.approved}</div><div class="stat-label">Approved</div></div>`;
+                html += `<div class="stat-card"><div class="stat-number" style="color: #E63946">${stats.rejected}</div><div class="stat-label">Rejected</div></div>`;
+                html += `<div class="stat-card"><div class="stat-number">${stats.instagram}</div><div class="stat-label">📷 Instagram</div></div>`;
+                html += `<div class="stat-card"><div class="stat-number">${stats.tiktok}</div><div class="stat-label">🎵 TikTok</div></div>`;
+                html += `<div class="stat-card"><div class="stat-number">${stats.youtube}</div><div class="stat-label">📺 YouTube</div></div>`;
+                html += '</div>';
+
+                container.innerHTML = html;
+
+            } catch (err) {
+                container.innerHTML = `<div class="empty">❌ Error: ${err.message}</div>`;
+            }
+        }
+
+        async function loadEvents() {
+            const container = document.getElementById('events');
+            container.innerHTML = '<div class="loading">⏳ Loading event registrations...</div>';
+
+            try {
+                const { data, error, count } = await supabase
+                    .from('event_registrations')
+                    .select('*', { count: 'exact' })
+                    .order('created_at', { ascending: false });
+
+                if (error) {
+                    container.innerHTML = `<div class="empty">❌ Error: ${error.message}</div>`;
+                    return;
+                }
+
+                if (!data || data.length === 0) {
+                    container.innerHTML = '<div class="empty">No event registrations found yet.</div>';
+                    return;
+                }
+
+                let html = `<p style="color: #16DB93; margin-bottom: 15px;">📊 Total: ${count} registration(s)</p>`;
+                html += '<table><thead><tr>';
+                html += '<th>Date</th><th>Event</th><th>Name</th><th>Email</th><th>Phone</th><th>Age</th><th>Marketing</th>';
+                html += '</tr></thead><tbody>';
+
+                data.forEach(reg => {
+                    const date = new Date(reg.created_at).toLocaleString();
+                    html += `<tr>`;
+                    html += `<td>${date}</td>`;
+                    html += `<td>${reg.event_id}</td>`;
+                    html += `<td>${reg.name}</td>`;
+                    html += `<td>${reg.email}</td>`;
+                    html += `<td>${reg.phone || 'N/A'}</td>`;
+                    html += `<td>${reg.age_range}</td>`;
+                    html += `<td>${reg.marketing_consent ? '✅ Yes' : '❌ No'}</td>`;
+                    html += `</tr>`;
+                });
+
+                html += '</tbody></table>';
+                container.innerHTML = html;
+
+            } catch (err) {
+                container.innerHTML = `<div class="empty">❌ Error: ${err.message}</div>`;
+            }
+        }
+
+        // Auto-load on page load
+        window.addEventListener('load', () => {
+            loadSubmissions();
+            loadStats();
+        });
+    </script>
+</body>
+</html>
