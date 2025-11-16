@@ -87,14 +87,24 @@ class Events {
     const closeBtn = modal.querySelector(".modal-close");
     const cancelBtn = modal.querySelector(".btn-secondary");
     const form = modal.querySelector("#eventRegistrationForm");
+    let isClosing = false;
 
     const closeModal = () => {
-      modal.style.animation = "slideDown 0.3s ease";
+      if (isClosing) return;
+      isClosing = true;
+      modal.style.animation = "fadeOut 0.3s ease";
       setTimeout(() => modal.remove(), 300);
     };
 
-    closeBtn.addEventListener("click", closeModal);
-    cancelBtn.addEventListener("click", closeModal);
+    closeBtn.addEventListener("click", (e) => {
+      e.stopPropagation();
+      closeModal();
+    });
+
+    cancelBtn.addEventListener("click", (e) => {
+      e.stopPropagation();
+      closeModal();
+    });
 
     form.addEventListener("submit", (e) => {
       e.preventDefault();

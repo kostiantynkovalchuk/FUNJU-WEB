@@ -71,14 +71,24 @@ class Marketing {
   bindPurchaseModalEvents(modal) {
     const closeBtn = modal.querySelector(".modal-close");
     const laterBtn = modal.querySelector(".btn-secondary");
+    let isClosing = false;
 
     const closeModal = () => {
-      modal.style.animation = "slideDown 0.3s ease";
+      if (isClosing) return;
+      isClosing = true;
+      modal.style.animation = "fadeOut 0.3s ease";
       setTimeout(() => modal.remove(), 300);
     };
 
-    closeBtn.addEventListener("click", closeModal);
-    laterBtn.addEventListener("click", closeModal);
+    closeBtn.addEventListener("click", (e) => {
+      e.stopPropagation();
+      closeModal();
+    });
+
+    laterBtn.addEventListener("click", (e) => {
+      e.stopPropagation();
+      closeModal();
+    });
 
     modal.addEventListener("click", (e) => {
       if (e.target === modal) closeModal();
@@ -206,14 +216,24 @@ class Marketing {
     const closeBtn = modal.querySelector(".modal-close");
     const closeBtn2 = modal.querySelector(".btn-secondary");
     const form = modal.querySelector("#ugcSubmissionForm");
+    let isClosing = false;
 
     const closeModal = () => {
-      modal.style.animation = "slideDown 0.3s ease";
+      if (isClosing) return;
+      isClosing = true;
+      modal.style.animation = "fadeOut 0.3s ease";
       setTimeout(() => modal.remove(), 300);
     };
 
-    closeBtn.addEventListener("click", closeModal);
-    closeBtn2.addEventListener("click", closeModal);
+    closeBtn.addEventListener("click", (e) => {
+      e.stopPropagation();
+      closeModal();
+    });
+
+    closeBtn2.addEventListener("click", (e) => {
+      e.stopPropagation();
+      closeModal();
+    });
 
     form.addEventListener("submit", (e) => {
       e.preventDefault();
