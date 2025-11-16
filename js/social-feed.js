@@ -14,10 +14,6 @@ class SocialFeed {
         url: "https://www.tiktok.com/@slesariusss/video/7565118925277580600",
       },
       {
-        type: "instagram",
-        url: "https://www.instagram.com/reel/DQCaP03DF6k/",
-      },
-      {
         type: "tiktok",
         url: "https://www.tiktok.com/@lessyk_inst/video/7568907598938869003",
       },
@@ -75,7 +71,8 @@ class SocialFeed {
     }, options);
 
     // Only observe Instagram cards for lazy loading
-    const instagramCards = this.feedContainer.querySelectorAll(".instagram-card");
+    const instagramCards =
+      this.feedContainer.querySelectorAll(".instagram-card");
     instagramCards.forEach((card) => observer.observe(card));
   }
 
@@ -87,7 +84,7 @@ class SocialFeed {
   }
 
   loadCardEmbed(card) {
-    const embedContainer = card.querySelector('[data-embed-url]');
+    const embedContainer = card.querySelector("[data-embed-url]");
     if (!embedContainer) return;
 
     const url = embedContainer.dataset.embedUrl;
@@ -120,7 +117,9 @@ class SocialFeed {
         </blockquote>
       `;
       if (window.tiktokEmbed) {
-        window.tiktokEmbed.lib.render(embedContainer.querySelector(".tiktok-embed"));
+        window.tiktokEmbed.lib.render(
+          embedContainer.querySelector(".tiktok-embed")
+        );
       }
     }
   }
@@ -173,7 +172,6 @@ class SocialFeed {
 
     return header;
   }
-
 
   // Method to add new posts dynamically
   addPost(type, url) {
