@@ -29,7 +29,8 @@ class VideoPlayer {
     // Create replay button (hidden initially)
     this.replayBtn = document.createElement('button');
     this.replayBtn.className = 'video-replay-btn';
-    this.replayBtn.innerHTML = '↻ Replay';
+    this.replayBtn.innerHTML = '↻';
+    this.replayBtn.setAttribute('aria-label', 'Replay video');
     this.replayBtn.style.display = 'none';
     this.container.appendChild(this.replayBtn);
 
