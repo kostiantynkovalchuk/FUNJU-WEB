@@ -14,6 +14,11 @@ class SocialFeed {
         url: "https://www.tiktok.com/@slesariusss/video/7565118925277580600",
       },
       {
+        type: "instagram",
+        url: "https://www.instagram.com/reel/DQCaP03DF6k/",
+        desktopOnly: true,
+      },
+      {
         type: "tiktok",
         url: "https://www.tiktok.com/@lessyk_inst/video/7568907598938869003",
       },
@@ -44,8 +49,14 @@ class SocialFeed {
 
   renderFeed() {
     this.feedContainer.innerHTML = "";
+    const isMobile = window.innerWidth <= 768;
 
     this.posts.forEach((post, index) => {
+      // Skip desktop-only posts on mobile
+      if (isMobile && post.desktopOnly) {
+        return;
+      }
+
       const card = this.createSocialCard(post, index);
       this.feedContainer.appendChild(card);
     });
