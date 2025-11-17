@@ -819,17 +819,20 @@ body {
   right: 20px;
   background: var(--primary-gradient);
   color: white;
-  padding: 15px 25px;
+  padding: 18px 32px;
   border: none;
   border-radius: 50px;
-  font-weight: 600;
+  font-weight: 700;
+  font-size: 16px;
   cursor: pointer;
   box-shadow: 0 5px 20px rgba(230, 57, 70, 0.4);
   z-index: 900;
   display: none;
   align-items: center;
-  gap: 8px;
+  gap: 10px;
   transition: all 0.3s;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
 }
 
 .location-btn.visible {
@@ -927,6 +930,8 @@ body {
 
 .directions-btn {
   width: 100%;
+  max-width: 300px;
+  margin: 20px auto 0;
   padding: 15px;
   background: linear-gradient(45deg, #4CAF50, #45a049);
   color: white;

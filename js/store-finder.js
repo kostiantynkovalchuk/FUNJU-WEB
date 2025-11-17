@@ -396,6 +396,10 @@ document.getElementById('locationBtn').addEventListener('click', function() {
       // Show store info panel
       displayStoreInfo(nearest);
 
+      // Smooth scroll to store panel
+      const storePanel = document.getElementById('storePanel');
+      storePanel.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+
       btn.innerHTML = originalHTML;
       btn.disabled = false;
     },
