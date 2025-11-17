@@ -42,7 +42,7 @@ class AgeGate {
     setTimeout(() => {
       if (typeof showNotification === "function") {
         showNotification(
-          "🎉 Welcome! Scroll down to discover what makes Funju special",
+          "🎉 Ласкаво просимо! Прокрутіть вниз, щоб дізнатися, що робить Funju особливим",
           "success"
         );
       }
