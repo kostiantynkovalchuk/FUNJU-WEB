@@ -71,12 +71,23 @@
           />
         </div>
         <div class="hero-video-container">
-          <video class="hero-video" playsinline muted preload="auto" webkit-playsinline>
+          <video
+            class="hero-video"
+            playsinline
+            muted
+            preload="auto"
+            webkit-playsinline
+          >
+            <!-- Android/Chrome gets WebM first (2.8 MB - faster!) -->
+            <source
+              src="assets/avatar-video.webm?v=2#t=0.001"
+              type="video/webm"
+            />
+            <!-- iOS Safari/Chrome falls back to MP4 (7 MB - still works) -->
             <source
               src="assets/avatar-video.mp4?v=2#t=0.001"
               type="video/mp4"
             />
-            <source src="assets/avatar-video.webm" type="video/webm" />
             Ваш браузер не підтримує відео.
           </video>
         </div>
