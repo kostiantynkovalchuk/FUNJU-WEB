@@ -11,14 +11,23 @@ class VideoPlayer {
   init() {
     if (!this.video || !this.container) return;
 
-    // Remove default controls on mobile
+    // Setup custom controls on mobile
     if (window.innerWidth <= 768) {
-      this.video.removeAttribute('controls');
       this.setupCustomControls();
+    } else {
+      // Add controls for desktop
+      this.video.setAttribute('controls', 'controls');
     }
   }
 
   setupCustomControls() {
+    // Ensure video is properly configured for iOS
+    this.video.muted = true;
+    this.video.setAttribute('muted', 'muted');
+    this.video.setAttribute('playsinline', 'playsinline');
+    this.video.setAttribute('webkit-playsinline', 'webkit-playsinline');
+    this.video.load(); // Force reload with correct attributes
+
     // Create unmute button
     this.unmuteBtn = document.createElement('button');
     this.unmuteBtn.className = 'video-unmute-btn';
@@ -34,12 +43,15 @@ class VideoPlayer {
     this.replayBtn.style.display = 'none';
     this.container.appendChild(this.replayBtn);
 
-    // Autoplay muted
-    this.video.muted = true;
-    this.video.play().catch(() => {
-      // Autoplay failed - show play button
-      console.log('Autoplay prevented');
-    });
+    // Try autoplay after short delay (iOS fix)
+    setTimeout(() => {
+      const playPromise = this.video.play();
+      if (playPromise !== undefined) {
+        playPromise.catch((error) => {
+          console.log('Autoplay prevented:', error);
+        });
+      }
+    }, 300);
 
     // Event listeners
     this.unmuteBtn.addEventListener('click', () => this.toggleMute());
