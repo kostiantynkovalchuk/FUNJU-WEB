@@ -32,7 +32,7 @@ class VideoPlayer {
     this.heroVideo.setAttribute('muted', 'muted');
     this.heroVideo.setAttribute('playsinline', 'playsinline');
     this.heroVideo.setAttribute('webkit-playsinline', 'webkit-playsinline');
-    this.heroVideo.load(); // Force reload with correct attributes
+    // Don't call .load() - it cancels autoplay and resets to first frame
 
     // Create unmute button
     this.unmuteBtn = document.createElement('button');
@@ -49,15 +49,17 @@ class VideoPlayer {
     this.replayBtn.style.display = 'none';
     this.heroContainer.appendChild(this.replayBtn);
 
-    // Try autoplay after short delay (iOS fix)
+    // Fallback: Try autoplay if video hasn't started (only if needed)
     setTimeout(() => {
-      const playPromise = this.heroVideo.play();
-      if (playPromise !== undefined) {
-        playPromise.catch((error) => {
-          console.log('Hero video autoplay prevented:', error);
-        });
+      if (this.heroVideo.paused) {
+        const playPromise = this.heroVideo.play();
+        if (playPromise !== undefined) {
+          playPromise.catch((error) => {
+            console.log('Hero video autoplay prevented:', error);
+          });
+        }
       }
-    }, 300);
+    }, 500);
 
     // Event listeners
     this.unmuteBtn.addEventListener('click', () => this.toggleMute());
@@ -77,17 +79,18 @@ class VideoPlayer {
     this.productVideo.setAttribute('playsinline', 'playsinline');
     this.productVideo.muted = true;
 
-    // Force play if autoplay fails
+    // Fallback: Force play if autoplay fails (wait longer to avoid conflicts)
     setTimeout(() => {
       if (this.productVideo.paused) {
         const playPromise = this.productVideo.play();
         if (playPromise !== undefined) {
           playPromise.catch((error) => {
             console.log('Product video autoplay prevented:', error);
+            // Show a play button overlay if autoplay completely fails
           });
         }
       }
-    }, 300);
+    }, 600);
   }
 
   toggleMute() {
