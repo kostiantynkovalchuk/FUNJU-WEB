@@ -156,7 +156,9 @@ class FunjuApp {
 
   initParallax() {
     // Check if user prefers reduced motion
-    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const prefersReducedMotion = window.matchMedia(
+      "(prefers-reduced-motion: reduce)"
+    ).matches;
 
     if (prefersReducedMotion) {
       return; // Skip parallax for accessibility
@@ -175,7 +177,7 @@ class FunjuApp {
       ticking = false;
     };
 
-    window.addEventListener('scroll', () => {
+    window.addEventListener("scroll", () => {
       if (!ticking) {
         window.requestAnimationFrame(updateParallax);
         ticking = true;
@@ -230,30 +232,32 @@ function trackEvent(eventName, properties = {}) {
   // Here you would send to your analytics service
   // Example: gtag('event', eventName, properties);
   // Example: mixpanel.track(eventName, eventData);
-
-  // Send to backend API (example)
-  this.sendToBackend(eventData);
+  // Send to backend
+  sendToBackend(eventData);
 }
 
-// Example backend integration
-function sendToBackend(eventData) {
-  // Skip analytics when running locally (file:// protocol)
-  if (window.location.protocol === 'file:') {
-    return;
+// Backend integration
+async function sendToBackend(eventData) {
+  try {
+    // Insert directly into Supabase
+    const { data, error } = await supabase.from("analytics_events").insert([
+      {
+        event_type: eventData.event,
+        event_data: eventData,
+        url: eventData.url,
+        timestamp: eventData.timestamp,
+        created_at: new Date().toISOString(),
+      },
+    ]);
+
+    if (error) {
+      console.error("Analytics error:", error);
+    } else {
+      console.log("✅ Analytics tracked:", eventData.event);
+    }
+  } catch (err) {
+    console.error("Analytics failed:", err);
   }
-
-  // This would be your actual backend endpoint
-  const endpoint = "/api/analytics";
-
-  fetch(endpoint, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify(eventData),
-  }).catch((error) => {
-    console.error("Analytics error:", error);
-  });
 }
 
 // Initialize the application when DOM is loaded

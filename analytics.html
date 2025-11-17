@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>FUNJU Analytics</title>
+  <script>
+    // Password protection
+    const password = prompt("Enter password:");
+    if (password !== "funju2025") {
+      document.body.innerHTML = "<div style='text-align:center;padding:100px;font-family:Arial;color:#e63946;'>Access denied</div>";
+      throw new Error("Unauthorized");
+    }
+  </script>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      padding: 40px 20px;
+      background: #1a1a2e;
+      color: #fff;
+      margin: 0;
+    }
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      background: rgba(26, 26, 46, 0.95);
+      padding: 30px;
+      border-radius: 10px;
+      border: 2px solid rgba(22, 219, 147, 0.3);
+      box-shadow: 0 0 30px rgba(22, 219, 147, 0.2);
+    }
+    h1 {
+      color: #16db93;
+      text-shadow: 0 0 20px rgba(22, 219, 147, 0.5);
+      margin-bottom: 30px;
+    }
+    h2 {
+      color: #16db93;
+      margin-top: 40px;
+      margin-bottom: 20px;
+    }
+    .metrics-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 20px;
+      margin: 30px 0;
+    }
+    .metric {
+      padding: 25px;
+      background: rgba(22, 219, 147, 0.1);
+      border-radius: 12px;
+      border: 2px solid rgba(22, 219, 147, 0.3);
+      text-align: center;
+    }
+    .metric h3 {
+      margin: 0;
+      color: #16db93;
+      font-size: 14px;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+    .metric p {
+      font-size: 42px;
+      font-weight: bold;
+      margin: 15px 0 0 0;
+      color: #fff;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 20px 0;
+      background: rgba(22, 219, 147, 0.05);
+      border-radius: 8px;
+      overflow: hidden;
+    }
+    th, td {
+      padding: 15px;
+      text-align: left;
+      border-bottom: 1px solid rgba(22, 219, 147, 0.2);
+    }
+    th {
+      background: rgba(22, 219, 147, 0.2);
+      color: #16db93;
+      font-weight: 700;
+    }
+    td {
+      color: rgba(255, 255, 255, 0.9);
+    }
+    .loading {
+      text-align: center;
+      padding: 40px;
+      color: #16db93;
+      font-size: 18px;
+    }
+    small {
+      color: rgba(255, 255, 255, 0.6);
+    }
+    @media (max-width: 768px) {
+      body {
+        padding: 20px 10px;
+      }
+      .container {
+        padding: 20px;
+      }
+      .metric p {
+        font-size: 32px;
+      }
+      table {
+        font-size: 14px;
+      }
+      th, td {
+        padding: 10px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>🍾 FUNJU Analytics Dashboard</h1>
+
+    <div id="metrics" class="loading">Завантаження метрик...</div>
+    <div id="tables" class="loading">Завантаження даних...</div>
+  </div>
+
+  <script>
+    // Initialize Supabase
+    const supabase = window.supabase.createClient(
+      'https://luucktzqourzszzxzlyn.supabase.co',
+      'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imx1dWNrdHpxb3VyenN6enh6bHluIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjMxMzA3NjAsImV4cCI6MjA3ODcwNjc2MH0.rungPxQ4hzZGVWhdf2mlkujkq9UuLVKYQFFX4626hR4'
+    );
+
+    async function loadAnalytics() {
+      try {
+        // Get total events
+        const { data: allEvents, error } = await supabase
+          .from('analytics_events')
+          .select('*')
+          .order('created_at', { ascending: false });
+
+        if (error) throw error;
+
+        // Calculate metrics
+        const totalEvents = allEvents.length;
+        const uniqueEventTypes = new Set(allEvents.map(e => e.event_type)).size;
+        const purchaseIntents = allEvents.filter(e => e.event_type === 'purchase_intent').length;
+        const leads = allEvents.filter(e => e.event_type === 'lead_generated').length;
+
+        // Display metrics
+        document.getElementById('metrics').innerHTML = `
+          <div class="metrics-grid">
+            <div class="metric">
+              <h3>Всього Подій</h3>
+              <p>${totalEvents}</p>
+            </div>
+            <div class="metric">
+              <h3>Типів Подій</h3>
+              <p>${uniqueEventTypes}</p>
+            </div>
+            <div class="metric">
+              <h3>Наміри Купівлі</h3>
+              <p>${purchaseIntents}</p>
+            </div>
+            <div class="metric">
+              <h3>Лідів Створено</h3>
+              <p>${leads}</p>
+            </div>
+          </div>
+        `;
+
+        // Group by event type
+        const eventCounts = {};
+        allEvents.forEach(e => {
+          eventCounts[e.event_type] = (eventCounts[e.event_type] || 0) + 1;
+        });
+
+        // Display tables
+        document.getElementById('tables').innerHTML = `
+          <h2>Події за Типом</h2>
+          <table>
+            <tr><th>Тип Події</th><th>Кількість</th></tr>
+            ${Object.entries(eventCounts)
+              .sort((a, b) => b[1] - a[1])
+              .map(([type, count]) => `<tr><td>${type}</td><td>${count}</td></tr>`)
+              .join('')}
+          </table>
+
+          <h2>Останні Події (20)</h2>
+          <table>
+            <tr><th>Подія</th><th>Час</th><th>Деталі</th></tr>
+            ${allEvents
+              .slice(0, 20)
+              .map(e => `
+                <tr>
+                  <td>${e.event_type}</td>
+                  <td>${new Date(e.created_at).toLocaleString('uk-UA')}</td>
+                  <td><small>${JSON.stringify(e.event_data).substring(0, 100)}...</small></td>
+                </tr>
+              `)
+              .join('')}
+          </table>
+        `;
+
+      } catch (error) {
+        console.error('Error loading analytics:', error);
+        document.getElementById('metrics').innerHTML = '<p style="color: #e63946;">Помилка завантаження аналітики: ' + error.message + '</p>';
+        document.getElementById('tables').innerHTML = '';
+      }
+    }
+
+    loadAnalytics();
+
+    // Auto-refresh every 30 seconds
+    setInterval(loadAnalytics, 30000);
+  </script>
+</body>
+</html>
