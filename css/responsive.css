@@ -236,7 +236,8 @@ body {
   transition: var(--transition);
   position: relative;
   overflow: hidden;
-  width: 100%;
+  max-width: 280px;
+  margin: 0 auto;
   text-align: center;
   display: block;
 }
@@ -349,19 +350,24 @@ body {
 .features {
   list-style: none;
   margin-bottom: 30px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  justify-content: center;
 }
 
 .features li {
-  display: inline-block;
-  padding: 12px 24px;
+  display: block;
+  padding: 10px 18px;
   background: rgba(22, 219, 147, 0.1);
   border: 2px solid #16DB93;
   border-radius: 50px;
   color: #16DB93;
-  font-size: 16px;
+  font-size: 14px;
   font-weight: 500;
   text-align: center;
   transition: var(--transition);
+  white-space: nowrap;
 }
 
 .features li:hover {
