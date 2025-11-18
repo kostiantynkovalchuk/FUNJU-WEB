@@ -45,16 +45,15 @@ class VideoPlayer {
   handleVisibilityChange() {
     document.addEventListener('visibilitychange', () => {
       if (!document.hidden) {
+        // Resume videos if they were playing before (but don't reset them with .load())
         setTimeout(() => {
-          if (this.heroVideo) {
-            this.heroVideo.load();
-            if (!this.hasPlayedOnce) this.heroVideo.play().catch(() => {});
+          if (this.heroVideo && this.heroVideo.paused && !this.hasPlayedOnce) {
+            this.heroVideo.play().catch(e => console.log('Hero resume blocked:', e));
           }
-          if (this.productVideo) {
-            this.productVideo.load();
-            this.productVideo.play().catch(() => {});
+          if (this.productVideo && this.productVideo.paused) {
+            this.productVideo.play().catch(e => console.log('Product resume blocked:', e));
           }
-        }, 500);
+        }, 100);
       }
     });
   }

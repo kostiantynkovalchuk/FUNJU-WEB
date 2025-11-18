@@ -11,6 +11,20 @@ class AgeGate {
     // Check if age has already been verified
     if (this.isAgeVerified()) {
       this.hideAgeGate();
+
+      // Fallback: Try to play videos for returning visitors
+      // This helps on iOS where autoplay might be blocked on page load
+      setTimeout(() => {
+        const heroVideo = document.querySelector('.hero-video');
+        const productVideo = document.querySelector('.product-video');
+        if (heroVideo && heroVideo.paused) {
+          heroVideo.play().catch(e => console.log('Hero autoplay blocked (returning):', e));
+        }
+        if (productVideo && productVideo.paused) {
+          productVideo.play().catch(e => console.log('Product autoplay blocked (returning):', e));
+        }
+      }, 100);
+
       return;
     }
 
@@ -33,20 +47,19 @@ class AgeGate {
   }
 
   verifyAge() {
-    // Set cookie/localStorage to remember verification
     this.setAgeVerified();
     this.hideAgeGate();
     this.trackVerification("verified");
 
-    // Show welcome message
-    setTimeout(() => {
-      if (typeof showNotification === "function") {
-        showNotification(
-          "🎉 Ласкаво просимо! Прокрутіть вниз, щоб дізнатися, що робить Funju особливим",
-          "success"
-        );
-      }
-    }, 1000);
+    // Play videos immediately after user clicks (preserves user gesture)
+    const heroVideo = document.querySelector('.hero-video');
+    const productVideo = document.querySelector('.product-video');
+    if (heroVideo) {
+      heroVideo.play().catch(e => console.log('Hero playback blocked (verify):', e));
+    }
+    if (productVideo) {
+      productVideo.play().catch(e => console.log('Product playback blocked (verify):', e));
+    }
   }
 
   redirectUnderage() {
