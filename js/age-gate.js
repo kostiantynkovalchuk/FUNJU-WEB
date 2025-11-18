@@ -33,20 +33,18 @@ class AgeGate {
   }
 
   verifyAge() {
-    // Set cookie/localStorage to remember verification
     this.setAgeVerified();
     this.hideAgeGate();
     this.trackVerification("verified");
 
-    // Show welcome message
+    // Play videos after user interaction
     setTimeout(() => {
-      if (typeof showNotification === "function") {
-        showNotification(
-          "🎉 Ласкаво просимо! Прокрутіть вниз, щоб дізнатися, що робить Funju особливим",
-          "success"
-        );
-      }
-    }, 1000);
+      const heroVideo = document.querySelector('.hero-video');
+      const productVideo = document.querySelector('.product-video');
+
+      if (heroVideo) heroVideo.play().catch(e => console.log('Hero blocked'));
+      if (productVideo) productVideo.play().catch(e => console.log('Product blocked'));
+    }, 500);
   }
 
   redirectUnderage() {
