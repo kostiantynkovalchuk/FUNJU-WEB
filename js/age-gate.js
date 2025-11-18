@@ -11,9 +11,6 @@ class AgeGate {
     // Check if age has already been verified
     if (this.isAgeVerified()) {
       this.hideAgeGate();
-
-      // CRITICAL: Play videos for returning visitors
-      this.playVideos();
       return;
     }
 
@@ -36,33 +33,20 @@ class AgeGate {
   }
 
   verifyAge() {
+    // Set cookie/localStorage to remember verification
     this.setAgeVerified();
     this.hideAgeGate();
     this.trackVerification("verified");
 
-    // Play videos for first-time visitors
-    this.playVideos();
-  }
-
-  // NEW METHOD: Centralized video play logic
-  playVideos() {
+    // Show welcome message
     setTimeout(() => {
-      const heroVideo = document.querySelector('.hero-video');
-      const productVideo = document.querySelector('.product-video');
-
-      const playWhenReady = (video) => {
-        if (video.readyState >= 2) {
-          video.play().catch(e => console.log('Play blocked:', e));
-        } else {
-          video.addEventListener('loadeddata', () => {
-            video.play().catch(e => console.log('Play blocked:', e));
-          }, { once: true });
-        }
-      };
-
-      if (heroVideo) playWhenReady(heroVideo);
-      if (productVideo) playWhenReady(productVideo);
-    }, 500);
+      if (typeof showNotification === "function") {
+        showNotification(
+          "🎉 Ласкаво просимо! Прокрутіть вниз, щоб дізнатися, що робить Funju особливим",
+          "success"
+        );
+      }
+    }, 1000);
   }
 
   redirectUnderage() {
