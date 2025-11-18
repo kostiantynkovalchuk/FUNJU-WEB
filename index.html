@@ -73,10 +73,9 @@
         <div class="hero-video-container">
           <video
             class="hero-video"
-            autoplay
             muted
             playsinline
-            preload="auto"
+            preload="metadata"
             webkit-playsinline
           >
             <!-- Android/Chrome gets WebM first (2.8 MB - faster!) -->
@@ -94,7 +93,7 @@
       <div class="product-container">
         <h2 class="product-heading">Що таке Funju?</h2>
         <div class="product-visual">
-          <video class="product-video" autoplay loop muted playsinline>
+          <video class="product-video" loop muted playsinline preload="metadata">
             <source src="assets/product-mobile.webm" type="video/webm" />
             <source src="assets/product-mobile.mp4" type="video/mp4" />
             Ваш браузер не підтримує відео.

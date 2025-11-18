@@ -11,6 +11,9 @@ class AgeGate {
     // Check if age has already been verified
     if (this.isAgeVerified()) {
       this.hideAgeGate();
+
+      // CRITICAL: Play videos for returning visitors
+      this.playVideos();
       return;
     }
 
@@ -37,13 +40,28 @@ class AgeGate {
     this.hideAgeGate();
     this.trackVerification("verified");
 
-    // Play videos after user interaction
+    // Play videos for first-time visitors
+    this.playVideos();
+  }
+
+  // NEW METHOD: Centralized video play logic
+  playVideos() {
     setTimeout(() => {
       const heroVideo = document.querySelector('.hero-video');
       const productVideo = document.querySelector('.product-video');
 
-      if (heroVideo) heroVideo.play().catch(e => console.log('Hero blocked'));
-      if (productVideo) productVideo.play().catch(e => console.log('Product blocked'));
+      const playWhenReady = (video) => {
+        if (video.readyState >= 2) {
+          video.play().catch(e => console.log('Play blocked:', e));
+        } else {
+          video.addEventListener('loadeddata', () => {
+            video.play().catch(e => console.log('Play blocked:', e));
+          }, { once: true });
+        }
+      };
+
+      if (heroVideo) playWhenReady(heroVideo);
+      if (productVideo) playWhenReady(productVideo);
     }, 500);
   }
 
