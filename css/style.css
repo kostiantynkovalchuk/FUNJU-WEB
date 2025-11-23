@@ -550,6 +550,7 @@ body {
   z-index: 2;
   width: 100%;
   height: 100%;
+  aspect-ratio: 1 / 1;
   min-height: 400px;
   max-height: 600px;
   background: rgba(255, 255, 255, 0.05);
@@ -563,16 +564,26 @@ body {
     0 0 40px rgba(230, 57, 70, 0.4),
     0 10px 40px rgba(0, 0, 0, 0.3);
   animation: neonBorderPulse 3s ease-in-out infinite alternate;
-  transition: min-height 0.3s ease;
 }
 
 .product-video {
+  position: absolute;
+  top: 0;
+  left: 0;
   width: 100%;
   height: 100%;
   object-fit: cover;
   object-position: center center;
   display: block;
-  transition: opacity 0.3s ease;
+  opacity: 0;
+  transition: opacity 0.5s ease;
+  pointer-events: none;
+}
+
+.product-video.active {
+  opacity: 1;
+  pointer-events: auto;
+  z-index: 1;
 }
 
 .product-taste {

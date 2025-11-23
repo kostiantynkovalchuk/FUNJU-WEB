@@ -33,95 +33,70 @@ const products = [
 ];
 
 let currentProductIndex = 0;
+let isTransitioning = false;
 
 function updateProduct(index) {
+  // Prevent multiple rapid clicks
+  if (isTransitioning) return;
+  isTransitioning = true;
+
   const product = products[index];
   const tasteElement = document.querySelector(".product-taste");
-  const videoElement = document.querySelector(".product-video");
-  const videoContainer = document.querySelector(".product-visual");
-  const videoSources = videoElement.querySelectorAll("source");
+  const videoElements = document.querySelectorAll(".product-video");
 
-  // Prevent multiple rapid clicks
-  if (videoElement.classList.contains('switching')) return;
-  videoElement.classList.add('switching');
+  // Find active and inactive video elements
+  const activeVideo = document.querySelector(".product-video.active");
+  const inactiveVideo = Array.from(videoElements).find(v => !v.classList.contains('active'));
 
-  // Step 1: Fade out current content
-  videoElement.style.opacity = "0";
-  tasteElement.style.opacity = "0";
+  if (!activeVideo || !inactiveVideo) return;
 
-  // Add min-height to prevent container collapse
-  videoContainer.style.minHeight = videoContainer.offsetHeight + 'px';
+  const inactiveSources = inactiveVideo.querySelectorAll("source");
 
-  // Step 2: After fade out completes, update content
-  setTimeout(() => {
-    // Preload new video in background
-    const tempVideo = document.createElement('video');
-    tempVideo.muted = true;
-    tempVideo.playsInline = true;
-    tempVideo.preload = "auto";
+  // Step 1: Load new video in background (invisible)
+  inactiveSources[0].src = product.videoWebm;
+  inactiveSources[1].src = product.videoMp4;
+  inactiveVideo.load();
 
-    const sourceWebm = document.createElement('source');
-    sourceWebm.src = product.videoWebm;
-    sourceWebm.type = 'video/webm';
+  // Step 2: Wait for new video to be ready
+  inactiveVideo.onloadeddata = () => {
+    // Start playing the new video (still invisible)
+    inactiveVideo.play().then(() => {
+      // Step 3: Crossfade - fade out old, fade in new
+      // Fade out active video
+      activeVideo.classList.remove('active');
 
-    const sourceMp4 = document.createElement('source');
-    sourceMp4.src = product.videoMp4;
-    sourceMp4.type = 'video/mp4';
+      // Fade in new video
+      inactiveVideo.classList.add('active');
 
-    tempVideo.appendChild(sourceWebm);
-    tempVideo.appendChild(sourceMp4);
+      // Step 4: Update taste text with fade
+      tasteElement.style.opacity = "0";
 
-    // Step 3: When new video is ready, swap and fade in
-    tempVideo.onloadeddata = () => {
-      // Update taste text (instant, but invisible)
-      tasteElement.textContent = product.taste;
-
-      // Update actual video sources
-      videoSources[0].src = product.videoWebm;
-      videoSources[1].src = product.videoMp4;
-      videoElement.load();
-
-      // Play the video
-      videoElement.play().then(() => {
-        // Step 4: Fade in new content together
-        videoElement.style.opacity = "1";
-        tasteElement.style.opacity = "1";
-
-        // Remove min-height after transition
-        setTimeout(() => {
-          videoContainer.style.minHeight = '';
-          videoElement.classList.remove('switching');
-        }, 300);
-      }).catch(() => {
-        // Fallback if autoplay fails
-        videoElement.style.opacity = "1";
-        tasteElement.style.opacity = "1";
-        setTimeout(() => {
-          videoContainer.style.minHeight = '';
-          videoElement.classList.remove('switching');
-        }, 300);
-      });
-    };
-
-    // Handle error case
-    tempVideo.onerror = () => {
-      // Still update even if preload fails
-      tasteElement.textContent = product.taste;
-      videoSources[0].src = product.videoWebm;
-      videoSources[1].src = product.videoMp4;
-      videoElement.load();
-      videoElement.play();
-      videoElement.style.opacity = "1";
-      tasteElement.style.opacity = "1";
       setTimeout(() => {
-        videoContainer.style.minHeight = '';
-        videoElement.classList.remove('switching');
-      }, 300);
-    };
+        tasteElement.textContent = product.taste;
+        tasteElement.style.opacity = "1";
+      }, 250);
 
-    // Start loading the temp video
-    tempVideo.load();
-  }, 300);
+      // Step 5: Clean up after transition completes
+      setTimeout(() => {
+        // Pause the old video to save resources
+        activeVideo.pause();
+        activeVideo.currentTime = 0;
+        isTransitioning = false;
+      }, 500);
+    }).catch(() => {
+      // Fallback if autoplay fails
+      inactiveVideo.classList.add('active');
+      activeVideo.classList.remove('active');
+      tasteElement.textContent = product.taste;
+      isTransitioning = false;
+    });
+  };
+
+  // Handle error case
+  inactiveVideo.onerror = () => {
+    console.error('Failed to load video:', product.videoWebm);
+    isTransitioning = false;
+  };
 }
 
 function nextProduct() {
