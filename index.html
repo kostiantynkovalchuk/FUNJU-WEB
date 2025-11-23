@@ -93,16 +93,21 @@
     <section class="product" id="product">
       <div class="product-container">
         <h2 class="product-heading">Що таке Funju?</h2>
-        <div class="product-visual">
-          <video class="product-video" loop muted playsinline preload="auto" autoplay>
-            <source src="assets/product-mobile.webm" type="video/webm" />
-            <source src="assets/product-mobile.mp4" type="video/mp4" />
-            Ваш браузер не підтримує відео.
-          </video>
+        <div class="product-carousel">
+          <button class="carousel-arrow carousel-prev" aria-label="Previous product">‹</button>
+          <div class="product-visual">
+            <video class="product-video" loop muted playsinline preload="auto" autoplay>
+              <source src="assets/product-mobile.webm" type="video/webm" />
+              <source src="assets/product-mobile.mp4" type="video/mp4" />
+              Ваш браузер не підтримує відео.
+            </video>
+          </div>
+          <button class="carousel-arrow carousel-next" aria-label="Next product">›</button>
         </div>
         <div class="product-info">
           <h2>Що таке Funju?</h2>
           <ul class="features">
+            <li class="product-taste"></li>
             <li>15% вмісту алкоголю</li>
             <li>Справжній корейський соджу</li>
             <li>Виготовлено з преміум спирту</li>
@@ -524,6 +529,7 @@
     <script src="js/age-gate.js"></script>
     <script src="js/navigation.js"></script>
     <script src="js/video-player.js"></script>
+    <script src="js/product-carousel.js"></script>
     <script src="js/events.js"></script>
     <script src="js/marketing.js"></script>
     <script src="js/social-feed.js"></script>

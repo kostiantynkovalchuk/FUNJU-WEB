@@ -504,6 +504,47 @@ body {
   padding: 0 40px 0 40px;
 }
 
+.product-carousel {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.carousel-arrow {
+  background: rgba(22, 219, 147, 0.2);
+  border: 2px solid #16DB93;
+  color: #16DB93;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  font-size: 36px;
+  font-weight: 300;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  box-shadow: 0 0 15px rgba(22, 219, 147, 0.4);
+  flex-shrink: 0;
+  padding: 0;
+  padding-bottom: 3px;
+  line-height: 0;
+  font-family: Arial, sans-serif;
+}
+
+.carousel-arrow:hover {
+  background: rgba(22, 219, 147, 0.3);
+  transform: scale(1.1);
+  box-shadow: 0 0 25px rgba(22, 219, 147, 0.6);
+}
+
+.carousel-arrow:active {
+  transform: scale(0.95);
+}
+
 .product-visual {
   position: relative;
   z-index: 2;
@@ -527,9 +568,14 @@ body {
 .product-video {
   width: 100%;
   height: 100%;
-  object-fit: contain;
-  object-position: center 42%;
+  object-fit: cover;
+  object-position: center center;
   display: block;
+  transition: opacity 0.3s ease;
+}
+
+.product-taste {
+  /* Inherits all styles from .features li */
 }
 
 .feature-badge {
