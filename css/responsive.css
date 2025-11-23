@@ -295,8 +295,9 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 15px;
+  gap: 0;
   width: 100%;
+  position: relative;
 }
 
 .carousel-arrow {
@@ -306,6 +307,16 @@ body {
   padding: 0;
   padding-bottom: 2px;
   line-height: 0;
+  position: absolute;
+  z-index: 10;
+}
+
+.carousel-prev {
+  left: 0;
+}
+
+.carousel-next {
+  right: 0;
 }
 
 .product-info {
@@ -1019,6 +1030,23 @@ body {
 
   .product-carousel {
     justify-content: flex-start;
+    gap: 20px;
+  }
+
+  .carousel-arrow {
+    position: static;
+    width: 50px;
+    height: 50px;
+    font-size: 36px;
+    padding-bottom: 3px;
+  }
+
+  .carousel-prev {
+    left: auto;
+  }
+
+  .carousel-next {
+    right: auto;
   }
 
   .product-info {
