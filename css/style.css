@@ -563,6 +563,7 @@ body {
     0 0 40px rgba(230, 57, 70, 0.4),
     0 10px 40px rgba(0, 0, 0, 0.3);
   animation: neonBorderPulse 3s ease-in-out infinite alternate;
+  transition: min-height 0.3s ease;
 }
 
 .product-video {

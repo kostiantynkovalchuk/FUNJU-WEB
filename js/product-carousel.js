@@ -45,29 +45,82 @@ function updateProduct(index) {
   if (videoElement.classList.contains('switching')) return;
   videoElement.classList.add('switching');
 
-  // Fade out video and text
+  // Step 1: Fade out current content
   videoElement.style.opacity = "0";
   tasteElement.style.opacity = "0";
 
+  // Add min-height to prevent container collapse
+  videoContainer.style.minHeight = videoContainer.offsetHeight + 'px';
+
+  // Step 2: After fade out completes, update content
   setTimeout(() => {
-    // Update taste description
-    tasteElement.textContent = product.taste;
+    // Preload new video in background
+    const tempVideo = document.createElement('video');
+    tempVideo.muted = true;
+    tempVideo.playsInline = true;
+    tempVideo.preload = "auto";
 
-    // Update video sources
-    videoSources[0].src = product.videoWebm;
-    videoSources[1].src = product.videoMp4;
+    const sourceWebm = document.createElement('source');
+    sourceWebm.src = product.videoWebm;
+    sourceWebm.type = 'video/webm';
 
-    // Reload video
-    videoElement.load();
+    const sourceMp4 = document.createElement('source');
+    sourceMp4.src = product.videoMp4;
+    sourceMp4.type = 'video/mp4';
 
-    // Wait for video to be loaded before showing
-    videoElement.onloadeddata = () => {
+    tempVideo.appendChild(sourceWebm);
+    tempVideo.appendChild(sourceMp4);
+
+    // Step 3: When new video is ready, swap and fade in
+    tempVideo.onloadeddata = () => {
+      // Update taste text (instant, but invisible)
+      tasteElement.textContent = product.taste;
+
+      // Update actual video sources
+      videoSources[0].src = product.videoWebm;
+      videoSources[1].src = product.videoMp4;
+      videoElement.load();
+
+      // Play the video
+      videoElement.play().then(() => {
+        // Step 4: Fade in new content together
+        videoElement.style.opacity = "1";
+        tasteElement.style.opacity = "1";
+
+        // Remove min-height after transition
+        setTimeout(() => {
+          videoContainer.style.minHeight = '';
+          videoElement.classList.remove('switching');
+        }, 300);
+      }).catch(() => {
+        // Fallback if autoplay fails
+        videoElement.style.opacity = "1";
+        tasteElement.style.opacity = "1";
+        setTimeout(() => {
+          videoContainer.style.minHeight = '';
+          videoElement.classList.remove('switching');
+        }, 300);
+      });
+    };
+
+    // Handle error case
+    tempVideo.onerror = () => {
+      // Still update even if preload fails
+      tasteElement.textContent = product.taste;
+      videoSources[0].src = product.videoWebm;
+      videoSources[1].src = product.videoMp4;
+      videoElement.load();
       videoElement.play();
-      // Fade in video and text together
       videoElement.style.opacity = "1";
       tasteElement.style.opacity = "1";
-      videoElement.classList.remove('switching');
+      setTimeout(() => {
+        videoContainer.style.minHeight = '';
+        videoElement.classList.remove('switching');
+      }, 300);
     };
+
+    // Start loading the temp video
+    tempVideo.load();
   }, 300);
 }
 
