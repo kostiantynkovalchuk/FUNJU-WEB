@@ -1222,7 +1222,6 @@ body {
 .moments {
   padding: 100px 0;
   background: transparent;
-  content-visibility: auto;
 }
 
 .fans-container {
@@ -1238,11 +1237,6 @@ body {
   margin-bottom: 60px;
   color: #16DB93;
   text-shadow: 0 0 10px rgba(22, 219, 147, 0.5);
-  will-change: opacity;
-}
-
-.moments p {
-  will-change: opacity;
 }
 
 .fans-grid {
@@ -1250,13 +1244,6 @@ body {
   flex-direction: column;
   gap: 20px;
   margin-bottom: 40px;
-  contain: layout style paint;
-}
-
-/* Lazy load optimization for social cards */
-.social-card {
-  content-visibility: auto;
-  contain-intrinsic-size: 0 350px;
 }
 
 .fan-card {
