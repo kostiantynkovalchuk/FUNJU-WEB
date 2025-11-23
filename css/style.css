@@ -576,6 +576,7 @@ body {
 
 .product-taste {
   /* Inherits all styles from .features li */
+  transition: opacity 0.3s ease;
 }
 
 .feature-badge {

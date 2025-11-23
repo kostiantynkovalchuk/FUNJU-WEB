@@ -38,10 +38,16 @@ function updateProduct(index) {
   const product = products[index];
   const tasteElement = document.querySelector(".product-taste");
   const videoElement = document.querySelector(".product-video");
+  const videoContainer = document.querySelector(".product-visual");
   const videoSources = videoElement.querySelectorAll("source");
 
-  // Fade out
+  // Prevent multiple rapid clicks
+  if (videoElement.classList.contains('switching')) return;
+  videoElement.classList.add('switching');
+
+  // Fade out video and text
   videoElement.style.opacity = "0";
+  tasteElement.style.opacity = "0";
 
   setTimeout(() => {
     // Update taste description
@@ -53,10 +59,15 @@ function updateProduct(index) {
 
     // Reload video
     videoElement.load();
-    videoElement.play();
 
-    // Fade in
-    videoElement.style.opacity = "1";
+    // Wait for video to be loaded before showing
+    videoElement.onloadeddata = () => {
+      videoElement.play();
+      // Fade in video and text together
+      videoElement.style.opacity = "1";
+      tasteElement.style.opacity = "1";
+      videoElement.classList.remove('switching');
+    };
   }, 300);
 }
 
