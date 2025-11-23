@@ -11,7 +11,7 @@ const products = [
     videoMp4: "assets/citrus.mp4",
   },
   {
-    taste: "Манго-маракуйя",
+    taste: "Манго",
     videoWebm: "assets/mango.webm",
     videoMp4: "assets/mango.mp4",
   },
@@ -46,7 +46,9 @@ function updateProduct(index) {
 
   // Find active and inactive video elements
   const activeVideo = document.querySelector(".product-video.active");
-  const inactiveVideo = Array.from(videoElements).find(v => !v.classList.contains('active'));
+  const inactiveVideo = Array.from(videoElements).find(
+    (v) => !v.classList.contains("active")
+  );
 
   if (!activeVideo || !inactiveVideo) return;
 
@@ -60,41 +62,44 @@ function updateProduct(index) {
   // Step 2: Wait for new video to be ready
   inactiveVideo.onloadeddata = () => {
     // Start playing the new video (still invisible)
-    inactiveVideo.play().then(() => {
-      // Step 3: Crossfade - fade out old, fade in new
-      // Fade out active video
-      activeVideo.classList.remove('active');
+    inactiveVideo
+      .play()
+      .then(() => {
+        // Step 3: Crossfade - fade out old, fade in new
+        // Fade out active video
+        activeVideo.classList.remove("active");
 
-      // Fade in new video
-      inactiveVideo.classList.add('active');
+        // Fade in new video
+        inactiveVideo.classList.add("active");
 
-      // Step 4: Update taste text with fade
-      tasteElement.style.opacity = "0";
+        // Step 4: Update taste text with fade
+        tasteElement.style.opacity = "0";
 
-      setTimeout(() => {
+        setTimeout(() => {
+          tasteElement.textContent = product.taste;
+          tasteElement.style.opacity = "1";
+        }, 250);
+
+        // Step 5: Clean up after transition completes
+        setTimeout(() => {
+          // Pause the old video to save resources
+          activeVideo.pause();
+          activeVideo.currentTime = 0;
+          isTransitioning = false;
+        }, 500);
+      })
+      .catch(() => {
+        // Fallback if autoplay fails
+        inactiveVideo.classList.add("active");
+        activeVideo.classList.remove("active");
         tasteElement.textContent = product.taste;
-        tasteElement.style.opacity = "1";
-      }, 250);
-
-      // Step 5: Clean up after transition completes
-      setTimeout(() => {
-        // Pause the old video to save resources
-        activeVideo.pause();
-        activeVideo.currentTime = 0;
         isTransitioning = false;
-      }, 500);
-    }).catch(() => {
-      // Fallback if autoplay fails
-      inactiveVideo.classList.add('active');
-      activeVideo.classList.remove('active');
-      tasteElement.textContent = product.taste;
-      isTransitioning = false;
-    });
+      });
   };
 
   // Handle error case
   inactiveVideo.onerror = () => {
-    console.error('Failed to load video:', product.videoWebm);
+    console.error("Failed to load video:", product.videoWebm);
     isTransitioning = false;
   };
 }
