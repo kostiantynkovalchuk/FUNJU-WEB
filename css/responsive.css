@@ -319,12 +319,15 @@ body {
   right: 0;
 }
 
-.product-info {
+.product .product-container .product-info {
   display: flex;
   flex-direction: column;
   align-items: center;
   width: 100%;
   text-align: center;
+  padding: 0 15px;
+  max-width: 100%;
+  justify-self: center;
 }
 
 .product-info h2 {
@@ -337,8 +340,10 @@ body {
   /* Inherits all styles from .features li */
 }
 
-.product-info .btn {
+.product .product-info .btn {
   margin: 20px auto 0 auto;
+  display: block;
+  width: fit-content;
 }
 
 .product-container .product-visual {
@@ -408,13 +413,15 @@ body {
   text-shadow: 0 0 8px rgba(22, 219, 147, 0.3);
 }
 
-.features {
+.product .product-info .features {
   list-style: none;
   margin-bottom: 30px;
   display: flex;
   flex-wrap: wrap;
   gap: 10px;
   justify-content: center;
+  padding: 0;
+  width: 100%;
 }
 
 .features li {
