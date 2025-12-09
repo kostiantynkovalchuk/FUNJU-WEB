@@ -1,32 +1,32 @@
 // Product Carousel Functionality
 const products = [
   {
-    taste: "Яблуко",
+    tasteKey: "productTasteApple",
     videoWebm: "assets/product-mobile.webm",
     videoMp4: "assets/product-mobile.mp4",
   },
   {
-    taste: "Цитрус",
+    tasteKey: "productTasteCitrus",
     videoWebm: "assets/citrus.webm",
     videoMp4: "assets/citrus.mp4",
   },
   {
-    taste: "Манго",
+    tasteKey: "productTasteMango",
     videoWebm: "assets/mango.webm",
     videoMp4: "assets/mango.mp4",
   },
   {
-    taste: "Персик",
+    tasteKey: "productTastePeach",
     videoWebm: "assets/peach.webm",
     videoMp4: "assets/peach.mp4",
   },
   {
-    taste: "Ананас",
+    tasteKey: "productTastePineapple",
     videoWebm: "assets/pineapple.webm",
     videoMp4: "assets/pineapple.mp4",
   },
   {
-    taste: "Кавун",
+    tasteKey: "productTasteWatermelon",
     videoWebm: "assets/watermelon.webm",
     videoMp4: "assets/watermelon.mp4",
   },
@@ -76,7 +76,7 @@ function updateProduct(index) {
         tasteElement.style.opacity = "0";
 
         setTimeout(() => {
-          tasteElement.textContent = product.taste;
+          tasteElement.textContent = window.t ? window.t(product.tasteKey) : product.tasteKey;
           tasteElement.style.opacity = "1";
         }, 250);
 
@@ -92,7 +92,7 @@ function updateProduct(index) {
         // Fallback if autoplay fails
         inactiveVideo.classList.add("active");
         activeVideo.classList.remove("active");
-        tasteElement.textContent = product.taste;
+        tasteElement.textContent = window.t ? window.t(product.tasteKey) : product.tasteKey;
         isTransitioning = false;
       });
   };
@@ -168,4 +168,13 @@ document.addEventListener("DOMContentLoaded", () => {
       }
     }
   }
+
+  // Listen for language changes and update current taste
+  window.addEventListener("languageChanged", () => {
+    const tasteElement = document.querySelector(".product-taste");
+    const product = products[currentProductIndex];
+    if (tasteElement && product) {
+      tasteElement.textContent = window.t ? window.t(product.tasteKey) : product.tasteKey;
+    }
+  });
 });

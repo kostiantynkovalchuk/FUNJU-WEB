@@ -53,14 +53,14 @@ class Marketing {
     modal.innerHTML = `
             <div class="modal-content">
                 <button class="modal-close">&times;</button>
-                <h2 style="margin-bottom: 15px; color: #333;">🚀 Купити Funju зараз!</h2>
-                <p style="color: #666; margin-bottom: 25px; font-size: 14px;">⚡ Замовте Funju онлайн з доставкою додому</p>
+                <h2 style="margin-bottom: 15px; color: #333;">${window.t('buyModalTitle')}</h2>
+                <p style="color: #666; margin-bottom: 25px; font-size: 14px;">${window.t('buyModalDescription')}</p>
                 <div style="display: flex; flex-direction: column; gap: 12px;">
                     <a href="https://rozetka.com.ua/ua/vodka/c4649154/producer=funju/" target="_blank" class="store-btn" style="text-decoration: none; display: block; text-align: center; padding: 15px 20px; background: linear-gradient(45deg, #4CAF50, #45a049); color: white; border: none; border-radius: 12px; font-weight: 600; font-size: 16px; cursor: pointer; transition: all 0.3s;">
-                        🛒 ROZETKA - В наявності
+                        ${window.t('buyModalRozetka')}
                     </a>
                 </div>
-                <button class="btn-secondary" style="margin-top: 15px; width: 100%;">Може пізніше</button>
+                <button class="btn-secondary" style="margin-top: 15px; width: 100%;">${window.t('buyModalLater')}</button>
             </div>
         `;
 
@@ -162,47 +162,47 @@ class Marketing {
     modal.innerHTML = `
             <div class="modal-content">
                 <button class="modal-close">&times;</button>
-                <h2 style="margin-bottom: 15px; color: #333;">📸 Поділіться і отримайте винагороду!</h2>
+                <h2 style="margin-bottom: 15px; color: #333;">${window.t('shareModalTitle')}</h2>
                 <p style="margin-bottom: 25px; color: #666; font-size: 14px; line-height: 1.5;">
-                    Опублікуйте ваш Funju момент з <strong>#FunjuMoments</strong> та <strong>@funju.soju</strong>, щоб потрапити на наш сайт + виграти ексклюзивні призи!
+                    ${window.t('shareModalDescription')}
                 </p>
 
                 <div style="background: linear-gradient(45deg, #f8f9ff, #e8ebff); padding: 20px; border-radius: 15px; margin-bottom: 25px;">
-                    <h3 style="color: #667eea; margin-bottom: 15px;">🎁 Що ви можете виграти:</h3>
+                    <h3 style="color: #667eea; margin-bottom: 15px;">${window.t('shareModalPrizes')}</h3>
                     <div style="text-align: left; font-size: 14px; color: #333;">
-                        • 🍾 <strong>Безкоштовні пляшки Funju</strong><br>
-                        • 🎫 <strong>VIP запрошення на вечірки</strong><br>
-                        • 👕 <strong>Ексклюзивний мерч</strong><br>
-                        • 📱 <strong>Публікація в наших соцмережах</strong>
+                        ${window.t('shareModalPrize1')}
+                        ${window.t('shareModalPrize2')}
+                        ${window.t('shareModalPrize3')}
+                        ${window.t('shareModalPrize4')}
                     </div>
                 </div>
 
                 <form id="ugcSubmissionForm">
                     <div style="margin-bottom: 15px;">
-                        <input type="text" name="userName" placeholder="Ваше ім'я *" required
+                        <input type="text" name="userName" placeholder="${window.t('shareModalYourName')}" required
                                style="width: 100%; padding: 12px; border: 2px solid #e0e0e0; border-radius: 10px; font-size: 16px; box-sizing: border-box;">
                     </div>
                     <div style="margin-bottom: 15px;">
-                        <input type="email" name="userEmail" placeholder="Ваш Email *" required
+                        <input type="email" name="userEmail" placeholder="${window.t('shareModalYourEmail')}" required
                                style="width: 100%; padding: 12px; border: 2px solid #e0e0e0; border-radius: 10px; font-size: 16px; box-sizing: border-box;">
                     </div>
                     <div style="margin-bottom: 15px;">
                         <select name="platform" required style="width: 100%; padding: 12px; border: 2px solid #e0e0e0; border-radius: 10px; font-size: 16px; box-sizing: border-box;">
-                            <option value="">Оберіть платформу *</option>
-                            <option value="instagram">📷 Instagram</option>
-                            <option value="tiktok">🎵 TikTok</option>
-                            <option value="youtube">📺 YouTube</option>
+                            <option value="">${window.t('shareModalPlatform')}</option>
+                            <option value="instagram">${window.t('shareModalPlatformInstagram')}</option>
+                            <option value="tiktok">${window.t('shareModalPlatformTiktok')}</option>
+                            <option value="youtube">${window.t('shareModalPlatformYoutube')}</option>
                         </select>
                     </div>
                     <div style="margin-bottom: 20px;">
-                        <input type="url" name="contentUrl" placeholder="Посилання на ваш пост/відео *" required
+                        <input type="url" name="contentUrl" placeholder="${window.t('shareModalContentUrl')}" required
                                style="width: 100%; padding: 12px; border: 2px solid #e0e0e0; border-radius: 10px; font-size: 16px; box-sizing: border-box;">
-                        <small style="color: #999; font-size: 12px; display: block; margin-top: 5px;">Вставте повне посилання на ваш пост</small>
+                        <small style="color: #999; font-size: 12px; display: block; margin-top: 5px;">${window.t('shareModalUrlHint')}</small>
                     </div>
 
                     <div style="display: flex; gap: 10px;">
-                        <button type="submit" style="flex: 1; padding: 15px; background: linear-gradient(45deg, #667eea, #764ba2); color: white; border: none; border-radius: 12px; cursor: pointer; font-weight: 600; font-size: 16px;">✨ Відправити на перевірку</button>
-                        <button type="button" class="btn-secondary" style="padding: 15px 20px;">Скасувати</button>
+                        <button type="submit" style="flex: 1; padding: 15px; background: linear-gradient(45deg, #667eea, #764ba2); color: white; border: none; border-radius: 12px; cursor: pointer; font-weight: 600; font-size: 16px;">${window.t('shareModalSubmit')}</button>
+                        <button type="button" class="btn-secondary" style="padding: 15px 20px;">${window.t('eventModalCancel')}</button>
                     </div>
                 </form>
             </div>
@@ -251,7 +251,7 @@ class Marketing {
 
     const submitBtn = e.target.querySelector('button[type="submit"]');
     const originalText = submitBtn.innerHTML;
-    submitBtn.innerHTML = '⏳ Відправляємо...';
+    submitBtn.innerHTML = window.t('shareModalSubmitting');
     submitBtn.disabled = true;
 
     try {
@@ -307,9 +307,9 @@ class Marketing {
 
       // Show success message
       if (typeof showNotification === "function") {
-        showNotification("✨ Дякуємо! Ваш контент надіслано на перевірку. Ми зв'яжемося з вами найближчим часом!", "success");
+        showNotification(window.t('shareModalSuccess'), "success");
       } else {
-        alert("✨ Дякуємо! Ваш контент надіслано на перевірку. Ми зв'яжемося з вами найближчим часом!");
+        alert(window.t('shareModalSuccess'));
       }
     } catch (error) {
       console.error('UGC submission error:', error);
@@ -317,9 +317,9 @@ class Marketing {
       submitBtn.disabled = false;
 
       if (typeof showNotification === "function") {
-        showNotification("❌ Помилка відправки. Спробуйте ще раз або напишіть нам на sojufunju@gmail.com", "error");
+        showNotification(window.t('shareModalError'), "error");
       } else {
-        alert("❌ Помилка відправки. Спробуйте ще раз або напишіть нам на sojufunju@gmail.com");
+        alert(window.t('shareModalError'));
       }
     }
   }

@@ -20,15 +20,15 @@ class Events {
 
   showRegistrationModal(eventId) {
     const eventTitles = {
-      "summer-party": "Київський Rooftop Experience",
-      "lviv-launch": "Львів Launch Party",
-      "odesa-beach": "Одеса Beach Festival",
+      "summer-party": window.t('eventKyivTitle'),
+      "lviv-launch": window.t('eventLvivTitle'),
+      "odesa-beach": window.t('eventOdesaTitle'),
     };
 
     const socialProof = {
-      "summer-party": "🔥 127 людей вже зареєструвалися!",
-      "lviv-launch": "⚡ Залишилося лише 23 місця!",
-      "odesa-beach": "🌊 85% заповнено - поспішайте!",
+      "summer-party": window.t('eventModalRegistered127'),
+      "lviv-launch": window.t('eventModalSpots23'),
+      "odesa-beach": window.t('eventModalFilled85'),
     };
 
     const modal = document.createElement("div");
@@ -37,41 +37,41 @@ class Events {
             <div class="modal-content">
                 <button class="modal-close">&times;</button>
                 <div style="text-align: center; margin-bottom: 25px;">
-                    <h2 style="margin-bottom: 10px; color: #333;">🎉 Приєднуйтесь до ${eventTitles[eventId]}!</h2>
+                    <h2 style="margin-bottom: 10px; color: #333;">${window.t('eventModalJoin')} ${eventTitles[eventId]}!</h2>
                     <p style="color: #667eea; font-weight: 600; font-size: 14px;">${socialProof[eventId]}</p>
                 </div>
                 <form id="eventRegistrationForm">
                     <input type="hidden" name="eventId" value="${eventId}">
                     <div style="margin-bottom: 15px;">
-                        <input type="text" name="name" placeholder="Ваше ім'я *" required
+                        <input type="text" name="name" placeholder="${window.t('eventModalName')}" required
                                style="width: 100%; padding: 12px; border: 2px solid #e0e0e0; border-radius: 10px; font-size: 16px; box-sizing: border-box;">
                     </div>
                     <div style="margin-bottom: 15px;">
-                        <input type="email" name="email" placeholder="Ваш Email *" required
+                        <input type="email" name="email" placeholder="${window.t('eventModalEmail')}" required
                                style="width: 100%; padding: 12px; border: 2px solid #e0e0e0; border-radius: 10px; font-size: 16px; box-sizing: border-box;">
                     </div>
                     <div style="margin-bottom: 15px;">
-                        <input type="tel" name="phone" placeholder="Ваш телефон (для оновлень події)"
+                        <input type="tel" name="phone" placeholder="${window.t('eventModalPhone')}"
                                style="width: 100%; padding: 12px; border: 2px solid #e0e0e0; border-radius: 10px; font-size: 16px; box-sizing: border-box;">
                     </div>
                     <div style="margin-bottom: 20px;">
                         <select name="age" required style="width: 100%; padding: 12px; border: 2px solid #e0e0e0; border-radius: 10px; font-size: 16px; box-sizing: border-box;">
-                            <option value="">Оберіть вашу вікову категорію *</option>
-                            <option value="18-24">18-24 роки</option>
-                            <option value="25-34">25-34 роки</option>
-                            <option value="35-44">35-44 роки</option>
-                            <option value="45+">45+ років</option>
+                            <option value="">${window.t('eventModalAge')}</option>
+                            <option value="18-24">${window.t('eventModalAge1824')}</option>
+                            <option value="25-34">${window.t('eventModalAge2534')}</option>
+                            <option value="35-44">${window.t('eventModalAge3544')}</option>
+                            <option value="45+">${window.t('eventModalAge45')}</option>
                         </select>
                     </div>
                     <div style="background: #f8f9ff; padding: 15px; border-radius: 10px; margin-bottom: 20px; border: 1px solid #e8ebff;">
                         <label style="display: flex; align-items: center; font-size: 14px; color: #666;">
                             <input type="checkbox" name="marketing" value="yes" checked style="margin-right: 10px;">
-                            📱 Отримувати ексклюзивні запрошення на Funju вечірки та пропозиції
+                            ${window.t('eventModalMarketing')}
                         </label>
                     </div>
                     <div style="display: flex; gap: 10px;">
-                        <button type="submit" style="flex: 1; padding: 15px; background: linear-gradient(45deg, #667eea, #764ba2); color: white; border: none; border-radius: 12px; cursor: pointer; font-weight: 600; font-size: 16px;">🎊 Забронювати моє місце!</button>
-                        <button type="button" class="btn-secondary" style="padding: 15px 20px;">Скасувати</button>
+                        <button type="submit" style="flex: 1; padding: 15px; background: linear-gradient(45deg, #667eea, #764ba2); color: white; border: none; border-radius: 12px; cursor: pointer; font-weight: 600; font-size: 16px;">${window.t('eventModalReserve')}</button>
+                        <button type="button" class="btn-secondary" style="padding: 15px 20px;">${window.t('eventModalCancel')}</button>
                     </div>
                 </form>
             </div>
@@ -126,7 +126,7 @@ class Events {
     // Show loading state
     const submitBtn = e.target.querySelector('button[type="submit"]');
     const originalText = submitBtn.innerHTML;
-    submitBtn.innerHTML = '⏳ Зберігаємо...';
+    submitBtn.innerHTML = window.t('eventModalSaving');
     submitBtn.disabled = true;
 
     try {
@@ -165,9 +165,9 @@ class Events {
 
       // Show success message
       if (typeof showNotification === "function") {
-        showNotification("🎉 Ви зареєстровані! Перевірте ваш email для деталей події та БЕЗКОШТОВНОГО ваучера на вітальний напій!", "success");
+        showNotification(window.t('eventModalSuccess'), "success");
       } else {
-        alert("🎉 Ви зареєстровані! Перевірте ваш email для деталей події та БЕЗКОШТОВНОГО ваучера на вітальний напій!");
+        alert(window.t('eventModalSuccess'));
       }
     } catch (error) {
       console.error('Registration error:', error);
@@ -175,9 +175,9 @@ class Events {
       submitBtn.disabled = false;
 
       if (typeof showNotification === "function") {
-        showNotification("❌ Помилка реєстрації. Спробуйте ще раз або зв'яжіться з нами.", "error");
+        showNotification(window.t('eventModalError'), "error");
       } else {
-        alert("❌ Помилка реєстрації. Спробуйте ще раз або зв'яжіться з нами.");
+        alert(window.t('eventModalError'));
       }
     }
   }

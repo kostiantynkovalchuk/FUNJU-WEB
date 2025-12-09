@@ -201,7 +201,7 @@ function displayStoreInfo(store) {
 
   infoDiv.innerHTML = `
     <span class="status-badge ${store.in_stock ? 'in-stock' : 'out-stock'}">
-      ${store.in_stock ? '✅ В наявності' : '❌ Немає в наявності'}
+      ${store.in_stock ? window.t('findInStock') : window.t('findOutOfStock')}
     </span>
     <div class="info-row">
       <span class="info-icon">🏪</span>
@@ -212,7 +212,7 @@ function displayStoreInfo(store) {
     </div>
     <div class="info-row">
       <span class="info-icon">📍</span>
-      <span><strong>${store.distance.toFixed(2)} км</strong> від вас</span>
+      <span><strong>${store.distance.toFixed(2)} км</strong> ${window.t('findFromYou')}</span>
     </div>
     ${store.phone ? `
     <div class="info-row">
@@ -258,14 +258,14 @@ document.getElementById('findForm').addEventListener('submit', async function(e)
 
   // Validate inputs
   if (!name || !city || !email) {
-    alert('Будь ласка, заповни всі поля');
+    alert(window.t('findAllFields'));
     return;
   }
 
   // Show loading
   const submitBtn = document.getElementById('submitBtn');
   const originalText = submitBtn.innerHTML;
-  submitBtn.innerHTML = '<span class="loading"></span> Шукаємо...';
+  submitBtn.innerHTML = `<span class="loading"></span> ${window.t('findSearching')}`;
   submitBtn.disabled = true;
 
   try {
@@ -339,7 +339,7 @@ document.getElementById('findForm').addEventListener('submit', async function(e)
       // Show success message
       const successMsg = document.getElementById('successMessage');
       document.getElementById('successText').textContent =
-        `Привіт, ${name}! Знайдено ${cityStores.length} магазинів у місті ${city}.`;
+        window.t('findSuccess', { name: name, count: cityStores.length, city: city });
       successMsg.classList.add('visible');
 
       setTimeout(() => {
@@ -348,13 +348,13 @@ document.getElementById('findForm').addEventListener('submit', async function(e)
 
       console.log('Form submitted successfully', userData);
     } else {
-      alert(`На жаль, у місті ${city} ще немає магазинів з Funju.`);
+      alert(window.t('findNoStores', { city: city }));
       submitBtn.innerHTML = originalText;
       submitBtn.disabled = false;
     }
   } catch (error) {
     console.error('Form submission error:', error);
-    alert('Сталася помилка. Спробуй ще раз.');
+    alert(window.t('findError'));
     submitBtn.innerHTML = originalText;
     submitBtn.disabled = false;
   }
@@ -362,13 +362,13 @@ document.getElementById('findForm').addEventListener('submit', async function(e)
 
 document.getElementById('locationBtn').addEventListener('click', function() {
   if (!navigator.geolocation) {
-    alert('Геолокація не підтримується вашим браузером');
+    alert(window.t('findGeoError'));
     return;
   }
 
   const btn = this;
   const originalHTML = btn.innerHTML;
-  btn.innerHTML = '<span class="loading"></span> Шукаю...';
+  btn.innerHTML = `<span class="loading"></span> ${window.t('findLocating')}`;
   btn.disabled = true;
 
   navigator.geolocation.getCurrentPosition(
@@ -405,7 +405,7 @@ document.getElementById('locationBtn').addEventListener('click', function() {
     },
     (error) => {
       console.error('Geolocation error:', error);
-      alert('Не вдалося визначити вашу локацію. Переконайтеся, що ви дали дозвіл на геолокацію.');
+      alert(window.t('findGeoPermission'));
       btn.innerHTML = originalHTML;
       btn.disabled = false;
     }

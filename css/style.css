@@ -243,30 +243,39 @@ body {
   gap: 20px;
 }
 
-.lang-switcher {
+.lang-switcher-btn {
   display: flex;
-  gap: 5px;
-  font-weight: 500;
-  color: rgba(255, 255, 255, 0.7);
-}
-
-.lang-switcher span {
+  align-items: center;
+  gap: 6px;
+  padding: 8px 14px;
+  background: rgba(22, 219, 147, 0.1);
+  border: 1px solid rgba(22, 219, 147, 0.3);
+  border-radius: 20px;
+  color: #16DB93;
+  font-weight: 600;
+  font-size: 14px;
   cursor: pointer;
-  padding: 5px 10px;
-  border-radius: 5px;
-  transition: var(--transition);
-  color: rgba(255, 255, 255, 0.7);
+  transition: all 0.3s ease;
 }
 
-.lang-switcher span:hover {
-  color: #16DB93;
-}
-
-.lang-switcher span.active {
+.lang-switcher-btn:hover {
   background: rgba(22, 219, 147, 0.2);
-  color: #16DB93;
-  box-shadow: 0 0 10px rgba(22, 219, 147, 0.3);
-  border: 1px solid rgba(22, 219, 147, 0.4);
+  box-shadow: 0 0 15px rgba(22, 219, 147, 0.4);
+  transform: translateY(-2px);
+}
+
+.lang-switcher-btn:active {
+  transform: translateY(0);
+}
+
+.lang-switcher-btn #langFlag {
+  font-size: 18px;
+  line-height: 1;
+}
+
+.lang-switcher-btn #langCode {
+  font-size: 13px;
+  letter-spacing: 0.5px;
 }
 
 .cta-buy {
