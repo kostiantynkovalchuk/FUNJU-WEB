@@ -26,7 +26,7 @@ const translations = {
     productTitle: "Що таке Funju?",
     productTasteApple: "Яблуко",
     productTasteCitrus: "Цитрус",
-    productTasteMango: "Манго",
+    productTasteMango: "Манго - Маракуйя",
     productTastePeach: "Персик",
     productTastePineapple: "Ананас",
     productTasteWatermelon: "Кавун",
@@ -164,13 +164,13 @@ const translations = {
     productTitle: "What is Funju?",
     productTasteApple: "Apple",
     productTasteCitrus: "Citrus",
-    productTasteMango: "Mango",
+    productTasteMango: "Mango - Passion Fruit",
     productTastePeach: "Peach",
     productTastePineapple: "Pineapple",
     productTasteWatermelon: "Watermelon",
     productAlcohol: "15% alcohol content",
     productOrigin: "Authentic Korean soju",
-    productSpirit: "Made from premium spirit",
+    productSpirit: "Made from premium alcohol",
     productIngredients: "100% natural ingredients",
     productBuyNow: "BUY NOW",
 
@@ -309,17 +309,14 @@ function switchLanguage(lang) {
 
   // Update language switcher button to show opposite language
   const langFlag = document.getElementById("langFlag");
-  const langCode = document.getElementById("langCode");
 
-  if (langFlag && langCode) {
+  if (langFlag) {
     if (lang === "ua") {
       // Currently UA, show EN option
       langFlag.textContent = "🇬🇧";
-      langCode.textContent = "EN";
     } else {
       // Currently EN, show UA option
       langFlag.textContent = "🇺🇦";
-      langCode.textContent = "UA";
     }
   }
 
