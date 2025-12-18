@@ -73,19 +73,21 @@ function updateProduct(index) {
         inactiveVideo.classList.add("active");
 
         // Step 4: Update taste text with fade
-        // Force layout recalculation to ensure transition happens
-        tasteElement.style.transition = "none";
-        tasteElement.style.opacity = "1";
-        void tasteElement.offsetWidth; // Force reflow
-
-        tasteElement.style.transition = "opacity 0.2s ease";
+        // Use visibility + opacity to prevent layout shift during text change
+        tasteElement.style.transition = "opacity 0.15s ease, visibility 0.15s ease";
         tasteElement.style.opacity = "0";
+        tasteElement.style.visibility = "hidden";
 
         setTimeout(() => {
+          // Change text while invisible (prevents layout shift flash)
           tasteElement.textContent = window.t ? window.t(product.tasteKey) : product.tasteKey;
-          void tasteElement.offsetWidth; // Force reflow
-          tasteElement.style.opacity = "1";
-        }, 200);
+
+          // Small delay to ensure DOM has updated
+          requestAnimationFrame(() => {
+            tasteElement.style.opacity = "1";
+            tasteElement.style.visibility = "visible";
+          });
+        }, 150);
 
         // Step 5: Clean up after transition completes
         setTimeout(() => {
