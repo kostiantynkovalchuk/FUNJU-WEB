@@ -26,7 +26,7 @@ class VideoPlayer {
     // Create unmute button
     this.unmuteBtn = document.createElement('button');
     this.unmuteBtn.className = 'video-unmute-btn';
-    this.unmuteBtn.innerHTML = '🔊';
+    this.unmuteBtn.innerHTML = '🔇';
     this.heroContainer.appendChild(this.unmuteBtn);
 
     // Create replay button
@@ -61,7 +61,7 @@ class VideoPlayer {
   toggleMute() {
     this.isMuted = !this.isMuted;
     this.heroVideo.muted = this.isMuted;
-    this.unmuteBtn.innerHTML = this.isMuted ? '🔊' : '🔇';
+    this.unmuteBtn.innerHTML = this.isMuted ? '🔇' : '🔊';
   }
 
   showReplayButton() {
