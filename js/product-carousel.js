@@ -73,12 +73,24 @@ function updateProduct(index) {
         inactiveVideo.classList.add("active");
 
         // Step 4: Update taste text with fade
+        tasteElement.style.transition = "opacity 0.3s ease";
         tasteElement.style.opacity = "0";
 
-        setTimeout(() => {
+        // Use transitionend event for better synchronization
+        const handleTransitionEnd = () => {
           tasteElement.textContent = window.t ? window.t(product.tasteKey) : product.tasteKey;
           tasteElement.style.opacity = "1";
-        }, 300);
+          tasteElement.removeEventListener("transitionend", handleTransitionEnd);
+        };
+
+        tasteElement.addEventListener("transitionend", handleTransitionEnd);
+
+        // Fallback timeout in case transitionend doesn't fire
+        setTimeout(() => {
+          if (tasteElement.style.opacity === "0") {
+            handleTransitionEnd();
+          }
+        }, 350);
 
         // Step 5: Clean up after transition completes
         setTimeout(() => {
