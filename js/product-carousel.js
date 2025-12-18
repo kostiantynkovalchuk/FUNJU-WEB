@@ -78,7 +78,7 @@ function updateProduct(index) {
         setTimeout(() => {
           tasteElement.textContent = window.t ? window.t(product.tasteKey) : product.tasteKey;
           tasteElement.style.opacity = "1";
-        }, 250);
+        }, 300);
 
         // Step 5: Clean up after transition completes
         setTimeout(() => {
