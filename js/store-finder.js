@@ -143,9 +143,13 @@ function initMap() {
       keyboard: false // Disable keyboard navigation initially
     }).setView([48.3794, 31.1656], 6); // Ukraine center
 
-    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-      attribution: '© OpenStreetMap contributors',
-      maxZoom: 19
+    // Use CartoDB tiles which have better English label support
+    const tileUrl = 'https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png';
+
+    L.tileLayer(tileUrl, {
+      attribution: '© OpenStreetMap contributors, © CARTO',
+      maxZoom: 19,
+      subdomains: 'abcd'
     }).addTo(map);
 
     console.log('Map initialized (interactions disabled)');
@@ -180,6 +184,10 @@ function displayStoresOnMap(stores, highlightNearest = false) {
   markers.forEach(marker => map.removeLayer(marker));
   markers = [];
 
+  // Get current language from i18n system
+  const currentLang = window.getCurrentLang ? window.getCurrentLang() : 'ua';
+  const isEnglish = currentLang === 'en';
+
   stores.forEach((store, index) => {
     const isNearest = highlightNearest && index === 0;
 
@@ -194,12 +202,20 @@ function displayStoresOnMap(stores, highlightNearest = false) {
     const distance = userLocation ?
       calculateDistance(userLocation.lat, userLocation.lng, store.lat, store.lng) : null;
 
+    // Use language-specific fields if available, fallback to default
+    const storeName = isEnglish && store.name_en ? store.name_en : store.name;
+    const storeAddress = isEnglish && store.address_en ? store.address_en : store.address;
+    const storeHours = isEnglish && store.hours_en ? store.hours_en : store.hours;
+
+    // Translate distance text
+    const distanceText = isEnglish ? 'km from you' : 'км від вас';
+
     const popupContent = `
       <div class="popup-content">
-        <h4>${store.name}</h4>
-        <p style="margin: 5px 0;">${store.address}</p>
-        ${store.hours ? `<p style="color: #999; font-size: 12px;">${store.hours}</p>` : ''}
-        ${distance ? `<span class="popup-distance">📍 ${distance.toFixed(1)} км від вас</span>` : ''}
+        <h4>${storeName}</h4>
+        <p style="margin: 5px 0;">${storeAddress}</p>
+        ${storeHours ? `<p style="color: #999; font-size: 12px;">${storeHours}</p>` : ''}
+        ${distance ? `<span class="popup-distance">📍 ${distance.toFixed(1)} ${distanceText}</span>` : ''}
       </div>
     `;
 
@@ -219,6 +235,20 @@ function displayStoreInfo(store) {
   const panel = document.getElementById('storePanel');
   const infoDiv = document.getElementById('storeInfo');
 
+  // Get current language from i18n system
+  const currentLang = window.getCurrentLang ? window.getCurrentLang() : 'ua';
+  const isEnglish = currentLang === 'en';
+
+  // Use language-specific fields if available
+  const storeName = isEnglish && store.name_en ? store.name_en : store.name;
+  const storeAddress = isEnglish && store.address_en ? store.address_en : store.address;
+  const storeHours = isEnglish && store.hours_en ? store.hours_en : store.hours;
+  const storeType = isEnglish && store.type_en ? store.type_en : store.type;
+
+  // Translate button text
+  const directionsText = isEnglish ? 'Get Directions' : 'Прокласти маршрут';
+  const distanceUnit = isEnglish ? 'km' : 'км';
+
   infoDiv.innerHTML = `
     <span class="status-badge ${store.in_stock ? 'in-stock' : 'out-stock'}">
       ${store.in_stock ? window.t('findInStock') : window.t('findOutOfStock')}
@@ -226,13 +256,13 @@ function displayStoreInfo(store) {
     <div class="info-row">
       <span class="info-icon">🏪</span>
       <div>
-        <strong>${store.name}</strong>${store.type ? ` - ${store.type}` : ''}<br>
-        <span style="color: #999; font-size: 13px;">${store.address}</span>
+        <strong>${storeName}</strong>${storeType ? ` - ${storeType}` : ''}<br>
+        <span style="color: #999; font-size: 13px;">${storeAddress}</span>
       </div>
     </div>
     <div class="info-row">
       <span class="info-icon">📍</span>
-      <span><strong>${store.distance.toFixed(2)} км</strong> ${window.t('findFromYou')}</span>
+      <span><strong>${store.distance.toFixed(2)} ${distanceUnit}</strong> ${window.t('findFromYou')}</span>
     </div>
     ${store.phone ? `
     <div class="info-row">
@@ -240,15 +270,15 @@ function displayStoreInfo(store) {
       <span>${store.phone}</span>
     </div>
     ` : ''}
-    ${store.hours ? `
+    ${storeHours ? `
     <div class="info-row">
       <span class="info-icon">🕒</span>
-      <span>${store.hours}</span>
+      <span>${storeHours}</span>
     </div>
     ` : ''}
     <button class="directions-btn" onclick="openDirections(${store.lat}, ${store.lng})">
       <span>🧭</span>
-      <span>Прокласти маршрут</span>
+      <span>${directionsText}</span>
     </button>
   `;
 
