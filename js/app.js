@@ -239,8 +239,21 @@ function trackEvent(eventName, properties = {}) {
 // Backend integration
 async function sendToBackend(eventData) {
   try {
+    // Check if Supabase is available
+    if (typeof window.supabase === 'undefined' || typeof window.supabase.createClient !== 'function') {
+      console.warn('Supabase not available, skipping analytics');
+      return;
+    }
+
+    // Initialize Supabase client if not already done
+    if (!window.supabaseClient) {
+      const SUPABASE_URL = 'https://luucktzqourzszzxzlyn.supabase.co';
+      const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imx1dWNrdHpxb3VyenN6enh6bHluIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjMxMzA3NjAsImV4cCI6MjA3ODcwNjc2MH0.rungPxQ4hzZGVWhdf2mlkujkq9UuLVKYQFFX4626hR4';
+      window.supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+    }
+
     // Insert directly into Supabase
-    const { data, error } = await supabase.from("analytics_events").insert([
+    const { data, error } = await window.supabaseClient.from("analytics_events").insert([
       {
         event_type: eventData.event,
         event_data: eventData,

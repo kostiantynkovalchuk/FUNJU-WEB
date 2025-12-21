@@ -10,8 +10,16 @@ const CONFIG = {
   SUPABASE_ANON_KEY: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imx1dWNrdHpxb3VyenN6enh6bHluIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjMxMzA3NjAsImV4cCI6MjA3ODcwNjc2MH0.rungPxQ4hzZGVWhdf2mlkujkq9UuLVKYQFFX4626hR4'
 };
 
-// Initialize Supabase client
-const supabase = window.supabase.createClient(CONFIG.SUPABASE_URL, CONFIG.SUPABASE_ANON_KEY);
+// Initialize Supabase client (or use existing one from app.js)
+let supabaseClient;
+if (window.supabaseClient) {
+  supabaseClient = window.supabaseClient;
+} else if (window.supabase && typeof window.supabase.createClient === 'function') {
+  supabaseClient = window.supabase.createClient(CONFIG.SUPABASE_URL, CONFIG.SUPABASE_ANON_KEY);
+  window.supabaseClient = supabaseClient;
+} else {
+  console.error('Supabase library not loaded');
+}
 
 // ============================================
 // STATE
@@ -49,7 +57,7 @@ function calculateDistance(lat1, lng1, lat2, lng2) {
 
 async function saveUserToDatabase(user) {
   try {
-    const { data, error } = await supabase
+    const { data, error } = await supabaseClient
       .from('user_leads')
       .insert([{
         name: user.name,
@@ -74,7 +82,7 @@ async function saveUserToDatabase(user) {
 
 async function fetchStoresFromDatabase(city) {
   try {
-    const { data, error } = await supabase
+    const { data, error } = await supabaseClient
       .from('stores')
       .select('*')
       .eq('city', city)
@@ -95,7 +103,7 @@ async function fetchStoresFromDatabase(city) {
 
 async function fetchAllStores() {
   try {
-    const { data, error } = await supabase
+    const { data, error } = await supabaseClient
       .from('stores')
       .select('*')
       .eq('in_stock', true);
@@ -118,22 +126,34 @@ async function fetchAllStores() {
 // ============================================
 
 function initMap() {
-  map = L.map('storeMap', {
-    zoomControl: true,
-    scrollWheelZoom: false, // Disable scroll zoom initially
-    dragging: false, // Disable dragging initially
-    touchZoom: false, // Disable touch zoom initially
-    doubleClickZoom: false, // Disable double click zoom initially
-    boxZoom: false, // Disable box zoom initially
-    keyboard: false // Disable keyboard navigation initially
-  }).setView([48.3794, 31.1656], 6); // Ukraine center
+  // Check if Leaflet is available
+  if (typeof L === 'undefined') {
+    console.error('Leaflet library not loaded yet');
+    return false;
+  }
 
-  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-    attribution: '© OpenStreetMap contributors',
-    maxZoom: 19
-  }).addTo(map);
+  try {
+    map = L.map('storeMap', {
+      zoomControl: true,
+      scrollWheelZoom: false, // Disable scroll zoom initially
+      dragging: false, // Disable dragging initially
+      touchZoom: false, // Disable touch zoom initially
+      doubleClickZoom: false, // Disable double click zoom initially
+      boxZoom: false, // Disable box zoom initially
+      keyboard: false // Disable keyboard navigation initially
+    }).setView([48.3794, 31.1656], 6); // Ukraine center
 
-  console.log('Map initialized (interactions disabled)');
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      attribution: '© OpenStreetMap contributors',
+      maxZoom: 19
+    }).addTo(map);
+
+    console.log('Map initialized (interactions disabled)');
+    return true;
+  } catch (error) {
+    console.error('Error initializing map:', error);
+    return false;
+  }
 }
 
 function enableMapInteractions() {
@@ -295,9 +315,9 @@ document.getElementById('findForm').addEventListener('submit', async function(e)
 
         // Wait for CSS to apply, then initialize map
         setTimeout(() => {
-          initMap();
+          const success = initMap();
 
-          if (map) {
+          if (success && map) {
             // Now zoom to city and show stores
             const cityCenter = [cityStores[0].lat, cityStores[0].lng];
             map.setView(cityCenter, 12);
@@ -310,6 +330,10 @@ document.getElementById('findForm').addEventListener('submit', async function(e)
             document.getElementById('formCard').style.display = 'none';
 
             // Stop spinner
+            submitBtn.innerHTML = originalText;
+            submitBtn.disabled = false;
+          } else {
+            alert(window.t('findError'));
             submitBtn.innerHTML = originalText;
             submitBtn.disabled = false;
           }
@@ -416,31 +440,77 @@ document.getElementById('locationBtn').addEventListener('click', function() {
 // INITIALIZATION
 // ============================================
 
-// Use DOMContentLoaded instead of 'load' for faster initialization
-document.addEventListener('DOMContentLoaded', async function() {
+// Wait for both DOM and Leaflet to be ready
+function initializeApp() {
+  console.log('🗺️ Store Finder: Initializing app...', {
+    width: window.innerWidth,
+    isDesktop: window.innerWidth >= 768,
+    leafletAvailable: typeof L !== 'undefined',
+    supabaseAvailable: typeof window.supabase !== 'undefined'
+  });
+
   // Only initialize map on desktop (where it's visible)
   // On mobile, we'll initialize it when the form is submitted
   if (window.innerWidth >= 768) {
-    // Initialize immediately, don't wait
-    initMap();
-    // Invalidate size after a short delay to ensure container is rendered
-    requestAnimationFrame(() => {
-      map.invalidateSize();
-    });
+    console.log('🗺️ Store Finder: Desktop view detected, initializing map...');
 
-    // Add disabled class to map container initially
-    const mapContainer = document.querySelector('.map-container');
-    if (mapContainer) {
-      mapContainer.classList.add('disabled');
+    // Check if map container exists
+    const mapContainer = document.getElementById('storeMap');
+    if (!mapContainer) {
+      console.error('❌ Map container #storeMap not found!');
+      return;
     }
+    console.log('✅ Map container found:', mapContainer);
 
-    // Load and display all stores on the map (non-interactive)
-    const allStores = await fetchAllStores();
-    if (allStores && allStores.length > 0) {
-      displayStoresOnMap(allStores);
-      console.log(`Loaded ${allStores.length} stores on map (non-interactive)`);
+    // Try to initialize map
+    const success = initMap();
+    console.log('🗺️ Map initialization result:', success);
+
+    if (success && map) {
+      console.log('✅ Map object created successfully');
+
+      // Invalidate size after a short delay to ensure container is rendered
+      requestAnimationFrame(() => {
+        map.invalidateSize();
+        console.log('🗺️ Map size invalidated');
+      });
+
+      // Add disabled class to map container initially
+      const mapContainerParent = document.querySelector('.map-container');
+      if (mapContainerParent) {
+        mapContainerParent.classList.add('disabled');
+        console.log('🗺️ Map container set to disabled mode');
+      }
+
+      // Load and display all stores on the map (non-interactive)
+      console.log('🗺️ Fetching stores from database...');
+      fetchAllStores().then(allStores => {
+        if (allStores && allStores.length > 0) {
+          displayStoresOnMap(allStores);
+          console.log(`✅ Loaded ${allStores.length} stores on map (non-interactive)`);
+        } else {
+          console.warn('⚠️ No stores found in database');
+        }
+      }).catch(err => {
+        console.error('❌ Error fetching stores:', err);
+      });
+    } else {
+      console.error('❌ Failed to initialize map');
     }
+  } else {
+    console.log('📱 Mobile view detected, map will initialize on form submit');
   }
 
-  console.log('Funju Store Finder loaded successfully');
-});
+  console.log('✅ Funju Store Finder loaded successfully');
+}
+
+// Use window.onload to ensure Leaflet library is fully loaded
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', () => {
+    // Wait a bit for external scripts to load
+    setTimeout(initializeApp, 100);
+  });
+} else {
+  // DOM already loaded
+  setTimeout(initializeApp, 100);
+}
