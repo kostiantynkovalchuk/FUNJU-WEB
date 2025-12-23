@@ -312,8 +312,8 @@ function switchLanguage(lang) {
 
   if (langFlag) {
     if (lang === "ua") {
-      // Currently UA, show EN option
-      langFlag.textContent = "🇬🇧";
+      // Currently UA, show US flag for EN option
+      langFlag.textContent = "🇺🇸";
     } else {
       // Currently EN, show UA option
       langFlag.textContent = "🇺🇦";

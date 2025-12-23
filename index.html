@@ -32,8 +32,12 @@
           Вам має бути 18 років або більше для входу на цей сайт. Вам вже є 18?
         </p>
         <div class="age-buttons">
-          <button class="age-btn yes" id="ageYes" data-i18n="ageYes">Так, мені 18+</button>
-          <button class="age-btn no" id="ageNo" data-i18n="ageNo">Ні, мені менше 18</button>
+          <button class="age-btn yes" id="ageYes" data-i18n="ageYes">
+            Так, мені 18+
+          </button>
+          <button class="age-btn no" id="ageNo" data-i18n="ageNo">
+            Ні, мені менше 18
+          </button>
         </div>
       </div>
     </div>
@@ -55,10 +59,16 @@
           <a href="#contact" data-i18n="navContact">Контакти</a>
         </nav>
         <div class="header-right">
-          <button class="lang-switcher-btn" id="langSwitcher" aria-label="Switch language">
-            <span id="langFlag">🇬🇧</span>
+          <button
+            class="lang-switcher-btn"
+            id="langSwitcher"
+            aria-label="Switch language"
+          >
+            <span id="langFlag">🇺🇸</span>
           </button>
-          <a href="#" class="cta-buy" data-track="header" data-i18n="ctaBuy">КУПИТИ</a>
+          <a href="#" class="cta-buy" data-track="header" data-i18n="ctaBuy"
+            >КУПИТИ</a
+          >
         </div>
       </div>
     </header>
@@ -86,7 +96,9 @@
             <source src="assets/avatar-video.webm" type="video/webm" />
             <!-- iOS Safari/Chrome falls back to MP4 (7 MB - still works) -->
             <source src="assets/avatar-video.mp4" type="video/mp4" />
-            <span data-i18n="videoNotSupported">Ваш браузер не підтримує відео.</span>
+            <span data-i18n="videoNotSupported"
+              >Ваш браузер не підтримує відео.</span
+            >
           </video>
         </div>
       </div>
@@ -95,32 +107,57 @@
     <!-- Product Section -->
     <section class="product" id="product">
       <div class="product-container">
-        <h2 class="product-heading" data-i18n="productHeading">Що таке Funju?</h2>
+        <h2 class="product-heading" data-i18n="productHeading">
+          Що таке Funju?
+        </h2>
         <div class="product-carousel">
-          <button class="carousel-arrow carousel-prev" aria-label="Previous product">‹</button>
+          <button
+            class="carousel-arrow carousel-prev"
+            aria-label="Previous product"
+          >
+            ‹
+          </button>
           <div class="product-visual">
-            <video class="product-video active" loop muted playsinline preload="auto" autoplay>
+            <video
+              class="product-video active"
+              loop
+              muted
+              playsinline
+              preload="auto"
+              autoplay
+            >
               <source src="assets/product-mobile.webm" type="video/webm" />
               <source src="assets/product-mobile.mp4" type="video/mp4" />
-              <span data-i18n="videoNotSupported">Ваш браузер не підтримує відео.</span>
+              <span data-i18n="videoNotSupported"
+                >Ваш браузер не підтримує відео.</span
+              >
             </video>
             <video class="product-video" loop muted playsinline preload="auto">
               <source src="" type="video/webm" />
               <source src="" type="video/mp4" />
             </video>
           </div>
-          <button class="carousel-arrow carousel-next" aria-label="Next product">›</button>
+          <button
+            class="carousel-arrow carousel-next"
+            aria-label="Next product"
+          >
+            ›
+          </button>
         </div>
         <div class="product-info">
           <h2 data-i18n="productTitle">Що таке Funju?</h2>
           <ul class="features">
             <li class="product-taste"></li>
             <li data-i18n="productAlcohol">15% вмісту алкоголю</li>
-            <li data-i18n="productOrigin">Справжній корейський соджу</li>
+            <li data-i18n="productOrigin">Перший український соджу</li>
             <li data-i18n="productSpirit">Виготовлено з преміум спирту</li>
             <li data-i18n="productIngredients">100% натуральні інгредієнти</li>
           </ul>
-          <a href="#" class="btn btn-primary" data-track="product" data-i18n="productBuyNow"
+          <a
+            href="#"
+            class="btn btn-primary"
+            data-track="product"
+            data-i18n="productBuyNow"
             >КУПИТИ ЗАРАЗ</a
           >
         </div>
@@ -160,7 +197,9 @@
 
             <form id="findForm">
               <div class="form-group">
-                <label class="form-label" data-i18n="findLabelName">Твоє ім'я</label>
+                <label class="form-label" data-i18n="findLabelName"
+                  >Твоє ім'я</label
+                >
                 <input
                   type="text"
                   class="form-input"
@@ -172,9 +211,13 @@
               </div>
 
               <div class="form-group">
-                <label class="form-label" data-i18n="findLabelCity">Твоє місто</label>
+                <label class="form-label" data-i18n="findLabelCity"
+                  >Твоє місто</label
+                >
                 <select class="form-input" id="userCity" required>
-                  <option value="" data-i18n="findSelectCity">Обери місто...</option>
+                  <option value="" data-i18n="findSelectCity">
+                    Обери місто...
+                  </option>
                   <option value="Львів">Львів</option>
                   <option value="Тернопіль">Тернопіль</option>
                   <option value="Запоріжжя">Запоріжжя</option>
@@ -187,7 +230,9 @@
               </div>
 
               <div class="form-group">
-                <label class="form-label" data-i18n="findLabelEmail">Твій Email</label>
+                <label class="form-label" data-i18n="findLabelEmail"
+                  >Твій Email</label
+                >
                 <input
                   type="email"
                   class="form-input"
@@ -198,7 +243,12 @@
                 />
               </div>
 
-              <button type="submit" class="btn btn-primary" id="submitBtn" data-i18n="findSubmitBtn">
+              <button
+                type="submit"
+                class="btn btn-primary"
+                id="submitBtn"
+                data-i18n="findSubmitBtn"
+              >
                 🔍 Знайти
               </button>
 
@@ -230,13 +280,19 @@
               class="event-image-photo"
             />
             <div class="event-content">
-              <h3 data-i18n="eventKyivTitle">🏙️ Київський Rooftop Experience</h3>
+              <h3 data-i18n="eventKyivTitle">
+                🏙️ Київський Rooftop Experience
+              </h3>
               <p data-i18n="eventKyivDescription">
                 Приєднуйтесь до 200+ любителів вечірок на ексклюзивній вечірці
                 на даху з видом на місто, преміальними коктейлями Funju,
                 корейською вуличною їжею та DJ-сетами.
               </p>
-              <button class="event-register" data-event="summer-party" data-i18n="eventComingSoon">
+              <button
+                class="event-register"
+                data-event="summer-party"
+                data-i18n="eventComingSoon"
+              >
                 Coming soon
               </button>
             </div>
@@ -254,7 +310,11 @@
                 вечірка з 50% знижкою на пляшки, корейським BBQ, живими
                 виступами K-pop та фотозонами для Instagram.
               </p>
-              <button class="event-register" data-event="lviv-launch" data-i18n="eventComingSoon">
+              <button
+                class="event-register"
+                data-event="lviv-launch"
+                data-i18n="eventComingSoon"
+              >
                 Coming soon
               </button>
             </div>
@@ -273,7 +333,11 @@
                 сонця, жива музика та ексклюзивний Funju мерч. Лімітовано до 300
                 гостей!
               </p>
-              <button class="event-register" data-event="odesa-beach" data-i18n="eventComingSoon">
+              <button
+                class="event-register"
+                data-event="odesa-beach"
+                data-i18n="eventComingSoon"
+              >
                 Coming soon
               </button>
             </div>
@@ -441,7 +505,11 @@
           </div>
         </div>
         <div class="share-moment">
-          <button class="btn btn-primary" id="shareMoment" data-i18n="momentsShareBtn">
+          <button
+            class="btn btn-primary"
+            id="shareMoment"
+            data-i18n="momentsShareBtn"
+          >
             📸 Поділися своїм Funju моментом та отримай винагороду!
           </button>
         </div>
@@ -513,7 +581,9 @@
           </div>
           <div class="footer-section">
             <h3 data-i18n="footerNewsletterTitle">Будь в темі</h3>
-            <p data-i18n="footerNewsletterDescription">Отримуй наші пропозиції та запрошення на вечірки!</p>
+            <p data-i18n="footerNewsletterDescription">
+              Отримуй наші пропозиції та запрошення на вечірки!
+            </p>
             <div class="newsletter">
               <input
                 type="email"
@@ -521,7 +591,9 @@
                 placeholder="Ваш email"
                 id="newsletterEmail"
               />
-              <button id="subscribeBtn" data-i18n="footerSubscribe">Підписатися</button>
+              <button id="subscribeBtn" data-i18n="footerSubscribe">
+                Підписатися
+              </button>
             </div>
           </div>
           <div class="footer-section">
