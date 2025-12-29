@@ -2,7 +2,7 @@
 const translations = {
   ua: {
     // Page title
-    pageTitle: "Funju - Корейська Преміум Горілка",
+    pageTitle: "Funju - Перший український соджу",
 
     // Age Gate
     ageGateTitle: "Підтвердження Віку",
